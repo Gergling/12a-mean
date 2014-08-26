@@ -1,0 +1,27 @@
+{
+  "name": "bower.json",
+  "version": "0.0.0",
+  "authors": [
+    "gergling <gregmichaeldavies@gmail.com>"
+  ],
+  "description": "12a MEAN",
+  "main": "server.js",
+  "keywords": [
+    "12a",
+    "space"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/public/views/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.23",
+    "jquery": "~2.1.1"
+  }
+}

@@ -1,4 +1,6 @@
 mode 120,2500
-start "" mongo.bat
-start "" node-server.bat
+@echo off
+echo Options:
+echo - 'node server.js'
+echo.
 cmd.exe

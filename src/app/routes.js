@@ -1,10 +1,5 @@
 module.exports = function(app) {
-
-    // server routes ===========================================================
-    // handle things like api calls
-    // authentication routes
-
-    // sample api route
+    // API
     app.get('/api/nerds', function(req, res) {
         // use mongoose to get all nerds in the database
         Nerd.find(function(err, nerds) {
@@ -17,13 +12,25 @@ module.exports = function(app) {
         });
     });
 
+    app.get('/count', function(req, res) {
+        var count = 5;
+        console.log(res.constructor.prototype);
+        res.send(count + "");
+    });
+
     // route to handle creating (app.post)
     // route to handle delete (app.delete)
 
-    // frontend routes =========================================================
-    // route to handle all angular requests
+    // Frontend
+    app.get('/', function(req, res) {
+        res.locals.stuff = "more stuff!";
+        res.sendFile('public/index.html');
+    });
+
+    // Everything else
     app.get('*', function(req, res) {
-        res.sendfile('./public/index.html'); // load our public/index.html file
+        res.send("404'd");
+        res.status(404).end();
     });
 
 };

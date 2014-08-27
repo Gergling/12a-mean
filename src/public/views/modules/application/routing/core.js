@@ -1,8 +1,10 @@
-ngModules.get("application").component("routing", "core", function(mod, ngm) {
+ngModules.get("application").component("routing", function(ngm, mod) {
     ngm.config(['$routeProvider', function($routeProvider) {
-        $routeProvider.when('/', {templateUrl: 'modules/' + mod.getPartialUrl('index')});
+        var getPartialUrl = function (name) {return 'modules/' + mod.getPartialUrl(name);};
+        $routeProvider.when('/', {templateUrl: getPartialUrl('index')});
+        $routeProvider.otherwise({templateUrl: getPartialUrl('404')});
     }]);
-    ngm.controller([function() {
-        
+    ngm.controller("application.controller.index", ["$rootScope", function($scope) {
+        $scope.stuff = "oi";
     }]);
 });

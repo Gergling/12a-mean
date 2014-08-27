@@ -1,1 +1,1 @@
-ngModules.set(angular.module("application", []));
+ngModules.set(angular.module("application", ["ngRoute"]));

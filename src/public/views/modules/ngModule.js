@@ -1,8 +1,9 @@
 var ngModule = function(ngm) {
+    var scope = this;
     this.ngm = ngm;
     this.name = ngm.name;
-    this.component = function (type, name, fnc) {
-        fnc(this, ngm);
+    this.component = function (type, fnc) {
+        fnc(ngm, scope);
         return this;
     };
     this.getPartialUrl = function (name) {
@@ -22,5 +23,8 @@ var ngModuleCollection = function () {
     };
     this.get = function (name) {
         return modules[name];
+    };
+    this.bootstrap = function (domObj) {
+        return angular.bootstrap(domObj, Object.keys(modules));
     };
 };

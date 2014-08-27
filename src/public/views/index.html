@@ -6,6 +6,7 @@
 
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
     <script src="modules/ngModule.js"></script>
     <script src="index.js"></script>
     <script src="modules/application/module.js"></script>
@@ -13,11 +14,8 @@
 
 	<title>12a MEAN</title>
 
-    List all scripts here. This could be pre-generated using magic.
 </head>
-<body>
-
-    Fire up the angular app here. Good luck with that, sucker.
-
+<body data-ng-controller="application.controller.index">
+    <div data-ng-view>(Loading...)</div>
 </body>
 </html>

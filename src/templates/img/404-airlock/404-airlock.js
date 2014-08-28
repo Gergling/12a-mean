@@ -10,6 +10,8 @@ var ratio = this.height / this.width;
 var cx = this.width/2, cy = this.height/2;
 var l = new Point(cx - radius, cy);
 var r = new Point(cx + radius, cy);
+var al = new Point();
+var ar = new Point();
 
 var background = new Image();
 background.src = "https://c3e0976d5fa48a0ee2571be341af11486e64e7de.googledrive.com/host/0Bxf8n7VcUjWsdlc0QUpRWUEzTUk/black-hole.jpg";
@@ -68,9 +70,15 @@ background.onload = function() {
     ctx.strokeStyle = grd;
     ctx.stroke();
 
-    ctx.lineWidth = radius/4;
+    ctx.lineWidth = rd8;
     ctx.strokeStyle = 'darkred';
     scope.drawLine(ctx, l, r);
+
+    ctx.lineWidth = rd8;
+    ctx.strokeStyle = 'darkred';
+    for(h = cy - rd8;h < cy + rd8; h++) {
+        
+    }
 
     grd = ctx.createLinearGradient(cx-radius,0,cx+radius,0);
     grd.addColorStop(0,"red");
@@ -81,8 +89,8 @@ background.onload = function() {
     grd.addColorStop(1,"darkred");
     ctx.lineWidth = 1;
     ctx.strokeStyle = grd;
-    var al = new Point();al.copy(l);
-    var ar = new Point();ar.copy(r);
+    al.copy(l);
+    ar.copy(r);
     al.x += rd8;
     al.y -= rd8;ar.y = al.y;
     ar.x -= rd8;

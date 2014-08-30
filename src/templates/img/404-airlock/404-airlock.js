@@ -1,4 +1,4 @@
-var radius = 50, 
+var radius = 100, 
     rd2 = radius / 2,
     rd4 = radius / 4,
     rd8 = radius / 8,
@@ -12,6 +12,18 @@ var l = new Point(cx - radius, cy);
 var r = new Point(cx + radius, cy);
 var al = new Point();
 var ar = new Point();
+var lx, ly, h, gradients = {
+    darkred: function () {
+        var grd = ctx.createLinearGradient(0,cy-radius,0,cy+radius);
+        grd.addColorStop(0,"darkred");
+        grd.addColorStop(0.18,"darkred");
+        grd.addColorStop(0.21,"red");
+        grd.addColorStop(0.25,"darkred");
+        grd.addColorStop(1,"darkred");
+        return grd;
+    }()
+};
+
 
 var background = new Image();
 background.src = "https://c3e0976d5fa48a0ee2571be341af11486e64e7de.googledrive.com/host/0Bxf8n7VcUjWsdlc0QUpRWUEzTUk/black-hole.jpg";
@@ -46,7 +58,7 @@ background.onload = function() {
     ctx.beginPath();
     ctx.arc(cx, cy, radius, 0, 2 * Math.PI, false);
     ctx.lineWidth = radius/4;
-    ctx.strokeStyle = 'darkred';
+    ctx.strokeStyle = gradients.darkred;
     ctx.stroke();
 
     var grd=ctx.createLinearGradient(0,cy-radius,0,cy+radius);
@@ -74,10 +86,26 @@ background.onload = function() {
     ctx.strokeStyle = 'darkred';
     scope.drawLine(ctx, l, r);
 
-    ctx.lineWidth = rd8;
-    ctx.strokeStyle = 'darkred';
-    for(h = cy - rd8;h < cy + rd8; h++) {
-        
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'red';
+    for(i = 0;i < rd16; i++) {
+        h = cy - rd8 + i;
+        al.copy(l);
+        ar.copy(r);
+        al.x = l.x - (i*2) + rd8;
+        ar.x = r.x + (i*2) - rd8;
+        al.y = h;ar.y = al.y;
+        scope.drawLine(ctx, al, ar);
+    }
+    ctx.strokeStyle = '#400';
+    for(i = 0;i < rd16; i++) {
+        h = cy + rd16 + i;
+        al.copy(l);
+        ar.copy(r);
+        al.x = l.x + (i*2);
+        ar.x = r.x - (i*2);
+        al.y = h;ar.y = al.y;
+        scope.drawLine(ctx, al, ar);
     }
 
     grd = ctx.createLinearGradient(cx-radius,0,cx+radius,0);

@@ -3,13 +3,12 @@ module.exports = function (grunt) {
 
     var paths = {
             vendor: [
-                'src/public_html/vendor/jquery/jquery.js',
-                'src/public_html/vendor/quadrahedron/quadrahedron.js',
-                'src/public_html/vendor/angular/angular.js',
-                'src/public_html/vendor/lodash/lodash.compat.js',
-                'src/public_html/vendor/*/*.js',
-                '!src/public_html/vendor/angular-mocks/angular-mocks.js',
-                'src/public_html/vendor/bootstrap/bootstrap.js'
+                'src/public/views/vendor/jquery/jquery.js',
+                'src/public/views/vendor/angular/angular.js',
+                'src/public/views/vendor/lodash/lodash.compat.js',
+                'src/public/views/vendor/*/*.js',
+                '!src/public/views/vendor/angular-mocks/angular-mocks.js',
+                'src/public/views/vendor/bootstrap/bootstrap.js'
             ],
 
             scripts: [
@@ -19,14 +18,27 @@ module.exports = function (grunt) {
                 'src/public_html/module/**/*.js',      // Other source files.
                 'src/public_html/angular.bootstrap.run.js' // Bootstrap.
             ],
+            client: [
+                'src/public/views/modules/NGModule.js',
+                'src/public/views/index.js',
+                'src/public/views/modules/**/module.js',
+                'src/public/views/modules/**/*.js'
+            ],
+            server: [
+                'server.js',
+                'src/app/*.js',
+                'src/config/*.js',
+                'src/module/*.js',
+                'src/template/*.js'
+            ],
 
             helpers: [ 'src/public_html/vendor/angular-mocks/*.js' ],
             specs: grunt.file.expand('specs/**/*.js')
         },
 
         css = {
-            vendor: [ 'src/public_html/vendor/**/*.css' ],
-            styles: [ 'src/public_html/module/**/*.css' ]
+            vendor: [ 'src/public/views/vendor/**/*.css' ],
+            styles: [ 'src/public/views/module/**/*.css' ]
         },
 
         banner = '/* TBE */\n'
@@ -72,28 +84,35 @@ module.exports = function (grunt) {
                     predef: [ 'module', 'require', 'process' ]
                 }
             },
-            src: {
-                src: paths.scripts,
+            client: {
+                src: paths.client,
                 directives: {
                     predef: [
-                        'FileReader',
-                        'fusepump',
-                        'jQuery',
-                        'qh',
-                        'angular',
-                        'Keen',
                         '$',
-                        'google'
+                        'angular',
+                        'document',
+                        'jQuery',
+                        'NGModuleCollection'
                     ]
                 },
                 options: { checkstyle: 'build/logs/checkstyle.xml' }
             },
+            /*src: {
+                src: paths.scripts,
+                directives: {
+                    predef: [
+                        'jQuery',
+                        'angular',
+                        '$'
+                    ]
+                },
+                options: { checkstyle: 'build/logs/checkstyle.xml' }
+            },*/
             specs: {
                 src: paths.specs,
                 directives: {
                     predef: [
                         'jasmine',
-                        'google',
                         'angular',
                         'expect',
                         'it',
@@ -122,10 +141,8 @@ module.exports = function (grunt) {
                     data: { paths: paths, css: css, expand: true }
                 },
                 files: {
-                    'src/public_html/modules.js':
-                        'src/public_html/modules.js.tpl',
-                    'src/public_html/index.html':
-                        'src/public_html/index.html.tpl'
+                    'src/public/views/index.html':
+                        'src/templates/html/index.html.tpl'
                 }
             },
             build: {
@@ -171,7 +188,7 @@ module.exports = function (grunt) {
                 helpers: paths.helpers
             },
             test: {
-                src: paths.scripts,
+                src: paths.client,
                 options: {
                     outfile:    'specs/index.html',
                     keepRunner: true,
@@ -179,7 +196,7 @@ module.exports = function (grunt) {
                 }
             },
             coverage: {
-                src: paths.scripts,
+                src: paths.client,
                 options: {
                     template: require('grunt-template-jasmine-istanbul'),
                     templateOptions: {
@@ -289,12 +306,13 @@ module.exports = function (grunt) {
             },
             src: {
                 files: [ ]
-                    .concat(paths.scripts)
+                    .concat(paths.server)
+                    .concat(paths.client)
                     .concat(paths.specs),
                 tasks: [ 'template:dev', 'jasmine', 'jslint' ]
             },
             jsdoc: {
-                files: 'src/public_html/module/**/*.js',
+                files: 'src/public/view/modules/*.js',
                 tasks: [ 'jsdoc' ]
             }
         },

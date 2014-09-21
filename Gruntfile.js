@@ -28,7 +28,7 @@ module.exports = function (grunt) {
                 'server.js',
                 'src/app/*.js',
                 'src/config/*.js',
-                'src/module/*.js',
+                'src/module/**/*.js',
                 'src/template/*.js'
             ],
 
@@ -98,17 +98,14 @@ module.exports = function (grunt) {
                 },
                 options: { checkstyle: 'build/logs/checkstyle.xml' }
             },
-            /*src: {
-                src: paths.scripts,
+            server: {
+                src: paths.server,
                 directives: {
-                    predef: [
-                        'jQuery',
-                        'angular',
-                        '$'
-                    ]
-                },
-                options: { checkstyle: 'build/logs/checkstyle.xml' }
-            },*/
+                    unparam: true,
+                    maxlen: 80,
+                    predef: [ 'module', 'require', 'process', 'console' ]
+                }
+            },
             specs: {
                 src: paths.specs,
                 directives: {

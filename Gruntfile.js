@@ -92,6 +92,7 @@ module.exports = function (grunt) {
                         'angular',
                         'document',
                         'jQuery',
+                        'ngModules',
                         'NGModuleCollection'
                     ]
                 },

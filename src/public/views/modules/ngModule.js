@@ -4,8 +4,10 @@ var NGModule = function (ngm) {
     var scope = this;
     this.ngm = ngm;
     this.name = ngm.name;
-    this.component = function (type, fnc) {
-        scope.type = type;
+    this.getModuleName = function (type, name) {
+        return [scope.name, type, name].join(".");
+    };
+    this.component = function (fnc) {
         fnc(ngm, scope);
         return this;
     };

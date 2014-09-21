@@ -1,17 +1,20 @@
-ngModules.get("test").component("test1", function(ngm, mod) {
-    ngm.controller("test.controller.test1", [
+ngModules.get("test").component(function (ngm, mod) {
+    "use strict";
+
+    ngm.controller(mod.getModuleName("controller", "test1"), [
 
         "$scope",
         "$http",
 
-        function($scope, $http) {
+        function ($scope, $http) {
+            $scope.state = { };
             $scope.attack = function () {
                 $http.post('/test', {ability_id: 1, source_id: 1, target_id: 2}).success(function (response) {
-                    console.log(response, response.game_state.characters[2].health);
+                    $scope.state = response.game_state;
                 });
-                console.log(1, "Send ability id, source character id, target character id to API");
-                console.log(2, "Backend runs ability, which currently just increases the target health by 1");
-                console.log(3, "API response is put through to a game state object on the frontend");
+                // 1, "Send ability id, source character id, target character id to API");
+                // 2, "Backend runs ability, which currently just increases the target health by 1");
+                // 3, "API response is put through to a game state object on the frontend");
             };
         }
     ]);

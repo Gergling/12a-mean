@@ -1,5 +1,9 @@
-var ngModules = new ngModuleCollection();
+var ngModules = (function ($) {
+    "use strict";
 
-$(function () {
-    ngModules.bootstrap(document);
-});
+    $(function () {
+        ngModules.bootstrap(document);
+    });
+
+    return new NGModuleCollection();
+}(jQuery));

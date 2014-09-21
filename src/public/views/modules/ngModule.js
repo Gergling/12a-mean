@@ -1,8 +1,11 @@
-var ngModule = function(ngm) {
+var NGModule = function (ngm) {
+    "use strict";
+
     var scope = this;
     this.ngm = ngm;
     this.name = ngm.name;
     this.component = function (type, fnc) {
+        scope.type = type;
         fnc(ngm, scope);
         return this;
     };
@@ -14,10 +17,12 @@ var ngModule = function(ngm) {
         ].join('/');
     };
 };
-var ngModuleCollection = function () {
-    var scope = this, modules = {};
+var NGModuleCollection = function () {
+    "use strict";
+
+    var modules = {};
     this.set = function (ngm) {
-        var module = new ngModule(ngm);
+        var module = new NGModule(ngm);
         modules[ngm.name] = module;
         return module;
     };

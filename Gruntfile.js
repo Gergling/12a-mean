@@ -1,144 +1,352 @@
 module.exports = function (grunt) {
     'use strict';
 
-    var tasks = {}, paths = {
-        bower: [
-            "src/bower_components/angular/angular.js",
-            "src/bower_components/lodash/dist/lodash.js",
-            "src/bower_components/angular-route/angular-route.js",
-            "src/bower_components/restangular/dist/restangular.js"
-        ],
-        qh: (function () {
-            var modules = grunt.file.readJSON('src/public_html/module/modules.json'),
-                modfile = "",
-                modulesFile = 'build/quadrahedron/modules.js',
-                module = [],
-                component = {};
+    var paths = {
+            vendor: [
+                'src/public_html/vendor/jquery/jquery.js',
+                'src/public_html/vendor/quadrahedron/quadrahedron.js',
+                'src/public_html/vendor/angular/angular.js',
+                'src/public_html/vendor/lodash/lodash.compat.js',
+                'src/public_html/vendor/*/*.js',
+                '!src/public_html/vendor/angular-mocks/angular-mocks.js',
+                'src/public_html/vendor/bootstrap/bootstrap.js'
+            ],
 
-            modules.list.forEach(function (mod) {
-                modfile += 'qh.moduleManager.qhModules.add("' + mod + '", "module");\n';
-            });
-            grunt.file.write(modulesFile, modfile);
+            scripts: [
+                'src/public_html/modules.js',          // QH module definitions.
+                'src/public_html/module/fusepump/fusepump.js', // Fusepump lib.
+                'src/public_html/module/**/module.js', // Module.js files.
+                'src/public_html/module/**/*.js',      // Other source files.
+                'src/public_html/angular.bootstrap.run.js' // Bootstrap.
+            ],
 
-            /*jslint unparam: true*/
-            grunt.file.recurse('src/public_html/module/', function (abs, root, sub, file) {
-                if (sub) {
-                    if (file === "module.js") {
-                        module.push(root + sub + "/module.js");
-                    } else {
-                        component[sub] = root + sub + "/*.js";
-                    }
-                }
-            });
-            /*jslint unparam: false*/
-            return [modulesFile]
-                .concat(module)
-                .concat(grunt.util.toArray(component));
-        }())
-    };
+            helpers: [ 'src/public_html/vendor/angular-mocks/*.js' ],
+            specs: grunt.file.expand('specs/**/*.js')
+        },
+
+        css = {
+            vendor: [ 'src/public_html/vendor/**/*.css' ],
+            styles: [ 'src/public_html/module/**/*.css' ]
+        },
+
+        banner = '/* FusePump Platform */\n'
+            + '/* Copyright © 2014, FusePump Ltd. - All rights reserved. */\n'
+            + '/* <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+
+        version = (function () {
+            var build = process.env.BUILD_NUMBER;
+            return build ? '?v=' + build : '';
+        }());
 
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
-        http: {
-            requirejs: {
-                options: {url: 'http://requirejs.org/docs/release/2.1.8/minified/require.js'},
-                dest: 'src/public_html/vendor/requirejs/requirejs.2.1.8.js'
-            },
-            keen: {
-                options: {url: 'http://dc8na2hxrj29i.cloudfront.net/code/keen-2.1.2-min.js'},
-                dest: 'build/keen/keen-2.1.2-min.js'
-            },
-            jsapi: {
-                options: {url: 'https://www.google.com/jsapi'},
-                dest: 'build/google/jsapi.js'
-            },
-            pkg: {
-                options: {url: 'https://www.google.com/uds/?file=visualization&v=1.0&packages=corechart&async=2'},
-                dest: 'build/google/pkg.js'
-            },
-            corechart: {
-                options: {url: 'https://www.google.com/uds/api/visualization/1.0/ce05bcf99b897caacb56a7105ca4b6ed/format+en_GB,default+en_GB,ui+en_GB,corechart+en_GB.I.js'},
-                dest: 'build/google/corechart.js'
-            }
-        },
-        concat: {
-            options: {
-                separator: ';'
-            },
-            dist: {
-                src: [
-                    "build/keen/keen-2.1.2-min.js",
-                    "src/public_html/keen.config.js",
-                    "build/google/jsapi.js",
-                    "build/google/pkg.js",
-                    "build/google/corechart.js"
-                ]
-                    .concat(paths.bower)
-                    .concat(paths.qh),
-                dest: 'build/<%= pkg.name %>.js'
-            }
-        },
-        uglify: {
-            options: {
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
-            },
-            dist: {
-                files: {
-                    'build/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+        bower: {
+            install: {
+                options: {
+                    targetDir: './src/public/views/vendor',
+                    verbose: true,
+                    layout: function (type, component, source) {
+                        /*
+                         * Make sure bootstrap CSS and fonts appear in correct
+                         * directories relative to each other.
+                         */
+                        if (component === 'bootstrap') {
+                            if (source.match('bootstrap.css')) {
+                                return require('path').join(component, 'css');
+                            }
+                            if (source.match('glyphicons-halflings-regular')) {
+                                return require('path').join(component, 'fonts');
+                            }
+                            return component;
+                        }
+                        return component;
+                    }
                 }
             }
         },
-        shell: {
-            documentation: {
-                command: "jsdoc ./src/public_html/module/ --recurse --destination ./documentation MODULES.md"
-            }
-        },
-        jslint: { // configure the task
-            client: {
-                src: [
-                    'Gruntfile.js',
-                    'src/public_html/module/**/*.js',
-                    'specs/*.js',
-                    'specs/**/*.js'
-                ],
+
+        jslint: {
+            grunt: {
+                src: [ 'Gruntfile.js' ],
                 directives: {
-                    browser: true,
+                    unparam: true,
+                    maxlen: 80,
+                    predef: [ 'module', 'require', 'process' ]
+                }
+            },
+            src: {
+                src: paths.scripts,
+                directives: {
                     predef: [
-                        // Source:
+                        'FileReader',
+                        'fusepump',
                         'jQuery',
                         'qh',
                         'angular',
                         'Keen',
                         '$',
+                        'google'
+                    ]
+                },
+                options: { checkstyle: 'build/logs/checkstyle.xml' }
+            },
+            specs: {
+                src: paths.specs,
+                directives: {
+                    predef: [
+                        'jasmine',
                         'google',
-
-                        // Gruntfile:
-                        'module',
-
-                        // Jasmine Specs:
+                        'angular',
                         'expect',
                         'it',
                         'inject',
                         'describe',
+                        'module',
                         'beforeEach',
-
-                        // Spec utils
-                        'FactoryChecklist'
+                        'afterEach'
                     ]
                 }
             }
+        },
+
+        jsdoc: {
+            dist: {
+                src: 'src/public_html/module/**/*.js',
+                options: {
+                    destination: 'build/documentation'
+                }
+            }
+        },
+
+        template: {
+            dev: {
+                options: {
+                    data: { paths: paths, css: css, expand: true }
+                },
+                files: {
+                    'src/public_html/modules.js':
+                        'src/public_html/modules.js.tpl',
+                    'src/public_html/index.html':
+                        'src/public_html/index.html.tpl'
+                }
+            },
+            build: {
+                options: {
+                    data: {
+                        paths: {
+                            vendor:  'js/vendor.min.js'  + version,
+                            scripts: 'js/scripts.min.js' + version
+                        },
+                        css: {
+                            vendor: 'css/vendor.min.css' + version,
+                            styles: 'css/styles.min.css' + version
+                        },
+                        expand: false
+                    }
+                },
+                files: {
+                    'build/public_html/index.html':
+                        'src/public_html/index.html.tpl'
+                }
+            }
+        },
+
+        eol: {
+            options: { replace: true },
+            dev: {
+                src: [
+                    'src/public_html/index.html',
+                    'src/public_html/modules.js'
+                ]
+            },
+            build: {
+                src: [
+                    'build/public_html/index.html'
+                ]
+            }
+        },
+
+        jasmine: {
+            options: {
+                specs:   paths.specs,
+                vendor:  paths.vendor,
+                helpers: paths.helpers
+            },
+            test: {
+                src: paths.scripts,
+                options: {
+                    outfile:    'specs/index.html',
+                    keepRunner: true,
+                    junit:      { path:  'build/logs/junit' }
+                }
+            },
+            coverage: {
+                src: paths.scripts,
+                options: {
+                    template: require('grunt-template-jasmine-istanbul'),
+                    templateOptions: {
+                        coverage: 'build/logs/coverage.json',
+                        report: [
+                            {
+                                type: 'html',
+                                options: { dir: 'build/coverage/' }
+                            },
+                            {
+                                type: 'cobertura',
+                                options: { dir: 'build/logs/' }
+                            },
+                            {
+                                type: 'text-summary'
+                            }
+                        ]
+                    },
+                    display: 'none',
+                    summary: true
+                }
+            }
+        },
+
+        karma: {
+            unit: {
+                options: {
+                    frameworks: [ 'jasmine' ],
+                    files: [ ]
+                        .concat(paths.vendor)
+                        .concat(paths.helpers)
+                        .concat(paths.scripts)
+                        .concat(paths.specs),
+                    logLevel: 'INFO',
+                    autoWatch: true,
+                    browsers: [ 'PhantomJS' ],
+                    captureTimeout: 60000,
+                    singleRun: false
+                }
+            }
+        },
+
+        uglify: {
+            vendor: {
+                files: { 'build/public_html/js/vendor.min.js': paths.vendor }
+            },
+            scripts: {
+                options: { banner: banner },
+                files: { 'build/public_html/js/scripts.min.js': paths.scripts }
+            }
+        },
+
+        cssmin: {
+            vendor: {
+                files: { 'build/public_html/css/vendor.min.css': css.vendor }
+            },
+            styles: {
+                options: { banner: banner },
+                files: { 'build/public_html/css/styles.min.css': css.styles }
+            }
+        },
+
+        htmlmin: {
+            options: {
+                removeComments:       true,
+                collapseWhitespace:   true,
+                conservativeCollapse: true,
+                preserveLineBreaks:   true
+            },
+            build: {
+                files: [ {
+                    expand: true,
+                    cwd:    'src/public_html/module/',
+                    src:    '**/partial/**/*.html',
+                    dest:   'build/public_html/module/'
+                } ]
+            }
+        },
+
+        copy: {
+            build: {
+                files: [
+                    {
+                        expand: true,
+                        cwd:    'src/public_html/module/',
+                        src:    '**/img/**/*',
+                        dest:   'build/public_html/module/'
+                    },
+                    {
+                        expand: true,
+                        cwd:    'src/public_html/vendor/bootstrap/fonts/',
+                        src:    '*',
+                        dest:   'build/public_html/fonts/'
+                    }
+                ]
+            }
+        },
+
+        watch: {
+            bower: {
+                files: [ 'bower.json' ],
+                tasks: [ 'bower' ]
+            },
+            gruntfile: {
+                files: [ 'Gruntfile.js' ],
+                tasks: [ 'jslint' ]
+            },
+            src: {
+                files: [ ]
+                    .concat(paths.scripts)
+                    .concat(paths.specs),
+                tasks: [ 'template:dev', 'jasmine', 'jslint' ]
+            },
+            jsdoc: {
+                files: 'src/public_html/module/**/*.js',
+                tasks: [ 'jsdoc' ]
+            }
+        },
+
+        clean: {
+            dev: [
+                '.grunt/',
+                'build/',
+                'specs/test.html',
+                'src/public_html/index.html',
+                'src/public_html/modules.js'
+            ],
+            build: [
+                'build/public_html/'
+            ],
+            extra: [
+                'bower_components/',
+                'src/public_html/vendor'
+            ],
+            junit: [ 'build/logs/junit/' ]
         }
     });
 
+    grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-jslint');
-    grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-http');
-    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-jsdoc');
+    grunt.loadNpmTasks('grunt-template');
+    grunt.loadNpmTasks('grunt-eol');
+    grunt.loadNpmTasks('grunt-contrib-jasmine');
+    grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-htmlmin');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-clean');
 
-    tasks.build = ['http:keen', 'http:jsapi', 'http:pkg', 'http:corechart', 'concat', 'uglify'];
-    grunt.registerTask('default', tasks.build);
-    grunt.registerTask('build', tasks.build);
-    grunt.registerTask('dev', ['shell:documentation', 'jslint:client']);
-    grunt.registerTask('setup', ['http:requirejs']);
+    // Default task
+    grunt.registerTask('default', [ 'build' ]);
+
+    grunt.registerTask('build', [
+        'bower',       // Install dependencies with bower
+        'jsdoc',       // Generate API documentation
+        'template',    // Populate templates with lists of source files
+        'eol',         // Standardise on LF (Unix) line endings
+        'clean:junit', // Clean up old test results
+        'jasmine',     // Run unit tests with Jasmine
+        'jslint',      // Check code with JSLint
+        'uglify',      // Concatenate and minify code
+        'cssmin',      // Concatenate and minify styles
+        'htmlmin',     // Copy and minify partials
+        'copy'         // Copy images and fonts
+    ]);
 };

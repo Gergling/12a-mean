@@ -29,8 +29,7 @@ module.exports = function (grunt) {
             styles: [ 'src/public_html/module/**/*.css' ]
         },
 
-        banner = '/* FusePump Platform */\n'
-            + '/* Copyright © 2014, FusePump Ltd. - All rights reserved. */\n'
+        banner = '/* TBE */\n'
             + '/* <%= grunt.template.today("yyyy-mm-dd") %> */\n',
 
         version = (function () {

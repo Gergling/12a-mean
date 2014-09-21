@@ -36,9 +36,7 @@ module.exports = function(app, mongoose) {
                 // create
                 character = new Character({id: 2, health: 0});
             }
-            console.log(character);
             character.health += 1;
-            console.log(character);
             character.save(function(err) {
                 if (err) {
                     console.log('error saving character');

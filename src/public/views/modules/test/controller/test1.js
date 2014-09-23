@@ -16,6 +16,13 @@ ngModules.get("test").component(function (ngm, mod) {
                 // 2, "Backend runs ability, which currently just increases the target health by 1");
                 // 3, "API response is put through to a game state object on the frontend");
             };
+
+            $scope.battle = { };
+            $scope.startBattle = function () {
+                $http.post('/battle', {battle_factory: "surveillance"}).success(function (response) {
+                    $scope.battle = response;
+                });
+            };
         }
     ]);
 });

@@ -1,4 +1,4 @@
-module.exports = function (app, tbeSchemas) {
+module.exports = function (app, tbeSchemas, controllers, mongoose) {
     "use strict";
 
     var Character = tbeSchemas.Character.model;
@@ -26,6 +26,33 @@ module.exports = function (app, tbeSchemas) {
                 }
             });
         });
+    });
+
+    // GET /battle returns the state of the current battle
+    // PUT /battle casts an ability
+
+    // POST /battle starts a new battle.
+    app.post('/battle', function (req, res) {
+        // Will need to check for authentication.
+        // If authentication successful, populate player_id
+        var player_id = 1;
+        if (player_id) {
+            controllers.battle.start(
+                req.param("battle_factory"),
+                player_id,
+                function (battle) {
+                    // Catch error and send as appropriate error message.
+                    res.send(battle);
+                },
+                function (err) {
+                    res.send(err);
+                    //res.status(401).end();
+                }
+            );
+        } else {
+            res.send();
+            res.status(403).end();
+        }
     });
 
     // route to handle creating (app.post)

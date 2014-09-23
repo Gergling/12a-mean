@@ -12,6 +12,15 @@ var methodOverride = require('method-override');
 // config files
 var db = require('./src/config/db');
 
+var schemas = {
+    tbe: require('./src/module/tbe/schema')(mongoose)
+};
+
+// controllers
+var controllers = {
+    battle: require("./src/module/battle/controller")(schemas.tbe)
+};
+
 var port = process.env.PORT || 8080; // set our port
 mongoose.connect(db.url);
 
@@ -32,7 +41,7 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static('./src/public/views'));
 
 // routes ==================================================
-require('./src/app/routes')(app, require('./src/module/tbe/schema')(mongoose));
+require('./src/app/routes')(app, schemas.tbe, controllers, mongoose);
 
 // start app ===============================================
 app.listen(port); // startup our app at http://localhost:8080

@@ -3,8 +3,12 @@
 module.exports = function (mongoose) {
     "use strict";
 
-    var list = [], schemas = {}, setSchema = function (name, fields) {
-        list.push({name: name, fields: fields});
+    var schemas = {}, setSchema = function (name, fields) {
+        var schema = mongoose.Schema(fields);
+        schemas[name] = {
+            schema: schema,
+            newModel: function () {return mongoose.model(name, schema);}
+        };
     };
     setSchema("Player", {
         name: String
@@ -19,17 +23,8 @@ module.exports = function (mongoose) {
         name: String
     });
     setSchema("Battle", {
-        context: Number,
-        name: String,
-        health: Number
-    });
-    list.forEach(function (item) {
-        var schema = mongoose.Schema(item.fields),
-            model = mongoose.model(item.name, item.fields);
-        schemas[item.name] = {
-            schema: schema,
-            model: model
-        };
+        battle_factory: String,
+        characters: []
     });
     return schemas;
 };

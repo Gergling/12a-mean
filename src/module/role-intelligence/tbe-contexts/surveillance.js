@@ -1,8 +1,8 @@
 module.exports = function (context) {
     var stats = {
         attributes: {
-            patience: 1, // Passively absorbs interest damage.
-            obscurity: 1 // Passively absorbs mystery damage.
+            patience: 1, // Passively absorbs interest damage. Based on player stats.
+            obscurity: 1 // Passively absorbs mystery damage. Also based on player stats.
         },
         capacitors: {
             interest: new Capacitor(),
@@ -19,9 +19,16 @@ module.exports = function (context) {
         }
     });
 
-    // An area of interest, when the mystery is taken away, spawns a Result.
-    // Results (corpses) are what the intelligence officer is looking for.
-    context.setBattleFactory("surveillance", {
+    // Mysteries probably spawn deliberate structures, such as a secret mining colony,
+    // or a ship buried in an asteroid.
+    context.setBattleFactory("surveillance", function (args) {
+        
+    });
+
+    // Mapping an area of space. Low-level missions for new players.
+    // Most likely to start with natural mysteries.
+    context.setBattleFactory("mapping", function (args) {
+        // Most likely to start with natural mystery
     });
 
     // Abilities need:
@@ -71,15 +78,24 @@ module.exports = function (context) {
 
         // Calculate stats according to generated spawn.
         return {
+            label: "Mysterious Space",
             spawns: {
                 death: [spawn] // On death, the random spawn is created in it's place.
             },
-            corpse: false
+            corpse: false // Does not generate a corpse.
         };
     });
 
     context.setCharacterFactory("mystery-deliberate", stats);
     context.setCharacterFactory("spatial-anomaly", stats);
+
+    context.setCharacterFactory("obscured-structure", stats, function () {
+        var adjective = ["", "Buried", "Secret", "Unusual"],
+            noun = ["Spaceship", "Mining Colony", "Asteroid"];
+        return {
+            label: [adjective, noun].join(" ").trim()
+        };
+    });
 
     // An obfuscated space has been deliberately hidden from view.
     // It will likely spawn something of military or police interest.

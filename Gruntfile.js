@@ -38,7 +38,7 @@ module.exports = function (grunt) {
 
         css = {
             vendor: [ 'src/public/views/vendor/**/*.css' ],
-            styles: [ 'src/public/views/module/**/*.css' ]
+            styles: [ 'src/public/views/modules/**/*.css' ]
         },
 
         banner = '/* TBE */\n'

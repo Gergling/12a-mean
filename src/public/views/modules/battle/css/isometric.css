@@ -1,0 +1,7 @@
+.isometric-grid {
+	position: relative;
+}
+.isometric-grid .isometric-square {
+	position: absolute;
+	border: solid 1px grey;
+}

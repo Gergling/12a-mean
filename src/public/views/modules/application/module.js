@@ -1,1 +1,1 @@
-ngModules.set(angular.module("application", ["ngRoute"]));
+ngModules.set(angular.module("application", ["ngRoute", "battle"]));

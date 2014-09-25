@@ -5,6 +5,7 @@ ngModules.get("application").component(function (ngm, mod) {
         var getPartialUrl = function (name) {return 'modules/' + mod.getPartialUrl(name); };
         $routeProvider.when('/', {templateUrl: getPartialUrl('index')});
         $routeProvider.when('/test/', {templateUrl: 'modules/test/partial/test.html'});
+        $routeProvider.when('/battle/', {templateUrl: 'modules/battle/partial/battle.html'});
         $routeProvider.otherwise({templateUrl: getPartialUrl('404')});
     }]);
     ngm.controller(mod.getModuleName("controller", "index"), ["$rootScope", function ($scope) {

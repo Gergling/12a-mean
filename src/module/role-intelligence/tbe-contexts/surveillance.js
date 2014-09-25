@@ -35,7 +35,7 @@ module.exports = function (context) {
     // - Label
     // - Colour text from the user perspective
     // - Colour text from the target perspective
-    context.setAbility("scan", 
+    context.setAbility("scan", "Scan",
         "Scans an area of interest. Increases visibility, decreases target mystery."
     );
     context.setAbility("stealth", "Decreases visibility for a period.");

@@ -9,13 +9,11 @@ ngModules.get("battle").component(function (ngm, mod) {
             controller: [
 
                 "$scope",
-                "$http",
 
-                function ($scope, $http) {
-                    //$scope.width = 100;
-                    //$scope.height = 52;
+                function ($scope) {
                     $scope.isometricX = $scope.x * $scope.width;
                     $scope.isometricY = $scope.y * $scope.height;
+                    $scope.character = 3; // An id. This will be used to generate a directive for displaying character models.
                 }
             ]
         };

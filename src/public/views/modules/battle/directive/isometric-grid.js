@@ -8,9 +8,8 @@ ngModules.get("battle").component(function (ngm, mod) {
             controller: [
 
                 "$scope",
-                "$http",
 
-                function ($scope, $http) {
+                function ($scope) {
                     var x, y, row, cell;
                     $scope.cellHeight = $scope.cellWidth*Math.sin(Math.PI*30/360)/Math.sin(Math.PI*60/360);
                     $scope.grid = [];

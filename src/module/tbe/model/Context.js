@@ -1,12 +1,14 @@
-module.exports = function (BattleFactory, CharacterFactory) {
+module.exports = function () {
     "use strict";
 
-    var Context = function (name, startBattle) {
+    var BattleFactory = require("./BattleFactory"),
+        CharacterFactory = require("./CharacterFactory"),
+        deepExtend = require("deep-extend");
+
+    return function () {
         var scope = this,
             characterFactories = { },
             battleFactories = { };
-        this.name = name;
-        this.startBattle = startBattle;
         this.defaults = {
             stats: { },
             generator: function () {return { }; }
@@ -19,9 +21,9 @@ module.exports = function (BattleFactory, CharacterFactory) {
         this.setCharacterFactory = function (name, stats, generator) {
             characterFactories[name] = new CharacterFactory(
                 // Look into deep-extend. Giggity.
-                angular.extend(scope.defaults.stats, stats),
+                deepExtend(scope.defaults.stats, stats),
                 function (args) {
-                    return angular.extend(
+                    return deepExtend(
                         scope.defaults.generator(args),
                         generator(args)
                     );
@@ -35,7 +37,13 @@ module.exports = function (BattleFactory, CharacterFactory) {
         this.setBattleFactory = function (name, generator) {
             battleFactories[name] = new BattleFactory(generator);
         };
-    };
 
-    return Context;
+        this.setCorpse = function (name, label, props) {
+            console.log("Context::setCorpse needs a body.");
+        };
+
+        this.setAbility = function (name, label, props) {
+            console.log("Context::setAbility needs a body.");
+        };
+    };
 };

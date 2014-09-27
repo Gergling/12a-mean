@@ -1,14 +1,15 @@
-module.exports = function (context) {
-    var stats = {
-        attributes: {
-            patience: 1, // Passively absorbs interest damage. Based on player stats.
-            obscurity: 1 // Passively absorbs mystery damage. Also based on player stats.
-        },
-        capacitors: {
-            interest: new Capacitor(),
-            mystery: new Capacitor()
-        }
-    };
+module.exports = function (context, tbe) {
+    var Capacitor = tbe.Capacitor,
+        stats = {
+            attributes: {
+                patience: 1, // Passively absorbs interest damage. Based on player stats.
+                obscurity: 1 // Passively absorbs mystery damage. Also based on player stats.
+            },
+            capacitors: {
+                interest: new Capacitor(),
+                mystery: new Capacitor()
+            }
+        };
 
     context.setCorpse("report", "Report", {
         drops: function (args) {
@@ -27,8 +28,14 @@ module.exports = function (context) {
 
     // Mapping an area of space. Low-level missions for new players.
     // Most likely to start with natural mysteries.
-    context.setBattleFactory("mapping", function (args) {
+    context.setBattleFactory("mapping", function (args, Battle) {
         // Most likely to start with natural mystery
+        var battle = new Battle();
+        battle.on().turn(0).start(function () {
+            //create a natural mystery
+            //this.createCharacter(
+        });
+        return battle;
     });
 
     // Abilities need:
@@ -42,7 +49,7 @@ module.exports = function (context) {
     context.setAbility("drones", 
         "Increases effectiveness of scans while deployed. "
         + "May need to retturn with samples or for fuel after a while, "
-        "depending on area of interest."
+        + "depending on area of interest."
     );
     context.setAbility("analyse", 
         "Opens possible options for other abilities by generating a buff. "
@@ -106,4 +113,6 @@ module.exports = function (context) {
     // vessel schematic (a corpse) and a real vessel. A real vessel will 
     // open a captain quest for pursuit, and possibly combat.
     context.setCharacterFactory("stealth-vessel", stats);
+
+    return context;
 };

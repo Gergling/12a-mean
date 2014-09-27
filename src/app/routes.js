@@ -38,6 +38,7 @@ module.exports = function (app, tbeSchemas, controllers, mongoose) {
         var player_id = 1;
         if (player_id) {
             controllers.battle.start(
+                "space-intel", // context
                 req.param("battle_factory"),
                 player_id,
                 function (battle) {

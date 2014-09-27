@@ -1,25 +1,78 @@
 // server.js
 
-// modules =================================================
-var express        = require('express');
-var app            = express();
-var mongoose       = require('mongoose');
-var bodyParser     = require('body-parser');
+// Vendor Modules =================================================
+var express = require('express');
+var app = express();
+var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+var grunt = require("grunt");
+var pathService = require("path");
 
 // configuration ===========================================
 
 // config files
 var db = require('./src/config/db');
 
+//var modules = grunt.file.expand("./src/
+
+/*var moduleRoot = "./src/module";
+var modules = { };
+grunt.file.recurse(moduleRoot, function (abs, root, sub) {
+    var name;
+    if (sub) {
+        name = sub.split("/")[0];
+        modules[name] = {
+            name: name,
+            root: pathService.join(root, name)
+        };
+    }
+});*/
+
+//var tbe.Context = require("./src/module/tbe
+
+//grunt.file.expand(pathService.join(moduleRoot, "role-*/tbe-contexts/*")).forEach(function (path) {
+    /*var name = pathService.basename(path, ".js");
+    modules.tbe.contexts[name] = {
+        name: name
+    };
+});*/
+
+var srcModules = {
+    tbe: {
+        Battle: require('./src/module/tbe/model/Battle')(),
+        Capacitor: require('./src/module/tbe/model/Capacitor')(),
+        Context: require('./src/module/tbe/model/Context')()
+    }
+};
+
+var contexts = { };
+
+grunt.file.expand("./src/module/tbe-contexts/*.js").forEach(function (ctx) {
+    var modulePath = ctx.replace(".js", ""),
+        contextName = pathService.basename(ctx, ".js"),
+        context = new srcModules.tbe.Context();
+
+    contexts[contextName] = require(modulePath)(context, srcModules.tbe);
+});
+
+console.log(contexts);
+
+//var contexts = require("./src/app/contexts")(grunt, pathService);
+
 var schemas = {
     tbe: require('./src/module/tbe/schema')(mongoose)
+    //tbe: require(modules.tbe.root + '/schema')(mongoose)
 };
 
 // controllers
 var controllers = {
-    battle: require("./src/module/battle/controller")(schemas.tbe)
+    battle: require("./src/module/battle/controller")(contexts, schemas.tbe, srcModules.tbe)
 };
+
+//var contexts = require("./src/module/contexts")();
+
+//require(grunt.file.expand("./src/module/*/tbe-contexts/*"))()
 
 var port = process.env.PORT || 8080; // set our port
 mongoose.connect(db.url);

@@ -9,6 +9,7 @@ module.exports = function (mongoose) {
             schema: schema,
             newModel: function () {return mongoose.model(name, schema);}
         };
+        return schemas[name];
     };
     setSchema("Player", {
         name: String

@@ -146,3 +146,19 @@ for(j = 0;j < tbi; j++) {
     scope.drawLine(ctx, a, b);
 }
 
+//grd = ctx.createLinearGradient(scope.width,0,0,scope.height);
+var x = tbo + (tbm/1.5);
+y=x;
+var sx = x - (tbm/4), sy = sx;
+var grd=ctx.createRadialGradient(sx,sy,0,x,y,Math.ceil(tbm/3));
+grd.addColorStop(0,"white");
+grd.addColorStop(0.1,"lightgrey");
+grd.addColorStop(0.3,"darkgrey");
+grd.addColorStop(0.6,"grey");
+grd.addColorStop(1,"black");
+
+
+ctx.beginPath();
+ctx.arc(x,y, tbo/3, 0, 2 * Math.PI, false);
+ctx.fillStyle = grd;
+ctx.fill();

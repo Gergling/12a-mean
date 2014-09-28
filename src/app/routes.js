@@ -29,6 +29,24 @@ module.exports = function (app, tbeSchemas, controllers, mongoose) {
     });
 
     // GET /battle returns the state of the current battle
+    app.get('/battle', function (req, res) {
+        var player_id = 1;
+        if (player_id) {
+            controllers.battle.get(
+                player_id,
+                function (battle) {
+                    res.send(battle);
+                },
+                function (err) {
+                    res.send(err);
+                    //res.status(500).end();
+                }
+            );
+        } else {
+            res.send();
+            res.status(403).end();
+        }
+    });
     // PUT /battle casts an ability
 
     // POST /battle starts a new battle.

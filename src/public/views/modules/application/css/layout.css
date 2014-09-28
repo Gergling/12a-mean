@@ -12,7 +12,6 @@ body {
 #content {
 	height: inherit;
 	padding: 20px;
-	border: -webkit-radial-gradient(center bottom, rgba(160, 201, 215, 0.8) 0%, rgba(160, 201, 215, 0) 70%), -webkit-linear-gradient(top, black 0%,#282F44 6%,#2C3551 52%,#354262 91%,#050C54 100%);
 }
 
 .grad-test {

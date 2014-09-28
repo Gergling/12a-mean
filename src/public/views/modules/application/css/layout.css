@@ -1,0 +1,20 @@
+body {
+	background: url(../img/background-metal-aluminium.jpg) center;
+}
+
+#background {
+	background: url(../img/background-space-red-band.jpg) center;
+	width: 800px;
+	height: 500px;
+	margin: 20px auto;
+}
+
+#content {
+	height: inherit;
+	padding: 20px;
+	border: -webkit-radial-gradient(center bottom, rgba(160, 201, 215, 0.8) 0%, rgba(160, 201, 215, 0) 70%), -webkit-linear-gradient(top, black 0%,#282F44 6%,#2C3551 52%,#354262 91%,#050C54 100%);
+}
+
+.grad-test {
+	background: -webkit-radial-gradient(center bottom, rgba(160, 201, 215, 0.8) 0%, rgba(160, 201, 215, 0) 70%), -webkit-linear-gradient(top, black 0%,#282F44 6%,#2C3551 52%,#354262 91%,#050C54 100%);
+}

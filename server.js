@@ -37,10 +37,14 @@ grunt.file.recurse(moduleRoot, function (abs, root, sub) {
         name: name
     };
 });*/
+var schemas = {
+    tbe: require('./src/module/tbe/schema')(mongoose)
+    //tbe: require(modules.tbe.root + '/schema')(mongoose)
+};
 
 var srcModules = {
     tbe: {
-        Battle: require('./src/module/tbe/model/Battle')(),
+        Battle: require('./src/module/tbe/model/Battle')(schemas.tbe),
         Capacitor: require('./src/module/tbe/model/Capacitor')(),
         Context: require('./src/module/tbe/model/Context')()
     }
@@ -59,11 +63,6 @@ grunt.file.expand("./src/module/tbe-contexts/*.js").forEach(function (ctx) {
 console.log(contexts);
 
 //var contexts = require("./src/app/contexts")(grunt, pathService);
-
-var schemas = {
-    tbe: require('./src/module/tbe/schema')(mongoose)
-    //tbe: require(modules.tbe.root + '/schema')(mongoose)
-};
 
 // controllers
 var controllers = {

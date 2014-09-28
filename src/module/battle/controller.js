@@ -33,28 +33,14 @@ module.exports = function (contexts, tbeSchemas, tbe) {
             }
         });
 
-        /*Battle.findOne({}, function (err, battle) {
-            if (!battle) {
-                battle = new Battle({battle_factory: battleFactoryName});
-                battle.save(function (err) {
-                    if (err) {
-                        error({
-                            message: "Error creating battle",
-                            error: err
-                        });
-                    } else {
-                        success(battle);
-                    }
-                });
-            }
-        });*/
-
         // If valid, return 200. If invalid, return appropriate code.
         return { };
     };
-    bc.get = function (player_id) {
+    bc.get = function (player_id, success, error) {
         // Player can only be in one battle at a time, so check it.
         // Get battle state.
+        // Also try to return a delta - showing changes. 
+        // This would make it easier for the front-end to animate changes, rather than reverse engineering.
     };
 
     return bc;

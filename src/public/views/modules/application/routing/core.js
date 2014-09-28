@@ -3,12 +3,21 @@ ngModules.get("application").component(function (ngm, mod) {
 
     ngm.config(['$routeProvider', function ($routeProvider) {
         var getPartialUrl = function (name) {return 'modules/' + mod.getPartialUrl(name); };
-        $routeProvider.when('/', {templateUrl: getPartialUrl('index')});
-        $routeProvider.when('/test/', {templateUrl: 'modules/test/partial/test.html'});
-        $routeProvider.when('/battle/', {templateUrl: 'modules/battle/partial/battle.html'});
-        $routeProvider.otherwise({templateUrl: getPartialUrl('404')});
+
+        var routes = {
+            '/': {partial: getPartialUrl('index')},
+            '/test/': {partial: 'modules/test/partial/test.html'},
+            '/battle/': {partial: 'modules/battle/partial/battle.html'}
+        };
+        angular.forEach(routes, function (obj, route) {
+            obj.templateUrl = getPartialUrl('container');
+            $routeProvider.when(route, obj);
+        });
+        $routeProvider.otherwise({templateUrl: getPartialUrl('container'), partial: getPartialUrl('404')});
     }]);
     ngm.controller(mod.getModuleName("controller", "index"), ["$rootScope", function ($scope) {
-        $scope.stuff = "oi";
+        $scope.$on("$routeChangeStart", function (event, next, current) {
+            $scope.routeTemplateUrl = next.partial;
+        });
     }]);
 });

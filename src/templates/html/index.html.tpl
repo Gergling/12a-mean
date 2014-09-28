@@ -16,20 +16,11 @@
    %><script src='<%- replace(path) %>'></script><%- "\n" %><%
   });
  %>
- <!--<script src="vendor/jquery/jquery.js"></script>
- <script src="vendor/angular/angular.js"></script>
- <script src="vendor/angular-route/angular-route.js"></script>
- <script src="modules/NGModule.js"></script>
- <script src="index.js"></script>
- <script src="modules/application/module.js"></script>
- <script src="modules/application/routing/core.js"></script>
- <script src="modules/test/module.js"></script>
- <script src="modules/test/controller/test1.js"></script>-->
 
  <title>12a MEAN</title>
 
 </head>
 <body data-ng-controller="application.controller.index">
-    <div data-ng-view>(Loading...)</div>
+ <div data-ng-view></div>
 </body>
 </html>

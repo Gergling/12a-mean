@@ -10,8 +10,10 @@ body {
 }
 
 #content {
+	background: url(../img/content-frame.png);
 	height: inherit;
-	padding: 20px;
+	padding: 40px;
+	box-shadow: 5px 5px 2px black;
 }
 
 .grad-test {

@@ -60,12 +60,14 @@ body {
 }
 #nav ul li a {
 	color: #2df;
-}
-#nav ul li a:hover {
-	text-shadow: -1px 1px 8px #ffc, 1px -1px 8px #fff;
+	padding: 10px 0;
+	display: block;
 }
 #nav ul li.active a {
 	color: #fff;
+}
+#nav ul li a:hover {
+	text-shadow: -1px 1px 8px #ffc, 1px -1px 8px #fff;
 }
 
 .bracket {

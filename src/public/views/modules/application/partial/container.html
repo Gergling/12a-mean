@@ -1,11 +1,12 @@
 <div id="all">
     <div id="nav">
         <ul>
-            <li><div class="bracket"></div>Bridge<div class="bracket"></div></li>
-            <li><div component-bracket>Cargo Bay</div></li>
-            <li class="active">[Your workplace]</li>
-            <li>More stuff</li>
-            <li>Other stuff</li>
+            <li data-ng-repeat="item in navigation.list" data-ng-class="{active: item.active}">
+                <div class="stalk"></div>
+                <div component-bracket>
+                    <a href="#/{{item.name}}/">{{item.label}}</a>
+                </div>
+            </li>
         </ul>
     </div>
     <div id="content">
@@ -13,6 +14,4 @@
         <div class="content-column main" data-ng-include="routeTemplateUrl"></div>
         <div class="content-column"></div>
     </div>
-    
-    <div component-bracket data-horizontal="true">Stuff</div>
 </div>

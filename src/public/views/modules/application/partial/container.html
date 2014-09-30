@@ -1,3 +1,18 @@
-<div id="background">
-    <div id="content" data-ng-include="routeTemplateUrl"></div>
+<div id="all">
+    <div id="nav">
+        <ul>
+            <li><div class="bracket"></div>Bridge<div class="bracket"></div></li>
+            <li><div component-bracket>Cargo Bay</div></li>
+            <li class="active">[Your workplace]</li>
+            <li>More stuff</li>
+            <li>Other stuff</li>
+        </ul>
+    </div>
+    <div id="content">
+        <div class="content-column"></div>
+        <div class="content-column main" data-ng-include="routeTemplateUrl"></div>
+        <div class="content-column"></div>
+    </div>
+    
+    <div component-bracket data-horizontal="true">Stuff</div>
 </div>

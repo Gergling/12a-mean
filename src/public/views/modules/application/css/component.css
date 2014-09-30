@@ -1,7 +1,3 @@
-a.glow:hover {
-	color: #fff;
-	text-shadow: -1px 1px 8px #ffc, 1px -1px 8px #fff;
-}
 
 [component-bracket] .bracket {
 	border: solid 4px #2df;

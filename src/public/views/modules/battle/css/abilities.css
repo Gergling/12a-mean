@@ -1,0 +1,22 @@
+[battle-abilities] {
+	position: absolute;
+	bottom: 0;
+}
+[battle-abilities] .left,
+[battle-abilities] .abilities,
+[battle-abilities] .right {
+	display: inline-block;
+}
+[battle-abilities] .abilities {
+	overflow: hidden;
+}
+[battle-abilities] .abilities ul {
+	list-style: none;
+	padding: 0;
+}
+[battle-abilities] .abilities ul li {
+	display: inline-block;
+}
+[battle-abilities] .abilities ul li .bracket-content {
+	padding: 5px;
+}

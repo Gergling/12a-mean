@@ -1,0 +1,15 @@
+<div class="left">
+    <button class="btn-info" data-ng-click="scroll.left();">&lt;</button>
+</div>
+<div class="abilities" style="width: {{scroll.width}}px; height: 30px;">
+    <ul style="margin-left: {{scroll.pixels}}px;">
+        <li style="width: {{width}}px;" data-ng-repeat="ability in abilities">
+            <div component-bracket data-horizontal="true">
+                {{ability.label}}
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="right">
+    <button class="btn-info" data-ng-click="scroll.right();">&gt;</button>
+</div>

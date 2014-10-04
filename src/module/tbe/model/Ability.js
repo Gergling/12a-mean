@@ -1,4 +1,5 @@
-module.exports = function (label, description, props) {
+module.exports = function (label, props) {
     this.label = label;
-    this.description = description;
+    this.description = props.description;
+    this.glyphicon = props.glyphicon || "";
 };

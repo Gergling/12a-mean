@@ -5,7 +5,8 @@
     <ul style="margin-left: {{scroll.pixels}}px;">
         <li style="width: {{width}}px;" data-ng-repeat="ability in abilities" title="{{ability.label}}">
             <div component-bracket data-horizontal="true">
-                O
+                <span data-ng-show="ability.glyphicon" class="glyphicon glyphicon-{{ability.glyphicon}}"></span>
+                <span data-ng-hide="ability.glyphicon">O</span>
             </div>
         </li>
     </ul>

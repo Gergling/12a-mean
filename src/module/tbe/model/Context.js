@@ -46,8 +46,8 @@ module.exports = function () {
         };
 
         this.abilities = { };
-        this.setAbility = function (name, label, description, props) {
-            var ability = new Ability(label, description, props)
+        this.setAbility = function (name, label, props) {
+            var ability = new Ability(label, props)
             scope.abilities[name] = ability;
         };
         this.getAbilities = function () {

@@ -57,78 +57,89 @@ module.exports = function (context, tbe) {
     // - Label
     // - Colour text from the user perspective
     // - Colour text from the target perspective
-    context.setAbility("scan", "Scan",
-        "Scans an area of interest. Increases visibility, decreases target mystery.",
-        {
-            text: {
-                activation: "scan the target"
-            },
-            effects: [
-                {
-                    type: "attack",
-                    capacitor: "mystery",
-                    payload: function () {
-                        // Skills and tool quality are contributors
-                        return 1;
-                    }
+    context.setAbility("scan", "Scan", {
+        glyphicon: "volume-up",
+        text: {
+            action: "scan the target",
+            description: "Scans an area of interest. Increases visibility, decreases target mystery."
+        },
+        effects: [
+            {
+                type: "attack",
+                capacitor: "mystery",
+                payload: function () {
+                    // Skills and tool quality are contributors
+                    return 1;
                 }
-            ]
+            }
+        ]
+    });
+    context.setAbility("stealth", "Enable Cloaking Device", {
+        glyphicon: "adjust",
+        text: {
+            action: "cloak the vessel",
+            description: "Decreases visibility for a period."
         }
-    );
-    context.setAbility("stealth", "cloak the vessel", "Decreases visibility for a period.");
-    context.setAbility("deploy-drones", "Deploy Drones",
-        "send in the drones",
-        "Increases effectiveness of scans while deployed. "
-        + "May need to return with samples or for fuel after a while, "
-        + "depending on area of interest."
-        // Todo: image of drones
-    );
+    });
+    context.setAbility("deploy-drones", "Deploy Drones", {
+        glyphicon: "plane",
+        text: {
+            action: "send in the drones",
+            description: "Increases effectiveness of scans while deployed. "
+            + "May need to return with samples or for fuel after a while, "
+            + "depending on area of interest.",
+        }
+    });
     context.setAbility("analyse", "Analyse Scan Data",
         "analyse the scan data",
         "Opens possible options for other abilities by generating a buff. "
         + "Buff will be consumed by appropriate ability. Find a good name for buff."
-        + "Preferably better than 'analysed'."
-        // Todo: image of 1s and 0s pattern
+        + "Preferably better than 'analysed'.",
+        {glyphicon: "floppy-saved"} // Todo: image of 1s and 0s pattern
     );
-    context.setAbility("renewed-interest", "Renew Interest",
-        // You...
-        "find something interesting",
-        "Heal interest levels. Requires analyse buff. Consumes analyse buff."
-        // Todo: image of a brain being electricuted.
-    );
-
-    context.setAbility("bore", // Can only target characters with interest.
-        // Passive scans...
-        "indicate nothing interesting",
-        "Lowers target's interest rating.",
-        {
-            target: {
-                capacitors: "interest"
-            }
+    context.setAbility("renewed-interest", "Renew Interest", {
+        glyphicon: "eye-open", // Todo: image of a brain being electricuted.
+        text: {
+            action: "find something interesting",
+            description: "Heal interest levels. Requires analyse buff. Consumes analyse buff."
         }
-    );
+    });
+
+    context.setAbility("bore", "Bore", {
+        // Can only target characters with interest.
+        // Passive scans...
+        text: {
+            action: "indicate nothing interesting",
+            description: "Lowers target's interest rating."
+        },
+        target: {
+            capacitors: "interest"
+        }
+    });
     context.setAbility("mysticise", "", "", "",
         {
             target: "self"
             // Function for healing mystery.
-        },
+        }
         // Todo: image of question mark-covered cloud
     );
-    context.setAbility("inconsistent-data", "Data Inconsistency",
-        "show inconsistent data",
-        "Attacks a little of the target's interest. Restores mystery.",
-        {
-            sub: {
-                bore: 0.25,
-                mysticise: 0.75
-            }
-        }
+    context.setAbility("inconsistent-data", "Data Inconsistency", {
         // Todo: image of 1s and 0s, and maybe a 2. Maybe make it red.
-    );
-    context.setAbility("unusual-variables", 
-        "shows unusual variables",
-        "Scans cannot make sense of the mystery"
-    );
+        text: {
+            action: "show inconsistent data",
+            description: "Attacks a little of the target's interest. Restores mystery."
+        },
+        sub: {
+            bore: 0.25,
+            mysticise: 0.75
+        }
+    });
+    context.setAbility("unusual-variables", "Unusual Variables", {
+        text: {
+            action: "shows unusual variables",
+            description: "Scans cannot make sense of the mystery"
+        }
+    });
 
     context.setCharacterDefaults(stats, function () {
         return {

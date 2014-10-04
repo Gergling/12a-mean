@@ -40,7 +40,13 @@ module.exports = function (contexts, tbeSchemas, tbe) {
         // Player can only be in one battle at a time, so check it.
         // Get battle state.
         // Also try to return a delta - showing changes. 
-        // This would make it easier for the front-end to animate changes, rather than reverse engineering.
+        // This would make it easier for the front-end to animate changes,
+            // rather than reverse engineering.
+        var abilities = [ ];
+        abilities.push({label: "andover"});
+        success({
+            abilities: abilities
+        });
     };
 
     return bc;

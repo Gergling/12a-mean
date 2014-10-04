@@ -42,8 +42,7 @@ module.exports = function (contexts, tbeSchemas, tbe) {
         // Also try to return a delta - showing changes. 
         // This would make it easier for the front-end to animate changes,
             // rather than reverse engineering.
-        var abilities = [ ];
-        abilities.push({label: "andover"});
+        var abilities = contexts["space-intel"].getAbilities();
         success({
             abilities: abilities
         });

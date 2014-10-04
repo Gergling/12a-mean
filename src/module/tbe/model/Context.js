@@ -3,6 +3,9 @@ module.exports = function () {
 
     var BattleFactory = require("./BattleFactory"),
         CharacterFactory = require("./CharacterFactory"),
+        Ability = require("./Ability"),
+        Attribute = require("./Attribute"),
+        Capacitor = require("./Capacitor"),
         deepExtend = require("deep-extend");
 
     return function () {
@@ -42,8 +45,25 @@ module.exports = function () {
             console.log("Context::setCorpse needs a body.");
         };
 
-        this.setAbility = function (name, label, props) {
-            console.log("Context::setAbility needs a body.");
+        this.abilities = { };
+        this.setAbility = function (name, label, description, props) {
+            var ability = new Ability(label, description, props)
+            scope.abilities[name] = ability;
+        };
+        this.getAbilities = function () {
+            return scope.abilities;
+        };
+
+        this.attributes = { };
+        this.setAttribute = function (name, description) {
+            var attribute = new Attribute();
+            scope.attributes[name] = attribute;
+        };
+
+        this.capacitors = { };
+        this.setCapacitor = function (name, description) {
+            var capacitor = new Capacitor();
+            scope.capacitors[name] = capacitor;
         };
     };
 };

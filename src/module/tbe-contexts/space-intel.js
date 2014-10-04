@@ -1,15 +1,30 @@
 module.exports = function (context, tbe) {
-    var Capacitor = tbe.Capacitor,
+    var extend = require("deep-extend"), Capacitor = tbe.Capacitor,
         stats = {
             attributes: {
-                patience: 1, // Passively absorbs interest damage. Based on player stats.
-                obscurity: 1 // Passively absorbs mystery damage. Also based on player stats.
+                obscurity: 0 // Passively absorbs mystery damage. Also based on player stats.
             },
             capacitors: {
-                interest: new Capacitor(),
+                energy: new Capacitor(),
+                load: new Capacitor(),
                 mystery: new Capacitor()
             }
         };
+
+    // Setup all possible stats for this context somewhere.
+        // The point is to easily feed in stats.
+    context.setAttribute("patience", "Resistance to reduction of interest.");
+    context.setCapacitor("interest", "How long the entity can hold your attention for.", {
+        dr: "patience"
+    });
+
+    context.setCapacitor("energy", "Available energy for the equipment to use.");
+    context.setCapacitor("load", "Degree of use the processor/memory are getting.");
+
+    context.setAttribute("obscurity", "Slows reduction of mystery.");
+    context.setCapacitor("mystery", "Extent to which the entity is understood.", {
+        dr: "obscurity"
+    });
 
     context.setCorpse("report", "Report", {
         drops: function (args) {
@@ -43,30 +58,70 @@ module.exports = function (context, tbe) {
     // - Colour text from the user perspective
     // - Colour text from the target perspective
     context.setAbility("scan", "Scan",
-        "Scans an area of interest. Increases visibility, decreases target mystery."
+        "Scans an area of interest. Increases visibility, decreases target mystery.",
+        {
+            text: {
+                activation: "scan the target"
+            },
+            effects: [
+                {
+                    type: "attack",
+                    capacitor: "mystery",
+                    payload: function () {
+                        // Skills and tool quality are contributors
+                        return 1;
+                    }
+                }
+            ]
+        }
     );
-    context.setAbility("stealth", "Decreases visibility for a period.");
-    context.setAbility("drones", 
+    context.setAbility("stealth", "cloak the vessel", "Decreases visibility for a period.");
+    context.setAbility("deploy-drones", "Deploy Drones",
+        "send in the drones",
         "Increases effectiveness of scans while deployed. "
-        + "May need to retturn with samples or for fuel after a while, "
+        + "May need to return with samples or for fuel after a while, "
         + "depending on area of interest."
     );
-    context.setAbility("analyse", 
+    context.setAbility("analyse", "Analyse Scan Data",
+        "analyse the scan data",
         "Opens possible options for other abilities by generating a buff. "
         + "Buff will be consumed by appropriate ability. Find a good name for buff."
         + "Preferably better than 'analysed'."
     );
-    context.setAbility("renewed-interest", 
+    context.setAbility("renewed-interest", "Renew Interest",
+        // You...
+        "find something interesting",
         "Heal interest levels. Requires analyse buff. Consumes analyse buff."
     );
 
-    context.setAbility("bore", 
-        "Lowers target's interest rating."
+    context.setAbility("bore", // Can only target characters with interest.
+        // Passive scans...
+        "indicate nothing interesting",
+        "Lowers target's interest rating.",
+        {
+            target: {
+                capacitors: "interest"
+            }
+        }
     );
-    context.setAbility("inconsistent-data", 
-        "Attacks a little of the target's interest. Restores mystery."
+    context.setAbility("mysticise", "", "", "",
+        {
+            target: "self"
+            // Function for healing mystery.
+        }
+    );
+    context.setAbility("inconsistent-data", "Data Inconsistency",
+        "show inconsistent data",
+        "Attacks a little of the target's interest. Restores mystery.",
+        {
+            sub: {
+                bore: 0.25,
+                mysticise: 0.75
+            }
+        }
     );
     context.setAbility("unusual-variables", 
+        "shows unusual variables",
         "Scans cannot make sense of the mystery"
     );
 
@@ -90,6 +145,30 @@ module.exports = function (context, tbe) {
                 death: [spawn] // On death, the random spawn is created in it's place.
             },
             corpse: false // Does not generate a corpse.
+        };
+    });
+
+    context.setCharacterFactory("scanner", stats, function () {
+        // Fix the stats for the scanner based on skills and equipment.
+        return {
+            label: "Scanner",
+            description: "Contains the hardware to scan areas of space."
+        };
+    });
+    context.setCharacterFactory("computer", stats, function () {
+        // Stats based on skills and equipment
+        return {
+            label: "Computer",
+            description: "Machine for analysing scan data."
+        };
+    });
+    context.setCharacterFactory("you", stats, function (cf) {
+        // Stats based on skills
+        cf.setAttribute("patience", 1);
+        cf.setCapacitor("interest", 1); // Passively absorbs interest damage. Based on player stats.
+        return {
+            label: "You",
+            description: "The Intelligence Officer."
         };
     });
 

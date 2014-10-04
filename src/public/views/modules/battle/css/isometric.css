@@ -1,5 +1,8 @@
 .isometric-grid {
 	position: relative;
+	width: 500px;
+	height: 250px;
+	margin: auto;
 }
 .isometric-grid .isometric-square {
 	position: absolute;

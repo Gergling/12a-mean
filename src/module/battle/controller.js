@@ -43,6 +43,7 @@ module.exports = function (contexts, tbeSchemas, tbe) {
         // This would make it easier for the front-end to animate changes,
             // rather than reverse engineering.
         var abilities = contexts["space-intel"].getAbilities();
+        // Todo: List of abilities must be limited to those available to the player.
         success({
             abilities: abilities
         });

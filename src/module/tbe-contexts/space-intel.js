@@ -81,17 +81,20 @@ module.exports = function (context, tbe) {
         "Increases effectiveness of scans while deployed. "
         + "May need to return with samples or for fuel after a while, "
         + "depending on area of interest."
+        // Todo: image of drones
     );
     context.setAbility("analyse", "Analyse Scan Data",
         "analyse the scan data",
         "Opens possible options for other abilities by generating a buff. "
         + "Buff will be consumed by appropriate ability. Find a good name for buff."
         + "Preferably better than 'analysed'."
+        // Todo: image of 1s and 0s pattern
     );
     context.setAbility("renewed-interest", "Renew Interest",
         // You...
         "find something interesting",
         "Heal interest levels. Requires analyse buff. Consumes analyse buff."
+        // Todo: image of a brain being electricuted.
     );
 
     context.setAbility("bore", // Can only target characters with interest.
@@ -108,7 +111,8 @@ module.exports = function (context, tbe) {
         {
             target: "self"
             // Function for healing mystery.
-        }
+        },
+        // Todo: image of question mark-covered cloud
     );
     context.setAbility("inconsistent-data", "Data Inconsistency",
         "show inconsistent data",
@@ -119,6 +123,7 @@ module.exports = function (context, tbe) {
                 mysticise: 0.75
             }
         }
+        // Todo: image of 1s and 0s, and maybe a 2. Maybe make it red.
     );
     context.setAbility("unusual-variables", 
         "shows unusual variables",

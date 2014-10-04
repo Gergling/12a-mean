@@ -12,7 +12,7 @@ var pathService = require("path");
 // configuration ===========================================
 
 // config files
-var db = require('./src/config/db');
+var db = require('./src/module/application/config/db');
 
 //var modules = grunt.file.expand("./src/
 
@@ -60,10 +60,6 @@ grunt.file.expand("./src/module/tbe-contexts/*.js").forEach(function (ctx) {
     contexts[contextName] = require(modulePath)(context, srcModules.tbe);
 });
 
-console.log(contexts);
-
-//var contexts = require("./src/app/contexts")(grunt, pathService);
-
 // controllers
 var controllers = {
     battle: require("./src/module/battle/controller")(contexts, schemas.tbe, srcModules.tbe)
@@ -93,7 +89,7 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static('./src/public/views'));
 
 // routes ==================================================
-require('./src/app/routes')(app, schemas.tbe, controllers, mongoose);
+require('./src/module/application/config/routes')(app, schemas.tbe, controllers, mongoose);
 
 // start app ===============================================
 app.listen(port); // startup our app at http://localhost:8080

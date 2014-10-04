@@ -8,12 +8,14 @@ ngModules.get("battle").component(function (ngm, mod) {
             controller: [
 
                 "$scope",
+                "battle.service.fetch",
 
-                function ($scope) {
-                    $scope.abilities = [ ];
-                    for(var i = 0; i < 10; i++) {
-                        $scope.abilities.push({label: i});
-                    }
+                function ($scope, battleFetcher) {
+                    battleFetcher.state().success(function (response) {
+                        $scope.abilities = response.abilities;
+                    });
+
+                    $scope.abilities = { };
 
                     $scope.scroll = (function () {
                         var ret = {

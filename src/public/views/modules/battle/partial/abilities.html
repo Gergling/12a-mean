@@ -3,9 +3,9 @@
 </div>
 <div class="abilities" style="width: {{scroll.width}}px; height: 30px;">
     <ul style="margin-left: {{scroll.pixels}}px;">
-        <li style="width: {{width}}px;" data-ng-repeat="ability in abilities">
+        <li style="width: {{width}}px;" data-ng-repeat="ability in abilities" title="{{ability.label}}">
             <div component-bracket data-horizontal="true">
-                {{ability.label}}
+                O
             </div>
         </li>
     </ul>

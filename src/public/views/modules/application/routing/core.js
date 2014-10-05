@@ -8,8 +8,12 @@ ngModules.get("application").component(function (ngm, mod) {
             '/': {redirectTo: "/mess/"},
             '/mess/': {partial: getPartialUrl('index'), name: "mess"},
             '/cargo-bay/': {partial: 'modules/test/partial/test.html', name: "cargo-bay"},
-            '/bridge/': {partial: 'modules/battle/partial/battle.html', name: "bridge"}
+            '/bridge/': {partial: 'modules/quest/partial/quests.html', name: "bridge"}
         };
+
+        routes['/bridge/battle/'] = angular.copy(routes['/bridge/']);
+        routes['/bridge/battle/'].partial = "modules/battle/partial/battle.html";
+
         angular.forEach(routes, function (obj, route) {
             obj.templateUrl = getPartialUrl('container');
             $routeProvider.when(route, obj);

@@ -9,23 +9,6 @@ body {
 	padding: 20px;
 }
 
-/*#background {
-	width: 800px;
-	height: 500px;
-	margin: 20px auto;
-	display: table;
-}
-
-.content-row {
-	display: table-cell;
-}
-
-#content {
-	width: 450px;
-	height: inherit;
-	padding: 40px;
-}*/
-
 #nav {
 	position: relative;
 	padding: 4px;
@@ -49,9 +32,6 @@ body {
 }
 #nav ul li .stalk {
 	height: 20px;
-	border-style: solid;
-	border-color: #2df;
-	width: 0;
 	border-width: 0;
 	margin: auto;
 }

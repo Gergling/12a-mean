@@ -3,10 +3,20 @@
 	border-width: 4px;
 	border-bottom-width: 0;
 	border-color: #2df;
-	padding: 20px 0;
+	padding-top: 20px;
 	height: 400px;
 	position: relative;
 }
+.quest-container .corner-left,
+.quest-container .corner-right {
+	background-color: #2df;
+	width: 10px;
+	height: 4px;
+	position: absolute;
+	bottom: 0;
+}
+.quest-container .corner-left {left: 0;}
+.quest-container .corner-right {right: 0;}
 
 .quests .quest {
 	padding-bottom: 10px;
@@ -36,4 +46,7 @@
 
 .quests .list-column [component-bracket] .bracket-content {
 	width: 160px;
+}
+.quests .detail-column [component-bracket] .bracket-content {
+	height: 340px;
 }

@@ -1,6 +1,39 @@
+.quest-container {
+	border-style: solid;
+	border-width: 4px;
+	border-bottom-width: 0;
+	border-color: #2df;
+	padding: 20px 0;
+	height: 400px;
+	position: relative;
+}
+
 .quests .quest {
-	margin-bottom: 10px;
+	padding-bottom: 10px;
 }
 .quests [component-bracket] .bracket-content {
 	padding: 10px;
+}
+
+.quests .list-column {
+	width: 200px;
+}
+.quests .list-column .quest .stalk {
+	border: 0;
+	background-color: transparent;
+	height: 4px;
+	width: 20px;
+}
+.quests .list-column .quest.active .stalk {
+	background-color: #2df;
+}
+.quests .detail-column {
+	width: 500px;
+	right: 20px;
+	top: 0;
+	position: absolute;
+}
+
+.quests .list-column [component-bracket] .bracket-content {
+	width: 160px;
 }

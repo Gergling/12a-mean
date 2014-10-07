@@ -1,5 +1,31 @@
 <div class="quests" data-ng-controller="quest.controller.index">
-    <div class="quest" data-ng-repeat="quest in quests" component-bracket data-horizontal="true">
-        <a href="#/bridge/battle/">{{quest.label}}</a>
+    <div component-bracket>
+        Search/Filter area. This could have a stalk attaching to a quest that's been expanded.
+    </div>
+    <div class="stalk" style="height: 20px; margin: 0 auto;"></div>
+    <div class="quest-container">
+
+        <div class="list-column">
+            <div class="quest" data-ng-repeat="quest in quests">
+                <div style="display: table-cell; vertical-align: middle;">
+                    <div class="stalk"></div>
+                </div>
+                <div style="display: table-cell;">
+                    <div component-bracket data-horizontal="true">
+                        <a href="#/bridge/battle/">{{quest.label}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-column">
+            <div class="stalk" style="height: 20px; margin: 0 auto;"></div>
+            <div component-bracket>
+                Stuff <br>
+                Stuff<br/>
+                More stuff
+            </div>
+        </div>
+
     </div>
 </div>

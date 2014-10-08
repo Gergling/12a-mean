@@ -7,6 +7,7 @@ ngModules.get("quest").component(function (ngm, mod) {
 
         function ($scope) {
             $scope.quests = [
+                {context: "space-intel", type: "emergency", label: "Scan Approaching Object", description: "Something is matching our course and speed. Find out what it is."},
                 {context: "space-intel", type: "buff", label: "Navigation Feed", description: "Offer the navigator an information feed, such that movement space is increased overall."},
                 {context: "space-intel", type: "buff", label: "Tactical Feed", description: "Offer the tactical chief an information feed, such that weapon and defense usage is improved."},
                 {context: "space-intel", type: "buff", label: "Environmental Feed", description: "Setup a general feed of the external environment, such that ship systems can be optimised more efficiently."},

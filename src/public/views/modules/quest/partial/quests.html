@@ -6,13 +6,13 @@
     <div class="quest-container">
 
         <div class="list-column">
-            <div class="quest" data-ng-repeat="quest in quests">
+            <div class="quest" data-ng-repeat="(idx, quest) in quests" data-ng-class="{active: quest.idx === selected.idx}">
                 <div style="display: table-cell; vertical-align: middle;">
                     <div class="stalk"></div>
                 </div>
                 <div style="display: table-cell;">
                     <div component-bracket data-horizontal="true">
-                        <a href="#/bridge/battle/">{{quest.label}}</a>
+                        <div data-ng-click="select(idx);">{{quest.label}}</div>
                     </div>
                 </div>
             </div>
@@ -21,9 +21,7 @@
         <div class="detail-column">
             <div class="stalk" style="height: 20px; margin: 0 auto;"></div>
             <div component-bracket>
-                Stuff <br>
-                Stuff<br/>
-                More stuff
+                {{selected.description || "Select a task to see the description"}}
             </div>
         </div>
 

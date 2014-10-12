@@ -5,10 +5,11 @@ ngModules.get("skill").component(function (ngm, mod) {
 
         "$scope",
         "skill.service.tree",
+        "skill.service.navigation",
 
-        function ($scope, skillTree) {
-            //$scope.breadcrumbs = navigation.
-            $scope.skilltree = skillTree;
+        function ($scope, skillTree, navigation) {
+            $scope.navigation = navigation;
+            $scope.skillTree = skillTree;
             console.log(skillTree);
         }
     ]);

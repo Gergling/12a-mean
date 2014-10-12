@@ -74,8 +74,13 @@ module.exports = function (app, tbeSchemas, controllers, mongoose) {
         }
     });
 
-    // route to handle creating (app.post)
-    // route to handle delete (app.delete)
+    app.get('/skills', function (req, res) {
+        res.send(require("../../skills/config/tree")());
+    });
+
+    //app.get('/quest/:id', function (req, res) {
+        //res.sendFile(req.param("id")
+    //});
 
     // Frontend
     app.get('/', function (req, res) {

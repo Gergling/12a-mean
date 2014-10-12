@@ -14,6 +14,7 @@ ngModules.get("application").component(function (ngm, mod) {
         setNavItem("mess", "Mess");
         setNavItem("bridge", "Bridge");
         setNavItem("cargo-bay", "Cargo Bay");
+        setNavItem("skills", "Skills");
 
         this.setActive = function (name) {
             angular.forEach(scope.list, function (item) {

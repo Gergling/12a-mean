@@ -2,91 +2,102 @@
 // Might also have use for a 'flat tree'.
 // If the whole thing is object oriented in the auto-generated version, the hierarchy can be assembled using references.
 // This way the flat version can be easily assembled, using notations such as 'combat' and 'combat.strategy'.
+// If the structure changes, skills will need to be marked to 'redirect'. Such that players can have all their skills updated.
+// This should only need to happen once every change, on distribution.
+// This will require a script to scan the database for these anomalies.
 
-module.exports = {
-    combat: {
-        description: "Skills in murder when met with resistance",
-        children: {
-            strategy: {
-                description: "Understanding of applied knowledge in combat",
+module.exports = function () {
+    var SkillCollection = require("../model/SkillCollection")(),
+        tree = {
+            combat: {
+                description: "Skills in murder when met with resistance",
                 children: {
-                    weapons: {
+                    strategy: {
+                        description: "Understanding of applied knowledge in combat",
+                        children: {
+                            weapons: {
+                            },
+                            obfuscation: {
+                            }
+                        }
                     },
-                    obfuscation: {
+                    practical: {
+                        description: "Instinctive application of combat skills",
+                        children: {
+                            unarmed: {
+                                description: "The ability to fight without holding weapons"
+                            },
+                            weapons: {
+                                description: "The ability to fight using weapons",
+                                children: {
+                                    mounted: {
+                                        description: "Weapons mounted on a vehicle or turret"
+                                    },
+                                    personnel: {
+                                        description: "Weapons carried by sentient beings"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             },
-            practical: {
-                description: "Instinctive application of combat skills",
+            science: {
+                description: "Understanding of scientific methodology and its products",
                 children: {
-                    unarmed: {
-                        description: "The ability to fight without holding weapons"
+                    model: {
+                        biology: {
+                            xeno: {
+                            }, 
+                            terran: {
+                                animal: {
+                                    mammal: {
+                                        human: 0
+                                    }
+                                }
+                            }
+                        },
+                        physics: {
+                        },
+                        psychology: {
+                        }
                     },
-                    weapons: {
-                        description: "The ability to fight using weapons",
-                        children: {
-                            mounted: {
-                                description: "Weapons mounted on a vehicle or turret"
+                    technology: {
+                        medical: {
+                        },
+                        engineering: {
+                            weapons: {
+                            },
+                            engines: {
+                            },
+                            defenses: {
+                            },
+                            scanners: {
+                            },
+                            environmental: {
                             },
                             personnel: {
-                                description: "Weapons carried by sentient beings"
+                            },
+                            encryption: {
                             }
                         }
                     }
-                }
-            }
-        }
-    },
-    science: {
-        description: "Understanding of scientific methodology and its products",
-        children: {
-            model: {
-                biology: {
-                    xeno: {
-                    }, 
-                    terran: {
-                        animal: {
-                            mammal: {
-                                human: 0
-                            }
-                        }
-                    }
-                },
-                physics: {
-                },
-                psychology: {
                 }
             },
-            practical: {
-                medical: {
-                },
-                engineering: {
-                    weapons: {
-                    },
-                    engines: {
-                    },
-                    defenses: {
-                    },
-                    scanners: {
-                    },
-                    environmental: {
-                    },
-                    personnel: {
-                    },
-                    encryption: {
+            charisma: {
+                description: "An understanding of how to communicate with other sentient beings"
+            },
+            lore: {
+                description: "General Knowledge",
+                children: {
+                    religion: {
                     }
                 }
             }
-        }
-    },
-    charisma: {
-        description: "An understanding of how to communicate with other sentient beings"
-    },
-    lore: {
-        description: "General Knowledge",
-        children: {
-            religion: {
-            }
-        }
-    }
-}
+        },
+        collection = new SkillCollection();
+
+    collection.set(tree);
+
+    return collection;
+};

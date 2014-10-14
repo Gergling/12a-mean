@@ -12,5 +12,6 @@ module.exports = function (SkillCollection) {
                 scope.collection.set(nodeConfig.children);
             }
         };
+        this.getCollection = function () {return scope.collection; };
     };
 };

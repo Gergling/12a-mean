@@ -8,96 +8,41 @@
 
 module.exports = function () {
     var SkillCollection = require("../model/SkillCollection")(),
-        tree = {
-            combat: {
-                description: "Skills in murder when met with resistance",
-                children: {
-                    strategy: {
-                        description: "Understanding of applied knowledge in combat",
-                        children: {
-                            weapons: {
-                            },
-                            obfuscation: {
-                            }
-                        }
-                    },
-                    practical: {
-                        description: "Instinctive application of combat skills",
-                        children: {
-                            unarmed: {
-                                description: "The ability to fight without holding weapons"
-                            },
-                            weapons: {
-                                description: "The ability to fight using weapons",
-                                children: {
-                                    mounted: {
-                                        description: "Weapons mounted on a vehicle or turret"
-                                    },
-                                    personnel: {
-                                        description: "Weapons carried by sentient beings"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            science: {
-                description: "Understanding of scientific methodology and its products",
-                children: {
-                    model: {
-                        biology: {
-                            xeno: {
-                            }, 
-                            terran: {
-                                animal: {
-                                    mammal: {
-                                        human: 0
-                                    }
-                                }
-                            }
-                        },
-                        physics: {
-                        },
-                        psychology: {
-                        }
-                    },
-                    technology: {
-                        medical: {
-                        },
-                        engineering: {
-                            weapons: {
-                            },
-                            engines: {
-                            },
-                            defenses: {
-                            },
-                            scanners: {
-                            },
-                            environmental: {
-                            },
-                            personnel: {
-                            },
-                            encryption: {
-                            }
-                        }
-                    }
-                }
-            },
-            charisma: {
-                description: "An understanding of how to communicate with other sentient beings"
-            },
-            lore: {
-                description: "General Knowledge",
-                children: {
-                    religion: {
-                    }
-                }
-            }
-        },
         collection = new SkillCollection();
 
-    collection.set(tree);
+    //collection.set(tree);
+    collection.setNode("combat").set({description: "Skills in murder when met with resistance"});
+    collection.setNode("combat.strategy").set({description: "Understanding of applied knowledge in combat"});
+    collection.setNode("combat.strategy.weapons");
+    collection.setNode("combat.strategy.obfuscation");
+    collection.setNode("combat.practical").set({description: "Instinctive application of combat skills"});
+    collection.setNode("combat.practical.unarmed").set({description: "The ability to fight without holding weapons"});
+    collection.setNode("combat.practical.weapons").set({description: "The ability to fight using weapons"});
+    collection.setNode("combat.practical.weapons.mounted").set({description: "Weapons mounted on a vehicle or turret"});
+    collection.setNode("combat.practical.weapons.personnel").set({description: "Weapons carried by sentient beings"});
+    collection.setNode("science").set({description: "Understanding of scientific methodology and its products"});
+    collection.setNode("science.model");
+    collection.setNode("science.model.biology");
+    collection.setNode("science.model.biology.xeno");
+    collection.setNode("science.model.biology.terran");
+    collection.setNode("science.model.biology.terran.animal");
+    collection.setNode("science.model.biology.terran.animal.mammal");
+    collection.setNode("science.model.biology.terran.animal.mammal.human");
+    collection.setNode("science.model.physics");
+    collection.setNode("science.model.psychology");
+    collection.setNode("science.technology");
+    collection.setNode("science.technology.medical");
+    collection.setNode("science.technology.engineering");
+    collection.setNode("science.technology.engineering.weapons");
+    collection.setNode("science.technology.engineering.engines");
+    collection.setNode("science.technology.engineering.defenses");
+    collection.setNode("science.technology.engineering.scanners");
+    collection.setNode("science.technology.engineering.environmental");
+    collection.setNode("science.technology.engineering.personnel");
+    collection.setNode("science.technology.engineering.encryption");
+    collection.setNode("charisma").set({description: "An understanding of how to communicate with other sentient beings"});
+    collection.setNode("lore").set({description: "General Knowledge"});
+    collection.setNode("lore.religion");
 
     return collection;
 };

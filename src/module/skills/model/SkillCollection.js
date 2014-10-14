@@ -1,19 +1,48 @@
 module.exports = function () {
-    var SkillNode, SkillCollection = function () {
-        var scope = this;
+    var SkillReference = function (strRef) {
+            var scope = this,
+                chunks = strRef.split("."),
+                name = chunks.shift(),
+                descRef = chunks.join(".");
 
-        this.skills = {};
+            this.getName = function () {return name; };
+            this.getDescendentReference = function () {return descRef; };
+        },
+        SkillNode,
+        SkillCollection = function () {
+            var scope = this;
 
-        this.set = function (configCollection) {
-            var name, configNode;
-            for(name in configCollection) {
-                configNode = configCollection[name];
-                scope.skills[name] = new SkillNode();
-                scope.skills[name].set(name, configNode);
-            }
+            this.skills = { };
+
+            this.setNode = function (reference) {
+                var node = scope.find(reference);
+                if (!node) {
+                    // The node for the reference does not exist.
+                    // Check for the child node
+                    var skillRef = new SkillReference(reference),
+                    var child = scope.find(skillRef.getName());
+                    if (!child) {
+                        // If the child does not exist, create it.
+                        child = new SkillNode(name);
+                        scope.skills[name] = child;
+                    }
+
+                    // Set the node from the child.
+                    node = child.getCollection().setNode(skillRef.getDescendentReference());
+                }
+                return node;
+            };
+            this.find = function (reference) {
+                var node,
+                    skillRef = new SkillReference(reference),
+                    child = scope.skills[skillRef.getName()];
+
+                if (child) {
+                    node = child.getCollection().find(skillRef.getDescendentReference());
+                }
+                return node;
+            };
         };
-        
-    };
 
     SkillNode = require("./SkillNode")(SkillCollection);
 

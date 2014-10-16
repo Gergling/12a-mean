@@ -9,11 +9,11 @@ module.exports = function () {
             this.getDescendentReference = function () {return descRef; };
         };
 
-    var SkillBaseNode = function (extension) {
-        var scope = this;
+    var SkillBaseNode = function (name, extension) {
+        var scope = this,
+            children = { };
 
-        this.children = { };
-
+        this.getName = function () {return name; };
         this.set = function (strRef) {
             return scope.traverse(strRef, false);
         };
@@ -25,24 +25,26 @@ module.exports = function () {
             var reference = new SkillReference(strRef),
                 childName = reference.getName(),
                 descRef = reference.getDescendentReference(),
-                child = scope.children[childName],
-                ext = extension || SkillBaseNode
+                child = children[childName],
+                ext = extension || SkillBaseNode,
                 node;
 
             if (!child) {
                 if (getter) {
-                    throw new Error();
+                    throw new Error("Node named '" + name + "' has no child named '" + childName + "'");
                 } else {
-                    child = new ext(descRef);
-                    scope.children[childName] = child;
+                    child = new ext(childName);
+                    children[childName] = child;
                 }
             }
             if (!descRef) {
                 node = child;
             } else {
-                node = child.traverse(descref, getter);
+                node = child.traverse(descRef, getter);
             }
             return node;
         };
     };
+
+    return SkillBaseNode;
 };

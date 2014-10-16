@@ -12,16 +12,6 @@ module.exports = function () {
     var SkillBaseNode = function (extension) {
         var scope = this;
 
-        this.set = function (name, nodeConfig) {
-            scope.name = name;
-            scope.label = nodeConfig.label || name.charAt(0).toUpperCase() + name.slice(1);
-            scope.description = nodeConfig.description;
-
-            if (nodeConfig.children) {
-                scope.collection.set(nodeConfig.children);
-            }
-        };
-        //this.getCollection = function () {return scope.collection; };
         this.children = { };
 
         this.set = function (strRef) {

@@ -18,6 +18,7 @@
     "grunt-contrib-uglify": "^0.5.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-eol": "^0.2.0",
+    "grunt-jasmine-node": "^0.2.1",
     "grunt-jasmine-runner": "^0.6.0",
     "grunt-jsdoc": "^0.5.6",
     "grunt-jslint": "^1.1.12",

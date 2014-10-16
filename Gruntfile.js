@@ -33,7 +33,7 @@ module.exports = function (grunt) {
             ],
 
             helpers: [ 'src/public_html/vendor/angular-mocks/*.js' ],
-            specs: grunt.file.expand('specs/**/*.js')
+            specs: grunt.file.expand('specs/client/**/*.js')
         },
 
         css = {
@@ -218,7 +218,21 @@ module.exports = function (grunt) {
                 }
             }
         },
-
+        jasmine_node: {
+            options: {
+                matchall: true, // load only specs containing specNameMatcher
+                //projectRoot: ".",
+                //requirejs: false,
+                forceExit: true,
+                jUnit: {
+                    report: false,
+                    savePath : "./build/reports/jasmine/",
+                    useDotNotation: true,
+                    consolidate: true
+                }
+            },
+            all: ['specs/server/']
+        },
         karma: {
             unit: {
                 options: {
@@ -347,6 +361,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-jasmine-node');
 
     // Default task
     grunt.registerTask('default', [ 'build' ]);
@@ -357,7 +372,8 @@ module.exports = function (grunt) {
         'template',    // Populate templates with lists of source files
         'eol',         // Standardise on LF (Unix) line endings
         'clean:junit', // Clean up old test results
-        'jasmine',     // Run unit tests with Jasmine
+        'jasmine_node',// Run server unit tests with Jasmine
+        'jasmine',     // Run client unit tests with Jasmine
         'jslint',      // Check code with JSLint
         'uglify',      // Concatenate and minify code
         'cssmin',      // Concatenate and minify styles

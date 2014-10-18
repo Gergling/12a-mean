@@ -51,6 +51,7 @@ module.exports = function () {
                     + (level / 2)
                     + trainingHours;
             };
+            this.getLevel = function () {return level; };
             this.train = function () {
                 trainingHours += 1;
                 if (trainingHours >= level + 1) {

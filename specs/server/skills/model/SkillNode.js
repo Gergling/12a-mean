@@ -38,6 +38,22 @@ describe("SkillNode class", function () {
     // Test that skill nodes can load in level and hours from database.
     
     // Nodes need to be able to train up hours and levels
+    describe("nodes gain levels when gaining training hours", function () {
+        var root = new SkillNode();
+        describe("#train()", function () {
+            it ("increments training hours by 1", function () {
+                var hoursBefore = root.getTotalTrainingHours(),
+                    hoursAfter;
+                root.train();
+                expect(hoursAfter).toBe(hoursBefore + 1);
+            });
+
+            it("resets to 0 if a level is gained", function () {
+                // Loop until a level is gained, or to a maximum of 100 for safety.
+                // Measure hours continually until level is gained, then exit loop.
+            });
+        });
+    });
     
     // Levels effect neighbouring node levels.
     // Neighbour is at minimum halway between this node and the parent. 

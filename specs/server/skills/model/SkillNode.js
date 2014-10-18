@@ -13,10 +13,9 @@ describe("SkillNode class", function () {
         root = new SkillNode();
     });
     references.forEach(function (reference, idx) {
-        var descendent = root.set(reference.join(".")),
-            ancestorReference = [ ];
-
         it("reference '" + reference.join(".") + "' can be created and its ancestors found", function () {
+            var descendent = root.set(reference.join(".")),
+                ancestorReference = [ ];
 
             expect(descendent.constructor).toBe(SkillNode);
 
@@ -61,26 +60,24 @@ describe("SkillNode class", function () {
     });
 
     // Nodes need to be able to train up hours and levels
-    describe("nodes gain levels when gaining training hours", function () {
-        describe("#train()", function () {
-            it ("increments training hours by 1", function () {
-                var hoursBefore = root.getTotalTrainingHours(),
-                    hoursAfter;
-                root.train();
-                hoursAfter = root.getTotalTrainingHours();
-                expect(hoursAfter).toBe(hoursBefore + 1);
-            });
+    describe("#train()", function () {
+        it ("increments training hours by 1", function () {
+            var hoursBefore = root.getTotalTrainingHours(),
+                hoursAfter;
+            root.train();
+            hoursAfter = root.getTotalTrainingHours();
+            expect(hoursAfter).toBe(hoursBefore + 1);
+        });
 
-            it("requires the level in hours to gain a level and resets the hours to 0", function () {
-                var i, beforeLevel = 0, afterLevel = 0;
-                for(i = 0; i < 100 && beforeLevel === afterLevel; i += 1) {
-                    beforeLevel = root.getLevel();
-                    root.train();
-                    afterLevel = root.getLevel();
-                }
-                expect(afterLevel).toBe(beforeLevel + 1);
-                expect(root.getTrainingHours());
-            });
+        it("requires the level in hours to gain a level and resets the hours to 0", function () {
+            var i, beforeLevel = 0, afterLevel = 0;
+            for(i = 0; i < 100 && beforeLevel === afterLevel; i += 1) {
+                beforeLevel = root.getLevel();
+                root.train();
+                afterLevel = root.getLevel();
+            }
+            expect(afterLevel).toBe(beforeLevel + 1);
+            expect(root.getTrainingHours());
         });
     });
     

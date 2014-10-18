@@ -10,7 +10,9 @@ module.exports = function () {
         },
         SkillNode = function (name) {
             var scope = this,
-                children = { };
+                children = { },
+                trainingHours = 0,
+                level = 0;
 
             this.getName = function () {return name; };
             this.set = function (strRef) {
@@ -41,6 +43,20 @@ module.exports = function () {
                     node = child.traverse(descRef, getter);
                 }
                 return node;
+            };
+
+            this.getTrainingHours = function () {return trainingHours; };
+            this.getTotalTrainingHours = function () {
+                return (Math.pow(level, 2) / 2)
+                    + (level / 2)
+                    + trainingHours;
+            };
+            this.train = function () {
+                trainingHours += 1;
+                if (trainingHours >= level + 1) {
+                    level += 1;
+                    trainingHours -= level;
+                }
             };
         };
 

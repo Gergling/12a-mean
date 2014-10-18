@@ -6,11 +6,14 @@ describe("SkillNode class", function () {
             ["combat"],
             ["combat", "strategy"],
             ["combat", "strategy", "engineering"]
-        ];
+        ],
+        root;
 
+    beforeEach(function () {
+        root = new SkillNode();
+    });
     references.forEach(function (reference, idx) {
-        var root = new SkillNode(),
-            descendent = root.set(reference.join(".")),
+        var descendent = root.set(reference.join(".")),
             ancestorReference = [ ];
 
         it("reference '" + reference.join(".") + "' can be created and its ancestors found", function () {
@@ -37,20 +40,46 @@ describe("SkillNode class", function () {
 
     // Test that skill nodes can load in level and hours from database.
     
+    // Test calculation for hours
+    it("#getTrainingHours() gets the training hours for the current level", function () {
+        expect(root.getTrainingHours()).toBe(0);
+        root.train(); // level 1, 0 hours
+        expect(root.getTrainingHours()).toBe(0);
+        root.train(); // level 1, 1 hour
+        expect(root.getTrainingHours()).toBe(1);
+    });
+
+    // Test calculation for hours
+    it("#getTotalTrainingHours() gets the total of level hours and the current training hours", function () {
+        expect(root.getTotalTrainingHours()).toBe(0);
+        root.train(); // level 1, 0 hours
+        expect(root.getTotalTrainingHours()).toBe(1);
+        root.train(); // level 1, 1 hour
+        expect(root.getTotalTrainingHours()).toBe(2);
+        root.train(); // level 2, 0 hours
+        expect(root.getTotalTrainingHours()).toBe(3);
+    });
+
     // Nodes need to be able to train up hours and levels
     describe("nodes gain levels when gaining training hours", function () {
-        var root = new SkillNode();
         describe("#train()", function () {
             it ("increments training hours by 1", function () {
                 var hoursBefore = root.getTotalTrainingHours(),
                     hoursAfter;
                 root.train();
+                hoursAfter = root.getTotalTrainingHours();
                 expect(hoursAfter).toBe(hoursBefore + 1);
             });
 
-            it("resets to 0 if a level is gained", function () {
-                // Loop until a level is gained, or to a maximum of 100 for safety.
-                // Measure hours continually until level is gained, then exit loop.
+            it("requires the level in hours to gain a level and resets the hours to 0", function () {
+                var i, beforeLevel = 0, afterLevel = 0;
+                for(i = 0; i < 100 && beforeLevel === afterLevel; i += 1) {
+                    beforeLevel = root.getLevel();
+                    root.train();
+                    afterLevel = root.getLevel();
+                }
+                expect(afterLevel).toBe(beforeLevel + 1);
+                expect(root.getTrainingHours());
             });
         });
     });

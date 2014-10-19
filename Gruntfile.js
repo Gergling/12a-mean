@@ -33,7 +33,9 @@ module.exports = function (grunt) {
             ],
 
             helpers: [ 'src/public_html/vendor/angular-mocks/*.js' ],
-            specs: grunt.file.expand('specs/client/**/*.js')
+            specs: grunt.file.expand('specs/client/**/*.js'),
+            specsClient: grunt.file.expand('specs/client/**/*.js'),
+            specsServer: grunt.file.expand('specs/server/**/*.js')
         },
 
         css = {
@@ -314,14 +316,19 @@ module.exports = function (grunt) {
             },
             gruntfile: {
                 files: [ 'Gruntfile.js' ],
-                tasks: [ 'jslint' ]
+                tasks: [ 'jslint:grunt' ]
             },
-            src: {
+            client: {
+                files: [ ]
+                    .concat(paths.client)
+                    .concat(paths.specsClient),
+                tasks: [ 'template:dev', 'jasmine', 'jslint:client' ]
+            },
+            server: {
                 files: [ ]
                     .concat(paths.server)
-                    .concat(paths.client)
-                    .concat(paths.specs),
-                tasks: [ 'template:dev', 'jasmine', 'jslint' ]
+                    .concat(paths.specsServer),
+                tasks: [ 'jasmine_node', 'jslint:server' ]
             },
             jsdoc: {
                 files: 'src/public/view/modules/*.js',

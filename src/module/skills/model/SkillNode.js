@@ -1,5 +1,6 @@
 module.exports = function () {
-    var SkillReference = function (strRef) {
+    var extend = require("deep-extend"),
+        SkillReference = function (strRef) {
             var scope = this,
                 chunks = strRef.split("."),
                 name = chunks.shift(),
@@ -8,11 +9,15 @@ module.exports = function () {
             this.getName = function () {return name; };
             this.getDescendentReference = function () {return descRef; };
         },
-        SkillNode = function (name) {
+        SkillNode = function (name, props) {
             var scope = this,
                 children = { },
                 trainingHours = 0,
                 level = 0;
+
+            props = extend({
+                description: ""
+            }, props);
 
             this.getName = function () {return name; };
             this.set = function (strRef) {
@@ -43,6 +48,19 @@ module.exports = function () {
                     node = child.traverse(descRef, getter);
                 }
                 return node;
+            };
+            this.getTree = function () {
+                var tree = {
+                    name: name,
+                    description: props.description,
+                    trainingHours: trainingHours,
+                    level: level,
+                    children: {}
+                };
+                Object.keys(children).forEach(function (childName) {
+                    tree.children[childName] = children[childName].getTree();
+                });
+                return tree;
             };
 
             this.getTrainingHours = function () {return trainingHours; };

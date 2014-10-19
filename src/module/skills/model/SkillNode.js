@@ -1,8 +1,9 @@
 module.exports = function () {
+    "use strict";
+
     var extend = require("deep-extend"),
         SkillReference = function (strRef) {
-            var scope = this,
-                chunks = strRef.split("."),
+            var chunks = strRef.split("."),
                 name = chunks.shift(),
                 descRef = chunks.join(".");
 
@@ -36,11 +37,13 @@ module.exports = function () {
 
                 if (!child) {
                     if (getter) {
-                        throw new Error("Node named '" + name + "' has no child named '" + childName + "'");
-                    } else {
-                        child = new SkillNode(childName);
-                        children[childName] = child;
+                        throw new Error("Node named '"
+                            + name
+                            + "' has no child named '"
+                            + childName + "'");
                     }
+                    child = new SkillNode(childName);
+                    children[childName] = child;
                 }
                 if (!descRef) {
                     node = child;

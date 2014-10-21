@@ -32,7 +32,7 @@ module.exports = function (grunt) {
                 'src/template/*.js'
             ],
 
-            helpers: [ 'src/public_html/vendor/angular-mocks/*.js' ],
+            helpers: [ 'src/public/views/vendor/angular-mocks/*.js' ],
             specs: grunt.file.expand('specs/client/**/*.js'),
             specsClient: grunt.file.expand('specs/client/**/*.js'),
             specsServer: grunt.file.expand('specs/server/**/*.js')
@@ -235,7 +235,7 @@ module.exports = function (grunt) {
             },
             all: ['specs/server/']
         },
-        karma: {
+        /*karma: {
             unit: {
                 options: {
                     frameworks: [ 'jasmine' ],
@@ -251,7 +251,7 @@ module.exports = function (grunt) {
                     singleRun: false
                 }
             }
-        },
+        },*/
 
         uglify: {
             vendor: {
@@ -361,7 +361,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-template');
     grunt.loadNpmTasks('grunt-eol');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
-    grunt.loadNpmTasks('grunt-karma');
+    //grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');

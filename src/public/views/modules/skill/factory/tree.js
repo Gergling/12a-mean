@@ -8,61 +8,65 @@ ngModules.get("skill").component(function (ngm, mod) {
         function (Restangular) {
             var skills = Restangular.one("skills"),
                 scope = this,
-                fetch = function () {
-                    scope.loading = true;
-                    skills.get().then(function (tree) {
-                        scope.loading = false;
-                        scope.root.set(tree);
+                SkillNode = function (props) {
+                    var name = props.name,
+                        description = props.description,
+                        level = props.level,
+                        trainingHours = props.trainingHours,
+                        children = { };
+
+                    angular.forEach(props.children, function (childData) {
+                        children[childData.name] = new SkillNode(childData);
                     });
-                },
-                SkillCollection = function () {
-                    var scope = this;
-                    this.skills = { };
-                    this.set = function (skills) {
-                        var name, configNode;
-                        for(name in skills) {
-                            configNode = skills[name];
-                            if (configNode) {
-                                scope.skills[name] = new SkillNode();
-                                scope.skills[name].set(name, configNode);
-                            }
+
+                    this.name = function () {return name; };
+                    this.description = function () {return description; };
+                    this.level = function () {return level; };
+                    this.getProgress = function () {
+                        var progress = 0;
+                        if (level > 0) {
+                            progress = trainingHours * 100 / level;
                         }
+                        return progress;
                     };
+                    this.getChildren = function () {return children; };
+
                     this.find = function (reference) {
-                        var name = reference.shift(),
+                        //var childName = reference.slice(0).shift(),
+                        var childName = reference.shift(),
+                            child = children[childName],
                             node;
                         if (reference.length > 1) {
-                            if (scope.skills[name]) {
-                                node = scope.skills[name].collection.find(reference);
+                            if (child) {
+                                node = child.find(reference);
                             } else {
                                 throw new Error("skill.service.tree: No such skill '" + reference.join(".") + "'");
                             }
                         } else {
-                            node = scope.skills[name]
+                            node = child;
                         }
 
                         return node;
                     };
                 },
-                SkillNode = function () {
-                    this.collection = new SkillCollection();
-
-                    this.set = function (name, nodeConfig) {
-                        scope.name = name;
-                        scope.label = nodeConfig.label || name.charAt(0).toUpperCase() + name.slice(1);
-                        scope.description = nodeConfig.description;
-
-                        if (nodeConfig.skills) {
-                            scope.collection.set(nodeConfig.skills);
-                        }
-                    };
+                fetch = function () {
+                    scope.loading = true;
+                    skills.get().then(function (tree) {
+                        console.log(tree);
+                        scope.loading = false;
+                        scope.loaded = true;
+                        scope.root = new SkillNode({children: tree});
+                    });
                 };
 
             this.loading = false;
-            this.root = new SkillCollection();
+            this.loaded = false;
+            //this.root = new SkillNode();
 
             this.get = function (reference) {
-                return scope.root.find(reference);
+                var node = scope.root.find(reference);
+                console.log(reference, node);
+                return node;
             };
 
             fetch();

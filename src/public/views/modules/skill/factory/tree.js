@@ -9,7 +9,7 @@ ngModules.get("skill").component(function (ngm, mod) {
             var skills = Restangular.one("skills"),
                 scope = this,
                 SkillNode = function (props) {
-                    var name = props.name,
+                    var name = props.name || "",
                         description = props.description,
                         level = props.level,
                         trainingHours = props.trainingHours,
@@ -52,10 +52,10 @@ ngModules.get("skill").component(function (ngm, mod) {
                 fetch = function () {
                     scope.loading = true;
                     skills.get().then(function (tree) {
-                        console.log(tree);
+                        console.log(1, tree.children);
                         scope.loading = false;
                         scope.loaded = true;
-                        scope.root = new SkillNode({children: tree});
+                        scope.root = new SkillNode({children: tree.children});
                     });
                 };
 
@@ -65,7 +65,7 @@ ngModules.get("skill").component(function (ngm, mod) {
 
             this.get = function (reference) {
                 var node = scope.root.find(reference);
-                console.log(reference, node);
+                console.log(2, reference, node);
                 return node;
             };
 

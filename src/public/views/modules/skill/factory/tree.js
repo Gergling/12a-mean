@@ -3,25 +3,29 @@ ngModules.get("skill").component(function (ngm, mod) {
 
     ngm.service(mod.getModuleName("service", "tree"), [
 
+        "$q",
         "Restangular",
 
-        function (Restangular) {
+        function ($q, Restangular) {
             var skills = Restangular.one("skills"),
                 scope = this,
+                deferred = $q.defer(),
                 SkillNode = function (props) {
-                    var name = props.name || "",
-                        description = props.description,
-                        level = props.level,
-                        trainingHours = props.trainingHours,
-                        children = { };
+                    var snScope = this;
+                    this.name = "root";
+                    angular.forEach(props, function (prop, name) {
+                        snScope[name] = prop;
+                    });
+                    snScope.children = { };
+                    if (snScope.parentUrl) {
+                        snScope.url = snScope.parentUrl + props.name + "/";
+                    }
 
                     angular.forEach(props.children, function (childData) {
-                        children[childData.name] = new SkillNode(childData);
+                        childData.parentUrl = snScope.url;
+                        snScope.children[childData.name] = new SkillNode(childData);
                     });
 
-                    this.name = function () {return name; };
-                    this.description = function () {return description; };
-                    this.level = function () {return level; };
                     this.getProgress = function () {
                         var progress = 0;
                         if (level > 0) {
@@ -29,14 +33,13 @@ ngModules.get("skill").component(function (ngm, mod) {
                         }
                         return progress;
                     };
-                    this.getChildren = function () {return children; };
 
                     this.find = function (reference) {
-                        //var childName = reference.slice(0).shift(),
                         var childName = reference.shift(),
-                            child = children[childName],
+                            child = snScope.children[childName],
                             node;
-                        if (reference.length > 1) {
+
+                        if (reference.length) {
                             if (child) {
                                 node = child.find(reference);
                             } else {
@@ -52,20 +55,22 @@ ngModules.get("skill").component(function (ngm, mod) {
                 fetch = function () {
                     scope.loading = true;
                     skills.get().then(function (tree) {
-                        console.log(1, tree.children);
                         scope.loading = false;
                         scope.loaded = true;
-                        scope.root = new SkillNode({children: tree.children});
+                        scope.root = new SkillNode({children: tree.children, url: "#/skills/"});
+                        deferred.resolve(scope.root);
                     });
                 };
 
             this.loading = false;
             this.loaded = false;
-            //this.root = new SkillNode();
+            this.promise = function () {return deferred.promise; };
 
             this.get = function (reference) {
-                var node = scope.root.find(reference);
-                console.log(2, reference, node);
+                var node;
+                if (scope.root) {
+                    node = scope.root.find(reference);
+                }
                 return node;
             };
 

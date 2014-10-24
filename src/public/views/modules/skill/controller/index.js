@@ -9,8 +9,6 @@ ngModules.get("skill").component(function (ngm, mod) {
 
         function ($scope, skillTree, navigation) {
             $scope.navigation = navigation;
-            $scope.skillTree = skillTree;
-            console.log(skillTree);
         }
     ]);
 });

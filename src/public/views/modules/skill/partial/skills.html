@@ -1,18 +1,22 @@
 <div data-ng-controller="skill.controller.index">
 
     <div class="breadcrumbs">
-        
-        <div component-bracket data-horizontal="true">Root</div>
-        <div component-bracket data-horizontal="true">Parent</div>
-        <div component-bracket data-horizontal="true">Skill</div>
-        <div component-bracket data-horizontal="true">{{navigation.breadcrumbs}}</div>
+        <div component-bracket 
+            data-horizontal="true"
+            data-ng-repeat="breadcrumb in navigation.breadcrumbs">
+            <a href="{{breadcrumb.url}}">{{breadcrumb.label}}</a>
+        </div>
     </div>
 
-    <div component-bracket class="description">
-        Description
+    <div component-bracket class="description" data-ng-hide="navigation.skill.name === 'root'">
+        {{navigation.skill.description}}
     </div>
 
-    <div component-bracket class="description">
-        Children
+    <div component-bracket class="children">
+        <div component-bracket 
+            data-horizontal="true"
+            data-ng-repeat="child in navigation.skill.children">
+            <a href="{{child.url}}">{{child.label}}</a>
+        </div>
     </div>
 </div>

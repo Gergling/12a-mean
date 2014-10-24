@@ -58,8 +58,12 @@ module.exports = function () {
                     description: props.description,
                     trainingHours: trainingHours,
                     level: level,
+                    label: "",
                     children: {}
                 };
+                if (name) {
+                    tree.label = name.charAt(0).toUpperCase() + name.slice(1);
+                }
                 Object.keys(children).forEach(function (childName) {
                     tree.children[childName] = children[childName].getTree();
                 });
@@ -79,6 +83,10 @@ module.exports = function () {
                     level += 1;
                     trainingHours -= level;
                 }
+            };
+
+            this.load = function (model) {
+                
             };
         };
 

@@ -9,45 +9,28 @@ ngModules.get("skill").component(function (ngm, mod) {
             var path, scope = this;
 
             this.setPath = function (newPath) {
-                console.log(newPath);
                 path = newPath;
-                scope.breadcrumbs = [ {name: "root", label: "Root"} ];
-                if (path) {
-                    var breadcrumbNames = path.split("/"),
-                        reference = [ ];
+                scope.breadcrumbs = [ {name: "root", label: "Skills", url: "#/skills/"} ];
+                tree.promise().then(function () {
+                    if (path) {
+                        var breadcrumbNames = path.split("/"),
+                            reference = [ ];
 
-                    console.log(breadcrumbNames);
-                    angular.forEach(breadcrumbNames, function (name) {
-                        if (name) {
-                            console.log(name);
-                            reference.push(name);
-                            console.log(1, reference);
-                            try {
-                                var node = tree.get(reference);
-                                console.log(3, node);
+                        angular.forEach(breadcrumbNames, function (name) {
+                            var node;
+                            if (name) {
+                                reference.push(name);
+                                node = tree.get(angular.copy(reference));
+                                node.description = "(This skill has no description. Maybe it's just too abstract to understand.)";
                                 scope.breadcrumbs.push(node);
-                            } catch (e) {
-                                
+                                scope.skill = node;
                             }
-                        }
-                        console.log(scope.breadcrumbs);
-                    });
-                }
-            };
-
-            /*this.getBreadcrumbNames = function () {
-                var names = [ ];
-                angular.forEach(scope.breadcrumbs, function (breadcrumb) {
-                    names.push(breadcrumb.name);
+                        });
+                    } else {
+                        scope.skill = tree.root;
+                    }
                 });
-                return names;
-            };*/
-
-            //this.getSkillName = function
-            //this.breadcrumbs = [ ];
-            // Set breadcrumbs according to ancestor skills.
-            // Set node. Get children from node.
-            
+            };            
         }
     ]);
 });

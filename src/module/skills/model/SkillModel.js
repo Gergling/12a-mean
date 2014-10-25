@@ -1,13 +1,16 @@
 module.exports = function () {
     "use strict";
 
-    var mongoose = require("mongoose")
-        SkillModel = mongoose.Schema({
-            name: String,
-            level: Number,
-            trainingHours: Number,
-            children: [ SkillModel ]
-        });
+    var mongoose = require("mongoose"),
+        SkillSchema;
 
-    return mongoose.model("Skill", SkillModel)
+    SkillSchema = mongoose.Schema({
+        name: String,
+        level: Number,
+        trainingHours: Number,
+        lastTrained: Date,
+        children: [ SkillSchema ]
+    });
+
+    return mongoose.model("Skill", SkillSchema);
 };

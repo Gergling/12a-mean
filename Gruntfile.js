@@ -223,8 +223,6 @@ module.exports = function (grunt) {
         jasmine_node: {
             options: {
                 matchall: true, // load only specs containing specNameMatcher
-                //projectRoot: ".",
-                //requirejs: false,
                 forceExit: true,
                 jUnit: {
                     report: false,
@@ -235,23 +233,6 @@ module.exports = function (grunt) {
             },
             all: ['specs/server/']
         },
-        /*karma: {
-            unit: {
-                options: {
-                    frameworks: [ 'jasmine' ],
-                    files: [ ]
-                        .concat(paths.vendor)
-                        .concat(paths.helpers)
-                        .concat(paths.scripts)
-                        .concat(paths.specs),
-                    logLevel: 'INFO',
-                    autoWatch: true,
-                    browsers: [ 'PhantomJS' ],
-                    captureTimeout: 60000,
-                    singleRun: false
-                }
-            }
-        },*/
 
         uglify: {
             vendor: {

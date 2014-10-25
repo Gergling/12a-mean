@@ -10,17 +10,23 @@ module.exports = function () {
             this.getName = function () {return name; };
             this.getDescendentReference = function () {return descRef; };
         },
-        SkillNode = function (name, props) {
+        SkillNode = function (name) {
             var scope = this,
                 children = { },
                 trainingHours = 0,
-                level = 0;
-
-            props = extend({
-                description: ""
-            }, props);
+                level = 0,
+                description = "",
+                model;
 
             this.getName = function () {return name; };
+            this.description = function (desc) {
+                if (typeof desc === "string") {description = desc; }
+                return description;
+            };
+            this.getChild = function (childName) {
+                return children[childName];
+            };
+            this.children = function () {return children; };
             this.set = function (strRef) {
                 return scope.traverse(strRef, false);
             };
@@ -55,7 +61,7 @@ module.exports = function () {
             this.getTree = function () {
                 var tree = {
                     name: name,
-                    description: props.description,
+                    description: scope.description,
                     trainingHours: trainingHours,
                     level: level,
                     label: "",
@@ -76,6 +82,14 @@ module.exports = function () {
                     + (level / 2)
                     + trainingHours;
             };
+            this.getTotalDescendentTrainingHours = function () {
+                var hours = scope.getTotalTrainingHours();
+                Object.keys(children).forEach(function (childName) {
+                    hours += scope.getChild(childName)
+                        .getTotalDescendentTrainingHours();
+                });
+                return hours;
+            };
             this.getLevel = function () {return level; };
             this.train = function () {
                 trainingHours += 1;
@@ -85,7 +99,31 @@ module.exports = function () {
                 }
             };
 
-            this.load = function (model) {
+            this.load = function (newModel) {
+                model = newModel;
+                trainingHours = model.trainingHours || 0;
+                level = model.level || 0;
+                model.children.forEach(function (childModel) {
+                    var childName = childModel.name,
+                        child = scope.getChild(childName),
+                        hours = 0;
+
+                    if (child) {
+                        child.load(childModel);
+                    } else {
+                        // Not an official child. 
+                        // Maybe skills have restructured.
+                        // Add the total descendent training 
+                        // hours to the player total.
+                        hours = scope.getTotalDescendentTrainingHours();
+                        // Load player model.
+                        // Add training hours.
+                        // Save player model.
+                        // Remove the child skill model.
+                    }
+                });
+            };
+            this.save = function () {
                 
             };
         };

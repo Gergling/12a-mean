@@ -7,10 +7,15 @@ describe("SkillNode class", function () {
             ["combat", "strategy"],
             ["combat", "strategy", "engineering"]
         ],
-        root;
+        root,
+        setup = function () {
+            references.forEach(function (reference, idx) {
+                root.set(reference.join("."));
+            });
+        };
 
     beforeEach(function () {
-        root = new SkillNode();
+        root = new SkillNode("root");
     });
     references.forEach(function (reference, idx) {
         it("reference '" + reference.join(".") + "' can be created and its ancestors found", function () {
@@ -38,6 +43,34 @@ describe("SkillNode class", function () {
     });
 
     // Test that skill nodes can load in level and hours from database.
+    describe("#load(model)", function () {
+        var NodeModel = function (name, level, hours, children) {
+                this.name = name;
+                this.level = level;
+                this.trainingHours = hours;
+                this.children = children || [ ];
+            },
+            model = new NodeModel("root", 0, 0, [
+                new NodeModel("combat", 2, 1, [
+                    new NodeModel("strategy", 4, 2),
+                    new NodeModel("junk", 6, 3)
+                ])
+            ]);
+
+        beforeEach(function () {
+            setup();
+            root.load(model);
+        });
+
+        it("loads in the model and all child models", function () {
+            var combatNode = root.find("combat"),
+                strategyNode = root.find("combat.strategy");
+            expect(combatNode.getLevel()).toBe(2);
+            expect(combatNode.getTrainingHours()).toBe(1);
+            expect(strategyNode.getLevel()).toBe(4);
+            expect(strategyNode.getTrainingHours()).toBe(2);
+        });
+    });
     
     // Test calculation for hours
     it("#getTrainingHours() gets the training hours for the current level", function () {
@@ -57,6 +90,27 @@ describe("SkillNode class", function () {
         expect(root.getTotalTrainingHours()).toBe(2);
         root.train(); // level 2, 0 hours
         expect(root.getTotalTrainingHours()).toBe(3);
+    });
+
+    describe("#getTotalDescendentTrainingHours()", function () {
+        beforeEach(setup);
+
+        it("gets the node's #getTotalTrainingHours() and that of every child", function () {
+            var combatNode = root.find("combat"),
+                strategyNode = root.find("combat.strategy");
+
+            root.train();
+            expect(root.getTotalDescendentTrainingHours()).toBe(1);
+
+            combatNode.train();
+            expect(root.getTotalTrainingHours()).toBe(1);
+            expect(root.getTotalDescendentTrainingHours()).toBe(2);
+
+            strategyNode.train();
+            expect(root.getTotalTrainingHours()).toBe(1);
+            expect(root.getTotalDescendentTrainingHours()).toBe(3);
+            expect(combatNode.getTotalDescendentTrainingHours()).toBe(2);
+        });
     });
 
     // Nodes need to be able to train up hours and levels

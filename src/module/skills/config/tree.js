@@ -2,7 +2,7 @@ module.exports = function () {
     "use strict";
 
     var SkillNode = require("../model/SkillNode")(),
-        root = new SkillNode();
+        root = new SkillNode("root");
 
     root.set("combat", {
         description: "Skills in murder when met with resistance"

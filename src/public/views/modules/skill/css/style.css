@@ -1,0 +1,15 @@
+.skills-view > * {
+	margin-bottom: 20px;
+}
+
+.skills-view .skill-name {
+	float: left;
+	margin-right: 10px;
+}
+.skills-view .skill-name .bracket-content {
+	padding: 10px;
+}
+.skills-view .children-container,
+.skills-view .description-container {
+	padding: 20px;
+}

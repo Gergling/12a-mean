@@ -1,22 +1,35 @@
-<div data-ng-controller="skill.controller.index">
+<div data-ng-controller="skill.controller.index" class="skills-view">
 
     <div class="breadcrumbs">
+        <div style="
+            border-bottom: solid 4px #2df;
+            height: 20px;
+        "></div>
         <div component-bracket 
             data-horizontal="true"
-            data-ng-repeat="breadcrumb in navigation.breadcrumbs">
+            data-ng-repeat="breadcrumb in navigation.breadcrumbs"
+            style="margin-top: -20px; background-color: #444;"
+            class="skill-name">
             <a href="{{breadcrumb.url}}">{{breadcrumb.label}}</a>
         </div>
+        <div style="clear: both;"></div>
     </div>
 
     <div component-bracket class="description" data-ng-hide="navigation.skill.name === 'root'">
-        {{navigation.skill.description}}
+        <div class="description-container">
+            {{navigation.skill.description}}
+        </div>
     </div>
 
     <div component-bracket class="children">
-        <div component-bracket 
-            data-horizontal="true"
-            data-ng-repeat="child in navigation.skill.children">
-            <a href="{{child.url}}">{{child.label}}</a>
+        <div class="children-container">
+            <div component-bracket 
+                data-horizontal="true"
+                data-ng-repeat="child in navigation.skill.children"
+                class="skill-name">
+                <a href="{{child.url}}">{{child.label}}</a>
+            </div>
+            <div style="clear: both;"></div>
         </div>
     </div>
 </div>

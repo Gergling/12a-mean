@@ -30,7 +30,7 @@ ngModules.get("skill").component(function (ngm, mod) {
                         scope.skill = tree.root;
                     }
                 });
-            };            
+            };
         }
     ]);
 });

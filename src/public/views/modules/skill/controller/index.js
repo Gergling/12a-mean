@@ -4,10 +4,9 @@ ngModules.get("skill").component(function (ngm, mod) {
     ngm.controller(mod.getModuleName("controller", "index"), [
 
         "$scope",
-        "skill.service.tree",
         "skill.service.navigation",
 
-        function ($scope, skillTree, navigation) {
+        function ($scope, navigation) {
             $scope.navigation = navigation;
         }
     ]);

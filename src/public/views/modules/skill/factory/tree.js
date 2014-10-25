@@ -28,8 +28,8 @@ ngModules.get("skill").component(function (ngm, mod) {
 
                     this.getProgress = function () {
                         var progress = 0;
-                        if (level > 0) {
-                            progress = trainingHours * 100 / level;
+                        if (snScope.level > 0) {
+                            progress = snScope.trainingHours * 100 / snScope.level;
                         }
                         return progress;
                     };

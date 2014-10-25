@@ -65,13 +65,21 @@ describe("SkillNode class", function () {
         it("loads in the model and all child models", function () {
             var combatNode = root.find("combat"),
                 strategyNode = root.find("combat.strategy");
+
             expect(combatNode.getLevel()).toBe(2);
             expect(combatNode.getTrainingHours()).toBe(1);
             expect(strategyNode.getLevel()).toBe(4);
             expect(strategyNode.getTrainingHours()).toBe(2);
         });
     });
-    
+
+    describe("#description(description)", function () {
+        it("sets and gets the description", function () {
+            root.set("combat", {description: "wombat"});
+            expect(root.find("combat").description()).toBe("wombat");
+        });
+    });
+
     // Test calculation for hours
     it("#getTrainingHours() gets the training hours for the current level", function () {
         expect(root.getTrainingHours()).toBe(0);

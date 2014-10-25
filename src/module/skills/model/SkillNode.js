@@ -27,8 +27,12 @@ module.exports = function () {
                 return children[childName];
             };
             this.children = function () {return children; };
-            this.set = function (strRef) {
-                return scope.traverse(strRef, false);
+            this.set = function (strRef, props) {
+                var node = scope.traverse(strRef, false);
+                if (props) {
+                    node.description(props.description || "");
+                }
+                return node;
             };
             this.find = function (strRef) {
                 return scope.traverse(strRef, true);
@@ -61,7 +65,7 @@ module.exports = function () {
             this.getTree = function () {
                 var tree = {
                     name: name,
-                    description: scope.description,
+                    description: scope.description(),
                     trainingHours: trainingHours,
                     level: level,
                     label: "",

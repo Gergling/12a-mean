@@ -21,7 +21,7 @@ ngModules.get("skill").component(function (ngm, mod) {
                             if (name) {
                                 reference.push(name);
                                 node = tree.get(angular.copy(reference));
-                                node.description = "(This skill has no description. Maybe it's just too abstract to understand.)";
+                                node.description = node.description || "(This skill has no description. Maybe it's just too abstract to understand.)";
                                 scope.breadcrumbs.push(node);
                                 scope.skill = node;
                             }

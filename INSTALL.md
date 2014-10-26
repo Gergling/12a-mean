@@ -14,3 +14,8 @@ Run:
 'node server.js' runs the server side.
 
 Browse to http://localhost:8080/.
+
+Windows
+-------
+
+Windows developers will require msysgit (http://msysgit.github.io/) to run grunt and bower.

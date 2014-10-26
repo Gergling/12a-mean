@@ -6,9 +6,7 @@ Download and install nodejs.
 Run:
 
     make
-
     grunt
-
     node server.js
 
 'make' runs 'npm install'.

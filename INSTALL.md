@@ -5,9 +5,9 @@ Download and install nodejs.
 
 Run:
 
-  make
+    make
 
-  grunt
+    grunt
 
 'make' runs 'npm install'.
 'grunt' runs the bower downloads and builds the templates.

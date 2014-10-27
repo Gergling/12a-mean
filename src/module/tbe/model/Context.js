@@ -11,7 +11,10 @@ module.exports = function () {
     return function () {
         var scope = this,
             characterFactories = { },
-            battleFactories = { };
+            battleFactories = { },
+            abilities = { },
+            abilityRegister = function () {return true; };
+
         this.defaults = {
             stats: { },
             generator: function () {return { }; }
@@ -45,14 +48,23 @@ module.exports = function () {
             console.log("Context::setCorpse needs a body.");
         };
 
-        this.abilities = { };
-        this.setAbility = function (name, label, props) {
-            var ability = new Ability(label, props)
-            scope.abilities[name] = ability;
+        this.ability = function (name, label, props) {
+            if (label) {
+                abilities[name] = new Ability(label, props);
+            }
+            return abilities[name];
         };
-        this.getAbilities = function () {
-            return scope.abilities;
+        this.abilities = function () {
+            var unlocked = { };
+            Object.keys(abilities).forEach(function (abilityName) {
+                if (scope.abilityAvailable(abilityName)) {
+                    unlocked[abilityName] = abilities[abilityName];
+                }
+            });
+            return unlocked;
         };
+        this.abilityRegister = function (fnc) {abilityRegister = fnc; };
+        this.abilityAvailable = function (name) {return abilityRegister(name); };
 
         this.attributes = { };
         this.setAttribute = function (name, description) {

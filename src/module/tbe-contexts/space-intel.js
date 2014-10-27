@@ -1,4 +1,6 @@
 module.exports = function (context, tbe) {
+    "use strict";
+
     var extend = require("deep-extend"), Capacitor = tbe.Capacitor,
         stats = {
             attributes: {
@@ -57,7 +59,7 @@ module.exports = function (context, tbe) {
     // - Label
     // - Colour text from the user perspective
     // - Colour text from the target perspective
-    context.setAbility("scan", "Scan", {
+    context.ability("scan", "Scan", {
         glyphicon: "volume-up",
         text: {
             action: "scan the target",
@@ -74,14 +76,14 @@ module.exports = function (context, tbe) {
             }
         ]
     });
-    context.setAbility("stealth", "Enable Cloaking Device", {
+    context.ability("stealth", "Enable Cloaking Device", {
         glyphicon: "adjust",
         text: {
             action: "cloak the vessel",
             description: "Decreases visibility for a period."
         }
     });
-    context.setAbility("deploy-drones", "Deploy Drones", {
+    context.ability("deploy-drones", "Deploy Drones", {
         glyphicon: "plane",
         text: {
             action: "send in the drones",
@@ -90,14 +92,14 @@ module.exports = function (context, tbe) {
             + "depending on area of interest.",
         }
     });
-    context.setAbility("analyse", "Analyse Scan Data",
+    context.ability("analyse", "Analyse Scan Data",
         "analyse the scan data",
         "Opens possible options for other abilities by generating a buff. "
         + "Buff will be consumed by appropriate ability. Find a good name for buff."
         + "Preferably better than 'analysed'.",
         {glyphicon: "floppy-saved"} // Todo: image of 1s and 0s pattern
     );
-    context.setAbility("renewed-interest", "Renew Interest", {
+    context.ability("renewed-interest", "Renew Interest", {
         glyphicon: "eye-open", // Todo: image of a brain being electricuted.
         text: {
             action: "find something interesting",
@@ -105,7 +107,7 @@ module.exports = function (context, tbe) {
         }
     });
 
-    context.setAbility("bore", "Bore", {
+    context.ability("bore", "Bore", {
         // Can only target characters with interest.
         // Passive scans...
         text: {
@@ -116,14 +118,14 @@ module.exports = function (context, tbe) {
             capacitors: "interest"
         }
     });
-    context.setAbility("mysticise", "", "", "",
+    context.ability("mysticise", "", "", "",
         {
             target: "self"
             // Function for healing mystery.
         }
         // Todo: image of question mark-covered cloud
     );
-    context.setAbility("inconsistent-data", "Data Inconsistency", {
+    context.ability("inconsistent-data", "Data Inconsistency", {
         // Todo: image of 1s and 0s, and maybe a 2. Maybe make it red.
         text: {
             action: "show inconsistent data",
@@ -134,7 +136,7 @@ module.exports = function (context, tbe) {
             mysticise: 0.75
         }
     });
-    context.setAbility("unusual-variables", "Unusual Variables", {
+    context.ability("unusual-variables", "Unusual Variables", {
         text: {
             action: "shows unusual variables",
             description: "Scans cannot make sense of the mystery"
@@ -192,7 +194,7 @@ module.exports = function (context, tbe) {
     context.setCharacterFactory("spatial-anomaly", stats);
 
     context.setCharacterFactory("obscured-structure", stats, function () {
-        var adjective = ["", "Buried", "Secret", "Unusual"],
+        var adjective = ["", "Asteroid-Buried", "Secret", "Unusual"],
             noun = ["Spaceship", "Mining Colony", "Asteroid"];
         return {
             label: [adjective, noun].join(" ").trim()
@@ -209,5 +211,14 @@ module.exports = function (context, tbe) {
     // open a captain quest for pursuit, and possibly combat.
     context.setCharacterFactory("stealth-vessel", stats);
 
+    context.abilityRegister(function (name) {
+        return [
+            "scan",
+            "stealth",
+            "analyse",
+            "renewed-interest",
+            "deploy-drones"
+        ].indexOf(name) > -1;
+    });
     return context;
 };

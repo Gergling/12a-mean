@@ -1,7 +1,8 @@
 module.exports = function (contexts, tbeSchemas, tbe) {
     "use strict";
 
-    var Battle = tbe.Battle,
+    var q = require("q"),
+        Battle = tbe.Battle,
         BattleModel = tbeSchemas.Battle.model,
         fetchBattle = function (cb) {
             BattleModel.findOne({}, function (err, battle) {
@@ -58,6 +59,35 @@ module.exports = function (contexts, tbeSchemas, tbe) {
         success({
             abilities: abilities
         });
+    };
+    bc.ability = function (playerId, abilityName, queryData) {
+        // queryData must be considered unsanitised and potentially dangerous
+        // at this point.
+        
+        var deferred = q.defer(),
+            error = {type: "unknown"},
+            ability = contexts["space-intel"].ability(abilityName),
+            available = true; // Check if available to playerId.
+        
+        if (ability) {
+            // Check if ability is available to playerId
+            if (available) {
+                // Run ability with queryData
+                if (ability.run(queryData)) {
+                    deferred.resolve();
+                    // Also need to return an error if the ability 
+                    // cannot be cast according to the game logic.
+                } else {
+                    error.type = "malformed";
+                    error.query = { }; // Based on missing queryData.
+                }
+            } else {
+                error.type = "unavailable";
+            }
+        } else {
+            error.type = "nonexistent";
+        }
+        deferred.reject(error);
     };
 
     return bc;

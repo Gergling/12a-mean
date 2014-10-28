@@ -62,7 +62,7 @@ module.exports = function (app, tbeSchemas, controllers, mongoose) {
             }, function (error) {
                 switch (error.type) {
                 case "malformed":
-                    res.status(400).send(error.payload);
+                    res.status(400).send(error.query);
                     break;
                 case "unavailable":
                     res.status(403).end();

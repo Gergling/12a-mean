@@ -1,83 +1,59 @@
-"use strict";
+module.exports = (function () {
 
-// Vendor Modules =================================================
-var express = require('express');
-var app = express();
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-var methodOverride = require('method-override');
-var grunt = require("grunt");
-var pathService = require("path");
+    "use strict";
 
-// configuration ===========================================
+    // Vendor Modules =================================================
+    var express = require('express'),
+        app = express(),
+        mongoose = require('mongoose'),
+        bodyParser = require('body-parser'),
+        methodOverride = require('method-override'),
 
-// config files
-var db = require('./src/module/application/config/db');
+    // configuration ===========================================
 
-/*var schemas = {
-    tbe: require('./src/module/tbe/schema')(mongoose)
-    //tbe: require(modules.tbe.root + '/schema')(mongoose)
-};*/
-var schemas = require("./src/module/application/loader/schemas");
+        modPath = "./src/module/",
 
-var srcModules = {
-    tbe: {
-        Battle: require('./src/module/tbe/model/Battle')(schemas.tbe),
-        Capacitor: require('./src/module/tbe/model/Capacitor')(),
-        Context: require('./src/module/tbe/model/Context')()
-    }
-};
+    // config files
+        dbConfig = require(modPath + 'application/config/db'),
 
-/*var contexts = { };
+        schemas = require(modPath + "application/loader/schemas"),
 
-grunt.file.expand("./src/module/tbe-contexts/*.js").forEach(function (ctx) {
-    var modulePath = ctx.replace(".js", ""),
-        contextName = pathService.basename(ctx, ".js"),
-        context = new srcModules.tbe.Context();
+    // controllers
+        controllers = require(modPath + "application/loader/controllers"),
 
-    contexts[contextName] = require(modulePath)(context, srcModules.tbe);
-});*/
+        port = process.env.PORT || 8080; // set our port
 
-// controllers
-var controllers = require("./src/module/application/loader/controllers");
-/*var controllers = {
-    battle: require("./src/module/battle/controller")(contexts, schemas.tbe, srcModules.tbe)
-};*/
+    mongoose.connect(dbConfig.url);
 
-//var contexts = require("./src/module/contexts")();
+    // get all data/stuff of the body (POST) parameters
+    app.use(bodyParser.json()); // parse application/json
 
-//require(grunt.file.expand("./src/module/*/tbe-contexts/*"))()
+    // parse application/vnd.api+json as json
+    app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
-var port = process.env.PORT || 8080; // set our port
-mongoose.connect(db.url);
+    // parse application/x-www-form-urlencoded
+    app.use(bodyParser.urlencoded({ extended: true }));
 
-// get all data/stuff of the body (POST) parameters
-app.use(bodyParser.json()); // parse application/json
+    // override with the X-HTTP-Method-Override header in the request.
+    // simulate DELETE/PUT
+    app.use(methodOverride('X-HTTP-Method-Override'));
 
-// parse application/vnd.api+json as json
-app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
+    // set the static files location /public/img will be /img for users
+    app.use(express.static('./src/public/views'));
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+    // routes ==================================================
+    require(modPath + 'application/config/routes')(app,
+        schemas.tbe, controllers, mongoose);
 
-// override with the X-HTTP-Method-Override header in the request.
-// simulate DELETE/PUT
-app.use(methodOverride('X-HTTP-Method-Override'));
+    // start app ===============================================
+    app.listen(port); // startup our app at http://localhost:8080
 
-// set the static files location /public/img will be /img for users
-app.use(express.static('./src/public/views'));
-
-// routes ==================================================
-require('./src/module/application/config/routes')
-    (app, schemas.tbe, controllers, mongoose);
-
-// start app ===============================================
-app.listen(port); // startup our app at http://localhost:8080
-
-console.log('Magic happens on port ' + port); // shoutout to the user
+    console.log('Magic happens on port ' + port); // shoutout to the user
 
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+    mongoose.connection.on('error',
+        console.error.bind(console, 'connection error:'));
 
-module.exports = app;
+    return app;
+
+}());

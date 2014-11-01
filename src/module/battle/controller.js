@@ -1,8 +1,7 @@
-module.exports = function (contexts, tbeSchemas, tbe) {
+module.exports = function (contexts, tbeSchemas, Battle) {
     "use strict";
 
     var q = require("q"),
-        Battle = tbe.Battle,
         BattleModel = tbeSchemas.Battle.model,
         fetchBattle = function (cb) {
             BattleModel.findOne({}, function (err, battle) {

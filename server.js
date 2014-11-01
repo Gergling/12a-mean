@@ -1,4 +1,4 @@
-// server.js
+"use strict";
 
 // Vendor Modules =================================================
 var express = require('express');
@@ -14,33 +14,11 @@ var pathService = require("path");
 // config files
 var db = require('./src/module/application/config/db');
 
-//var modules = grunt.file.expand("./src/
-
-/*var moduleRoot = "./src/module";
-var modules = { };
-grunt.file.recurse(moduleRoot, function (abs, root, sub) {
-    var name;
-    if (sub) {
-        name = sub.split("/")[0];
-        modules[name] = {
-            name: name,
-            root: pathService.join(root, name)
-        };
-    }
-});*/
-
-//var tbe.Context = require("./src/module/tbe
-
-//grunt.file.expand(pathService.join(moduleRoot, "role-*/tbe-contexts/*")).forEach(function (path) {
-    /*var name = pathService.basename(path, ".js");
-    modules.tbe.contexts[name] = {
-        name: name
-    };
-});*/
-var schemas = {
+/*var schemas = {
     tbe: require('./src/module/tbe/schema')(mongoose)
     //tbe: require(modules.tbe.root + '/schema')(mongoose)
-};
+};*/
+var schemas = require("./src/module/application/loader/schemas");
 
 var srcModules = {
     tbe: {
@@ -50,7 +28,7 @@ var srcModules = {
     }
 };
 
-var contexts = { };
+/*var contexts = { };
 
 grunt.file.expand("./src/module/tbe-contexts/*.js").forEach(function (ctx) {
     var modulePath = ctx.replace(".js", ""),
@@ -58,12 +36,13 @@ grunt.file.expand("./src/module/tbe-contexts/*.js").forEach(function (ctx) {
         context = new srcModules.tbe.Context();
 
     contexts[contextName] = require(modulePath)(context, srcModules.tbe);
-});
+});*/
 
 // controllers
-var controllers = {
+var controllers = require("./src/module/application/loader/controllers");
+/*var controllers = {
     battle: require("./src/module/battle/controller")(contexts, schemas.tbe, srcModules.tbe)
-};
+};*/
 
 //var contexts = require("./src/module/contexts")();
 
@@ -89,7 +68,8 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(express.static('./src/public/views'));
 
 // routes ==================================================
-require('./src/module/application/config/routes')(app, schemas.tbe, controllers, mongoose);
+require('./src/module/application/config/routes')
+    (app, schemas.tbe, controllers, mongoose);
 
 // start app ===============================================
 app.listen(port); // startup our app at http://localhost:8080

@@ -31,7 +31,6 @@ module.exports = function (grunt) {
             ],
 
             helpers: [ 'src/public/views/vendor/angular-mocks/*.js' ],
-            specs: grunt.file.expand('specs/client/**/*.js'),
             specsClient: grunt.file.expand('specs/client/**/*.js'),
             specsServer: grunt.file.expand('specs/server/**/*.js')
         },
@@ -50,6 +49,7 @@ module.exports = function (grunt) {
         }());
 
     paths.server = paths.module.concat(paths.other);
+    paths.specs = paths.specsClient.concat(paths.specsServer);
 
     grunt.initConfig({
         bower: {
@@ -120,15 +120,16 @@ module.exports = function (grunt) {
                 src: paths.specs,
                 directives: {
                     predef: [
-                        'jasmine',
+                        'afterEach',
                         'angular',
+                        'beforeEach',
+                        'describe',
                         'expect',
                         'it',
                         'inject',
-                        'describe',
+                        'jasmine',
                         'module',
-                        'beforeEach',
-                        'afterEach'
+                        'require'
                     ]
                 }
             }
@@ -191,7 +192,7 @@ module.exports = function (grunt) {
 
         jasmine: {
             options: {
-                specs:   paths.specs,
+                specs:   paths.specsClient,
                 vendor:  paths.vendor,
                 helpers: paths.helpers
             },
@@ -323,6 +324,10 @@ module.exports = function (grunt) {
             module: {
                 files: [ 'src/module/**/*.js' ],
                 tasks: [ 'jasmine_node', 'jslint:module' ]
+            },
+            specs: {
+                files: paths.specsServer,
+                tasks: [ 'jasmine_node', 'jslint:specs' ]
             },
             jsdoc: {
                 files: 'src/public/view/modules/*.js',

@@ -26,10 +26,9 @@ module.exports = function (grunt) {
             ],
             server: [
                 'server.js',
-                'src/app/*.js',
                 'src/config/*.js',
                 'src/module/**/*.js',
-                'src/template/*.js'
+                'src/templates/*.js'
             ],
 
             helpers: [ 'src/public/views/vendor/angular-mocks/*.js' ],

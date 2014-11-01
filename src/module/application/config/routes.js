@@ -49,7 +49,14 @@ module.exports = function (app, tbeSchemas, controllers, mongoose) {
     });
 
     // PUT /battle casts an ability
-    app.param('abilityName', /^[a-z]$/);
+    app.param('abilityName', function(req, res, next, name){
+        var regex = new RegExp(/^[a-z]$/);
+        if(regex.test(name)){
+            next();
+        }else{
+            next('route');
+        }
+    });
     app.put('/battle/:abilityName', function (req, res) {
         var player_id = 1;
         if (player_id) {

@@ -1,18 +1,22 @@
-var grunt = require("grunt"),
-    pathService = require("path"),
+module.exports = (function () {
+    "use strict";
 
-    localPaths = require("./local-paths"),
+    var grunt = require("grunt"),
+        pathService = require("path"),
 
-    Context = require(localPaths.module + "tbe/model/Context"),
+        localPaths = require("./local-paths"),
 
-    contexts = { };
+        Context = require(localPaths.module + "tbe/model/Context"),
 
-grunt.file.expand("src/module/tbe-contexts/*.js").forEach(function (ctx) {
-    var modulePath = localPaths.root + ctx.replace(".js", ""),
-        contextName = pathService.basename(ctx, ".js"),
-        context = new Context();
+        contexts = { };
 
-    contexts[contextName] = require(modulePath)(context);
-});
+    grunt.file.expand("src/module/tbe-contexts/*.js").forEach(function (ctx) {
+        var modulePath = localPaths.root + ctx.replace(".js", ""),
+            contextName = pathService.basename(ctx, ".js"),
+            context = new Context();
 
-module.exports = contexts;
+        contexts[contextName] = require(modulePath)(context);
+    });
+
+    return contexts;
+}());

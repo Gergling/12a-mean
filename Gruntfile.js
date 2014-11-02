@@ -299,6 +299,11 @@ module.exports = function (grunt) {
             }
         },
 
+        execute: {
+            images: {
+                src: ['./src/templates/image-generator/generator.js']
+            }
+        },
         watch: {
             bower: {
                 files: [ 'bower.json' ],
@@ -316,8 +321,7 @@ module.exports = function (grunt) {
             },
             server: {
                 files: [
-                    'server.js',
-                    'src/templates/**/*.js'
+                    'server.js'
                 ],
                 tasks: [ 'jasmine_node', 'jslint:server' ]
             },
@@ -332,6 +336,16 @@ module.exports = function (grunt) {
             jsdoc: {
                 files: 'src/public/view/modules/*.js',
                 tasks: [ 'jsdoc' ]
+            },
+            generator: {
+                files: [
+                    './src/templates/image-generator/generator.js',
+                    './src/templates/image-generator/src/*.js'
+                ],
+                tasks: [
+                    'jslint:server',
+                    'execute:images'
+                ]
             }
         },
 

@@ -26,7 +26,7 @@ module.exports = function (grunt) {
             ],
             module: [ 'src/module/**/*.js' ],
             other: [
-                'src/templates/**/*.js',
+                'src/templates/image-generator/**/*.js',
                 'server.js'
             ],
 

@@ -9,7 +9,7 @@ describe("SkillNode class", function () {
         ],
         root,
         setup = function () {
-            references.forEach(function (reference, idx) {
+            references.forEach(function (reference) {
                 root.set(reference.join("."));
             });
         };
@@ -17,10 +17,9 @@ describe("SkillNode class", function () {
     beforeEach(function () {
         root = new SkillNode("root");
     });
-    references.forEach(function (reference, idx) {
+    references.forEach(function (reference) {
         it("reference '" + reference.join(".") + "' can be created and its ancestors found", function () {
-            var descendent = root.set(reference.join(".")),
-                ancestorReference = [ ];
+            var descendent = root.set(reference.join("."));
 
             expect(descendent.constructor).toBe(SkillNode);
 
@@ -30,7 +29,7 @@ describe("SkillNode class", function () {
             expect(function () {return root.find(reference.join(".") + ".junk"); })
                 .toThrow(new Error("Node named '" + reference[reference.length - 1] + "' has no child named 'junk'"));
 
-            reference.forEach(function (chunk) {
+            /*reference.forEach(function (chunk) {
                 var node;
                 if (ancestorReference.length) {
                     //root.find
@@ -38,7 +37,7 @@ describe("SkillNode class", function () {
                     
                 }
                 ancestorReference.push(chunk);
-            });
+            });*/
         });
     });
 
@@ -123,7 +122,7 @@ describe("SkillNode class", function () {
 
     // Nodes need to be able to train up hours and levels
     describe("#train()", function () {
-        it ("increments training hours by 1", function () {
+        it("increments training hours by 1", function () {
             var hoursBefore = root.getTotalTrainingHours(),
                 hoursAfter;
             root.train();
@@ -133,7 +132,7 @@ describe("SkillNode class", function () {
 
         it("requires the level in hours to gain a level and resets the hours to 0", function () {
             var i, beforeLevel = 0, afterLevel = 0;
-            for(i = 0; i < 100 && beforeLevel === afterLevel; i += 1) {
+            for (i = 0; i < 100 && beforeLevel === afterLevel; i += 1) {
                 beforeLevel = root.getLevel();
                 root.train();
                 afterLevel = root.getLevel();
@@ -142,7 +141,7 @@ describe("SkillNode class", function () {
             expect(root.getTrainingHours());
         });
     });
-    
+
     // Levels effect neighbouring node levels.
     // Neighbour is at minimum halway between this node and the parent. 
     // The root parent level is considered to be 0.
@@ -161,6 +160,6 @@ describe("SkillNode class", function () {
     // Once this cap is reached, the oldest-trained skill above a minimum 
     // level takes the reduction to meet the cap, and the level is reduced 
     // accordingly.
-    
+
     // Nodes need to be able to save hours and levels
 });

@@ -1,10 +1,14 @@
-module.exports = function (context, tbe) {
+module.exports = function (context) {
     "use strict";
 
-    var extend = require("deep-extend"), Capacitor = tbe.Capacitor,
+    var tbePath = {
+            model: "../tbe/model/"
+        },
+        Capacitor = require(tbePath.model + "Capacitor"),
         stats = {
             attributes: {
-                obscurity: 0 // Passively absorbs mystery damage. Also based on player stats.
+                obscurity: 0
+                // Passively absorbs mystery damage. Also based on player stats.
             },
             capacitors: {
                 energy: new Capacitor(),
@@ -16,17 +20,23 @@ module.exports = function (context, tbe) {
     // Setup all possible stats for this context somewhere.
         // The point is to easily feed in stats.
     context.setAttribute("patience", "Resistance to reduction of interest.");
-    context.setCapacitor("interest", "How long the entity can hold your attention for.", {
-        dr: "patience"
-    });
+    context.setCapacitor("interest", "How long the entity can hold your "
+        + "attention for.",
+        {
+            dr: "patience"
+        });
 
-    context.setCapacitor("energy", "Available energy for the equipment to use.");
-    context.setCapacitor("load", "Degree of use the processor/memory are getting.");
+    context.setCapacitor("energy", "Available energy for the equipment to "
+        + "use.");
+    context.setCapacitor("load", "Degree of use the processor/memory are "
+        + "getting.");
 
     context.setAttribute("obscurity", "Slows reduction of mystery.");
-    context.setCapacitor("mystery", "Extent to which the entity is understood.", {
-        dr: "obscurity"
-    });
+    context.setCapacitor("mystery", "Extent to which the entity is "
+        + "understood.",
+        {
+            dr: "obscurity"
+        });
 
     context.setCorpse("report", "Report", {
         drops: function (args) {
@@ -37,11 +47,9 @@ module.exports = function (context, tbe) {
         }
     });
 
-    // Mysteries probably spawn deliberate structures, such as a secret mining colony,
-    // or a ship buried in an asteroid.
-    context.setBattleFactory("surveillance", function (args) {
-        
-    });
+    // Mysteries probably spawn deliberate structures, such as a secret 
+    // mining colony, or a ship buried in an asteroid.
+    context.setBattleFactory("surveillance", function (args) {return false; });
 
     // Mapping an area of space. Low-level missions for new players.
     // Most likely to start with natural mysteries.
@@ -63,7 +71,8 @@ module.exports = function (context, tbe) {
         glyphicon: "volume-up",
         text: {
             action: "scan the target",
-            description: "Scans an area of interest. Increases visibility, decreases target mystery."
+            description: "Scans an area of interest. Increases visibility, "
+                + "decreases target mystery."
         },
         effects: [
             {
@@ -88,22 +97,24 @@ module.exports = function (context, tbe) {
         text: {
             action: "send in the drones",
             description: "Increases effectiveness of scans while deployed. "
-            + "May need to return with samples or for fuel after a while, "
-            + "depending on area of interest.",
+                + "May need to return with samples or for fuel after a while, "
+                + "depending on area of interest."
         }
     });
     context.ability("analyse", "Analyse Scan Data",
         "analyse the scan data",
         "Opens possible options for other abilities by generating a buff. "
-        + "Buff will be consumed by appropriate ability. Find a good name for buff."
-        + "Preferably better than 'analysed'.",
-        {glyphicon: "floppy-saved"} // Todo: image of 1s and 0s pattern
-    );
+            + "Buff will be consumed by appropriate ability. Find a good name "
+            + "for buff."
+            + "Preferably better than 'analysed'.",
+        {glyphicon: "floppy-saved"}); // Todo: image of 1s and 0s pattern
+
     context.ability("renewed-interest", "Renew Interest", {
         glyphicon: "eye-open", // Todo: image of a brain being electricuted.
         text: {
             action: "find something interesting",
-            description: "Heal interest levels. Requires analyse buff. Consumes analyse buff."
+            description: "Heal interest levels. Requires analyse buff. "
+                + "Consumes analyse buff."
         }
     });
 
@@ -122,9 +133,9 @@ module.exports = function (context, tbe) {
         {
             target: "self"
             // Function for healing mystery.
-        }
+        });
         // Todo: image of question mark-covered cloud
-    );
+
     context.ability("inconsistent-data", "Data Inconsistency", {
         // Todo: image of 1s and 0s, and maybe a 2. Maybe make it red.
         text: {
@@ -153,7 +164,7 @@ module.exports = function (context, tbe) {
     context.setCharacterFactory("mystery-natural", stats, function (args) {
         // Choose spawn(s). Assign attributes and abilities based on spawns.
         var spawns = ["spatial-anomaly"],
-            spawnName = spawns[Math.floor(Math.random()*spawns.length)],
+            spawnName = spawns[Math.floor(Math.random() * spawns.length)],
             spawn = context.getCharacterFactory(spawnName);
 
         // Calculate stats according to generated spawn.

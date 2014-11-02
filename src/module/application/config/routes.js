@@ -47,7 +47,44 @@ module.exports = function (app, tbeSchemas, controllers, mongoose) {
             res.status(403).end();
         }
     });
+
     // PUT /battle casts an ability
+    app.param('abilityName', function(req, res, next, name){
+        var regex = new RegExp(/^[a-z]$/);
+        if(regex.test(name)){
+            next();
+        }else{
+            next('route');
+        }
+    });
+    app.put('/battle/:abilityName', function (req, res) {
+        var player_id = 1;
+        if (player_id) {
+            controllers.battle.ability(
+                player_id,
+                req.params.abilityName,
+                req.query // Controller to sanitise.
+            ).then(function () {
+                res.send({ });
+            }, function (error) {
+                switch (error.type) {
+                case "malformed":
+                    res.status(400).send(error.query);
+                    break;
+                case "unavailable":
+                    res.status(403).end();
+                    break;
+                case "nonexistent":
+                    res.status(404).end();
+                    break;
+                default:
+                    res.status(500).end();
+                }
+            });
+        } else {
+            res.status(401).end();
+        }
+    });
 
     // POST /battle starts a new battle.
     app.post('/battle', function (req, res) {

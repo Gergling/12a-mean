@@ -1,4 +1,6 @@
 describe("Skill Tree Factory (skill.factory.tree)", function () {
+    "use strict";
+
     var factory, $httpBackend;
 
     beforeEach(function () {

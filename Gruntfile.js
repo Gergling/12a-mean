@@ -24,16 +24,13 @@ module.exports = function (grunt) {
                 'src/public/views/modules/**/module.js',
                 'src/public/views/modules/**/*.js'
             ],
-            server: [
-                'server.js',
-                'src/app/*.js',
-                'src/config/*.js',
-                'src/module/**/*.js',
-                'src/template/*.js'
+            module: [ 'src/module/**/*.js' ],
+            other: [
+                'src/templates/**/*.js',
+                'server.js'
             ],
 
             helpers: [ 'src/public/views/vendor/angular-mocks/*.js' ],
-            specs: grunt.file.expand('specs/client/**/*.js'),
             specsClient: grunt.file.expand('specs/client/**/*.js'),
             specsServer: grunt.file.expand('specs/server/**/*.js')
         },
@@ -50,6 +47,9 @@ module.exports = function (grunt) {
             var build = process.env.BUILD_NUMBER;
             return build ? '?v=' + build : '';
         }());
+
+    paths.server = paths.module.concat(paths.other);
+    paths.specs = paths.specsClient.concat(paths.specsServer);
 
     grunt.initConfig({
         bower: {
@@ -101,7 +101,15 @@ module.exports = function (grunt) {
                 options: { checkstyle: 'build/logs/checkstyle.xml' }
             },
             server: {
-                src: paths.server,
+                src: paths.other,
+                directives: {
+                    unparam: true,
+                    maxlen: 80,
+                    predef: [ 'module', 'require', 'process', 'console' ]
+                }
+            },
+            module: {
+                src: paths.module,
                 directives: {
                     unparam: true,
                     maxlen: 80,
@@ -112,15 +120,16 @@ module.exports = function (grunt) {
                 src: paths.specs,
                 directives: {
                     predef: [
-                        'jasmine',
+                        'afterEach',
                         'angular',
+                        'beforeEach',
+                        'describe',
                         'expect',
                         'it',
                         'inject',
-                        'describe',
+                        'jasmine',
                         'module',
-                        'beforeEach',
-                        'afterEach'
+                        'require'
                     ]
                 }
             }
@@ -183,7 +192,7 @@ module.exports = function (grunt) {
 
         jasmine: {
             options: {
-                specs:   paths.specs,
+                specs:   paths.specsClient,
                 vendor:  paths.vendor,
                 helpers: paths.helpers
             },
@@ -306,10 +315,19 @@ module.exports = function (grunt) {
                 tasks: [ 'template:dev', 'jasmine', 'jslint:client' ]
             },
             server: {
-                files: [ ]
-                    .concat(paths.server)
-                    .concat(paths.specsServer),
+                files: [
+                    'server.js',
+                    'src/templates/**/*.js'
+                ],
                 tasks: [ 'jasmine_node', 'jslint:server' ]
+            },
+            module: {
+                files: [ 'src/module/**/*.js' ],
+                tasks: [ 'jasmine_node', 'jslint:module' ]
+            },
+            specs: {
+                files: paths.specsServer,
+                tasks: [ 'jasmine_node', 'jslint:specs' ]
             },
             jsdoc: {
                 files: 'src/public/view/modules/*.js',

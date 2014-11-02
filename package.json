@@ -30,6 +30,7 @@
     "karma-phantomjs-launcher": "^0.1.4",
     "karma-story-reporter": "^0.2.2",
     "method-override": "~2.0.2",
-    "mongoose": "~3.8.0"
+    "mongoose": "~3.8.0",
+    "q": "^1.0.1"
   }
 }

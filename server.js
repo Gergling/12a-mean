@@ -1,103 +1,59 @@
-// server.js
+module.exports = (function () {
 
-// Vendor Modules =================================================
-var express = require('express');
-var app = express();
-var mongoose = require('mongoose');
-var bodyParser = require('body-parser');
-var methodOverride = require('method-override');
-var grunt = require("grunt");
-var pathService = require("path");
+    "use strict";
 
-// configuration ===========================================
+    // Vendor Modules =================================================
+    var express = require('express'),
+        app = express(),
+        mongoose = require('mongoose'),
+        bodyParser = require('body-parser'),
+        methodOverride = require('method-override'),
 
-// config files
-var db = require('./src/module/application/config/db');
+    // configuration ===========================================
 
-//var modules = grunt.file.expand("./src/
+        modPath = "./src/module/",
 
-/*var moduleRoot = "./src/module";
-var modules = { };
-grunt.file.recurse(moduleRoot, function (abs, root, sub) {
-    var name;
-    if (sub) {
-        name = sub.split("/")[0];
-        modules[name] = {
-            name: name,
-            root: pathService.join(root, name)
-        };
-    }
-});*/
+    // config files
+        dbConfig = require(modPath + 'application/config/db'),
 
-//var tbe.Context = require("./src/module/tbe
+        schemas = require(modPath + "application/loader/schemas"),
 
-//grunt.file.expand(pathService.join(moduleRoot, "role-*/tbe-contexts/*")).forEach(function (path) {
-    /*var name = pathService.basename(path, ".js");
-    modules.tbe.contexts[name] = {
-        name: name
-    };
-});*/
-var schemas = {
-    tbe: require('./src/module/tbe/schema')(mongoose)
-    //tbe: require(modules.tbe.root + '/schema')(mongoose)
-};
+    // controllers
+        controllers = require(modPath + "application/loader/controllers"),
 
-var srcModules = {
-    tbe: {
-        Battle: require('./src/module/tbe/model/Battle')(schemas.tbe),
-        Capacitor: require('./src/module/tbe/model/Capacitor')(),
-        Context: require('./src/module/tbe/model/Context')()
-    }
-};
+        port = process.env.PORT || 8080; // set our port
 
-var contexts = { };
+    mongoose.connect(dbConfig.url);
 
-grunt.file.expand("./src/module/tbe-contexts/*.js").forEach(function (ctx) {
-    var modulePath = ctx.replace(".js", ""),
-        contextName = pathService.basename(ctx, ".js"),
-        context = new srcModules.tbe.Context();
+    // get all data/stuff of the body (POST) parameters
+    app.use(bodyParser.json()); // parse application/json
 
-    contexts[contextName] = require(modulePath)(context, srcModules.tbe);
-});
+    // parse application/vnd.api+json as json
+    app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 
-// controllers
-var controllers = {
-    battle: require("./src/module/battle/controller")(contexts, schemas.tbe, srcModules.tbe)
-};
+    // parse application/x-www-form-urlencoded
+    app.use(bodyParser.urlencoded({ extended: true }));
 
-//var contexts = require("./src/module/contexts")();
+    // override with the X-HTTP-Method-Override header in the request.
+    // simulate DELETE/PUT
+    app.use(methodOverride('X-HTTP-Method-Override'));
 
-//require(grunt.file.expand("./src/module/*/tbe-contexts/*"))()
+    // set the static files location /public/img will be /img for users
+    app.use(express.static('./src/public/views'));
 
-var port = process.env.PORT || 8080; // set our port
-mongoose.connect(db.url);
+    // routes ==================================================
+    require(modPath + 'application/config/routes')(app,
+        schemas.tbe, controllers, mongoose);
 
-// get all data/stuff of the body (POST) parameters
-app.use(bodyParser.json()); // parse application/json
+    // start app ===============================================
+    app.listen(port); // startup our app at http://localhost:8080
 
-// parse application/vnd.api+json as json
-app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
-
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
-
-// override with the X-HTTP-Method-Override header in the request.
-// simulate DELETE/PUT
-app.use(methodOverride('X-HTTP-Method-Override'));
-
-// set the static files location /public/img will be /img for users
-app.use(express.static('./src/public/views'));
-
-// routes ==================================================
-require('./src/module/application/config/routes')(app, schemas.tbe, controllers, mongoose);
-
-// start app ===============================================
-app.listen(port); // startup our app at http://localhost:8080
-
-console.log('Magic happens on port ' + port); // shoutout to the user
+    console.log('Magic happens on port ' + port); // shoutout to the user
 
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
+    mongoose.connection.on('error',
+        console.error.bind(console, 'connection error:'));
 
-module.exports = app;
+    return app;
+
+}());

@@ -1,4 +1,4 @@
-module.exports = function () {
+module.exports = (function () {
     "use strict";
 
     var BattleFactory = require("./BattleFactory"),
@@ -49,7 +49,7 @@ module.exports = function () {
         };
 
         this.ability = function (name, label, props) {
-            if (label) {
+            if (label && props) {
                 abilities[name] = new Ability(label, props);
             }
             return abilities[name];
@@ -78,4 +78,4 @@ module.exports = function () {
             scope.capacitors[name] = capacitor;
         };
     };
-};
+}());

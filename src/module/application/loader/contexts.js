@@ -7,12 +7,12 @@ var grunt = require("grunt"),
 
     contexts = { };
 
-grunt.file.expand(localPaths.module + "tbe-contexts/*.js").forEach(function (ctx) {
-    var modulePath = ctx.replace(".js", ""),
+grunt.file.expand("src/module/tbe-contexts/*.js").forEach(function (ctx) {
+    var modulePath = localPaths.root + ctx.replace(".js", ""),
         contextName = pathService.basename(ctx, ".js"),
         context = new Context();
 
-    contexts[contextName] = require(modulePath)(context, srcModules.tbe);
+    contexts[contextName] = require(modulePath)(context);
 });
 
 module.exports = contexts;

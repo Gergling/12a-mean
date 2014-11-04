@@ -343,8 +343,8 @@ module.exports = function (grunt) {
                     './src/templates/image-generator/src/*.js'
                 ],
                 tasks: [
-                    'jslint:server',
-                    'execute:images'
+                    'execute:images',
+                    'jslint:server'
                 ]
             }
         },

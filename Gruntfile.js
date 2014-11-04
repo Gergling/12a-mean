@@ -26,7 +26,7 @@ module.exports = function (grunt) {
             ],
             module: [ 'src/module/**/*.js' ],
             other: [
-                'src/templates/**/*.js',
+                'src/templates/image-generator/**/*.js',
                 'server.js'
             ],
 
@@ -105,7 +105,7 @@ module.exports = function (grunt) {
                 directives: {
                     unparam: true,
                     maxlen: 80,
-                    predef: [ 'module', 'require', 'process', 'console' ]
+                    predef: [ 'module', 'require', 'process' ]
                 }
             },
             module: {
@@ -299,6 +299,11 @@ module.exports = function (grunt) {
             }
         },
 
+        execute: {
+            images: {
+                src: ['./src/templates/image-generator/generator.js']
+            }
+        },
         watch: {
             bower: {
                 files: [ 'bower.json' ],
@@ -316,8 +321,7 @@ module.exports = function (grunt) {
             },
             server: {
                 files: [
-                    'server.js',
-                    'src/templates/**/*.js'
+                    'server.js'
                 ],
                 tasks: [ 'jasmine_node', 'jslint:server' ]
             },
@@ -332,6 +336,16 @@ module.exports = function (grunt) {
             jsdoc: {
                 files: 'src/public/view/modules/*.js',
                 tasks: [ 'jsdoc' ]
+            },
+            generator: {
+                files: [
+                    './src/templates/image-generator/generator.js',
+                    './src/templates/image-generator/src/*.js'
+                ],
+                tasks: [
+                    'execute:images',
+                    'jslint:server'
+                ]
             }
         },
 
@@ -355,19 +369,19 @@ module.exports = function (grunt) {
     });
 
     grunt.loadNpmTasks('grunt-bower-task');
-    grunt.loadNpmTasks('grunt-jslint');
-    grunt.loadNpmTasks('grunt-jsdoc');
-    grunt.loadNpmTasks('grunt-template');
-    grunt.loadNpmTasks('grunt-eol');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
-    //grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-eol');
+    grunt.loadNpmTasks('grunt-execute');
     grunt.loadNpmTasks('grunt-jasmine-node');
+    grunt.loadNpmTasks('grunt-jsdoc');
+    grunt.loadNpmTasks('grunt-jslint');
+    grunt.loadNpmTasks('grunt-template');
 
     // Default task
     grunt.registerTask('default', [ 'build' ]);

@@ -57,4 +57,4 @@ What the-? I don't even-
 
 Correct. Either I haven't bothered to tell you something, or I don't understand it either. Ask me about it. At the very worst I will never get back to you, but it's more likely I'll give you a long rambling response in a flak-cannon approach to answering your question. That is, I will turn up with a flak cannon and right click.
 
-Some might consider that to be almost *sunglasses* Unreal! :O
+Some might consider that to be almost (*sunglasses*) Unreal! :O

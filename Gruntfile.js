@@ -333,10 +333,6 @@ module.exports = function (grunt) {
                 files: paths.specsServer,
                 tasks: [ 'jasmine_node', 'jslint:specs' ]
             },
-            jsdoc: {
-                files: 'src/public/view/modules/*.js',
-                tasks: [ 'jsdoc' ]
-            },
             generator: {
                 files: [
                     './src/templates/image-generator/generator.js',
@@ -388,7 +384,6 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'bower',       // Install dependencies with bower
-        'jsdoc',       // Generate API documentation
         'template',    // Populate templates with lists of source files
         'eol',         // Standardise on LF (Unix) line endings
         'clean:junit', // Clean up old test results

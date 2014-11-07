@@ -29,7 +29,7 @@
 
         function ($scope, navigation, skillNavigation) {
             $scope.navigation = navigation;
-            $scope.$on("$routeChangeStart", function (event, next, current) {
+            $scope.$on("$routeChangeStart", function (event, next) {
                 $scope.routeTemplateUrl = next.partial;
                 navigation.setActive(next.name);
 

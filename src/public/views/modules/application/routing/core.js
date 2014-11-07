@@ -1,16 +1,15 @@
-ngModules.get("application").component(function (ngm, mod) {
+(function () {
     "use strict";
 
-    ngm.config(['$routeProvider', function ($routeProvider) {
-        var getPartialUrl = function (name) {return 'modules/' + mod.getPartialUrl(name); };
-
-        var routes = {
-            '/': {redirectTo: "/mess/"},
-            '/mess/': {partial: getPartialUrl('index'), name: "mess"},
-            '/cargo-bay/': {partial: 'modules/test/partial/test.html', name: "cargo-bay"},
-            '/bridge/': {partial: 'modules/quest/partial/quests.html', name: "bridge"},
-            '/skills/': {partial: 'modules/skill/partial/skills.html', name: "skills"}
-        };
+    angular.module("application").config(['$routeProvider', function ($routeProvider) {
+        var getPartialUrl = function (name) {return 'modules/application/partial/' + name + '.html'; },
+            routes = {
+                '/': {redirectTo: "/mess/"},
+                '/mess/': {partial: getPartialUrl('index'), name: "mess"},
+                '/cargo-bay/': {partial: 'modules/test/partial/test.html', name: "cargo-bay"},
+                '/bridge/': {partial: 'modules/quest/partial/quests.html', name: "bridge"},
+                '/skills/': {partial: 'modules/skill/partial/skills.html', name: "skills"}
+            };
 
         routes['/bridge/battle/'] = angular.copy(routes['/bridge/']);
         routes['/bridge/battle/'].partial = "modules/battle/partial/battle.html";
@@ -22,8 +21,7 @@ ngModules.get("application").component(function (ngm, mod) {
             $routeProvider.when(route, obj);
         });
         $routeProvider.otherwise({templateUrl: getPartialUrl('container'), partial: getPartialUrl('404')});
-    }]);
-    ngm.controller(mod.getModuleName("controller", "index"), [
+    }]).controller("application.controller.index", [
 
         "$rootScope",
         "application.service.primary-navigation",
@@ -41,4 +39,5 @@ ngModules.get("application").component(function (ngm, mod) {
             });
         }
     ]);
-});
+
+}());

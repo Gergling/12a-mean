@@ -3,7 +3,7 @@ angular.module("battle").directive("battleAbilities", function () {
 
     return {
         scope: {width: "@"},
-        templateUrl: 'modules/battle/directive/partial/abilities.html',
+        templateUrl: 'modules/battle/partial/abilities.html',
         controller: [
 
             "$scope",

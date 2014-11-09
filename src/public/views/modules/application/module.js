@@ -1,8 +1,8 @@
-ngModules.set(angular.module("application", [
+angular.module("application", [
     "ngRoute",
 
     "restangular",
 
     "battle",
     "skill"
-]));
+]);

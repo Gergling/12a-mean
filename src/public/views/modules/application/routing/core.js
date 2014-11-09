@@ -29,6 +29,8 @@
 
         function ($scope, navigation, skillNavigation) {
             $scope.navigation = navigation;
+
+            /*jslint unparam: true */
             $scope.$on("$routeChangeStart", function (event, next) {
                 $scope.routeTemplateUrl = next.partial;
                 navigation.setActive(next.name);
@@ -37,6 +39,7 @@
                     skillNavigation.setPath(next.params.skill);
                 }
             });
+            /*jslint unparam: false */
         }
     ]);
 

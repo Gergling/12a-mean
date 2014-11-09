@@ -336,7 +336,8 @@ module.exports = function (grunt) {
             generator: {
                 files: [
                     './src/templates/image-generator/generator.js',
-                    './src/templates/image-generator/src/*.js'
+                    './src/templates/image-generator/src/*.js',
+                    './src/templates/image-generator/generator/**.js'
                 ],
                 tasks: [
                     'execute:images',

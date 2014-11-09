@@ -1,1 +1,1 @@
-ngModules.set(angular.module("test", []));
+angular.module("test", []);

@@ -3,7 +3,8 @@ var ngModules = (function ($) {
 
     $(function () {
         //ngModules.bootstrap(document);
-        //angular.bootstrap(document, "application");
+        console.log(angular, angular.bootstrap);
+        angular.bootstrap(document, ["application"]);
     });
 
     return new NGModuleCollection();

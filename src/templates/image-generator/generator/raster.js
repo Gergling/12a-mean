@@ -46,7 +46,6 @@ module.exports = function (png) {
         this.forEach(function (pixel, x, y) {
             current = maths.pythagoras(x, y);
             pixel.setGradient(start, end, from, to, current, pixel);
-            console.log(current, pixel, start, end);
         }, fromX, fromY, toX, toY);
     };
 };

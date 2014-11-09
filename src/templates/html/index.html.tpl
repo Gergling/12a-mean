@@ -1,6 +1,6 @@
 <!-- public/views/index.html -->
 <!doctype html>
-<html lang="en">
+<html lang="en" data-ng-app="application">
 <head>
  <meta charset="UTF-8">
 

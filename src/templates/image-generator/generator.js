@@ -6,6 +6,8 @@ module.exports = (function () {
         fs = require('fs'),
         PNG = require('pngjs').PNG,
 
+        Generator = require("./generator/core"),
+
         newPNG = function () {
             var png = new PNG();
             if (!png.data) {png.data = [ ]; }
@@ -23,13 +25,18 @@ module.exports = (function () {
         var fileName = pathService.basename(srcPath, ".js"),
             distPath = paths.generator + "dist/" + fileName + ".png",
             dst = fs.createWriteStream(distPath),
-            png = newPNG();
+            png = newPNG(),
+            fnc = require(paths.module + "src/" + fileName);
 
-        require(paths.module + "src/" + fileName)(png);
+        if (typeof fnc === "function") {
+            fnc(png, new Generator(png));
+            grunt.log.writeln("- Image generated: '" + fileName + "'");
 
-        grunt.log.writeln("- Image generated: '" + fileName + "'");
-
-        png.pack().pipe(dst);
+            png.pack().pipe(dst);
+        } else {
+            grunt.log.writeln("- No function exported for: "
+                + fileName + ".js");
+        }
     });
 
 }());

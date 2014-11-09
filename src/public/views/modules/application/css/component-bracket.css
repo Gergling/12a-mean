@@ -1,7 +1,8 @@
 [component-bracket] .bracket {
 	position: relative;
-	border: solid 4px #2df;
-	height: 6px;
+	/*border: solid 4px #2df;*/
+	border: none;
+	height: 10px;
 	background-color: #2df;
 }
 [component-bracket] .bracket > .bracket-inner {

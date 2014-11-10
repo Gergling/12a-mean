@@ -27,7 +27,6 @@ var Pixel = function (red, green, blue, alpha) {
                 current
             );
         });
-        console.log(pixel);
         return pixel;
     };
     this.setGradient = function (start, end, from, to, current) {
@@ -40,6 +39,9 @@ var Pixel = function (red, green, blue, alpha) {
             this.blue,
             this.alpha
         ].join(", ") + ")";
+    };
+    this.copy = function () {
+        return new Pixel(this.red, this.green, this.blue, this.alpha);
     };
 };
 

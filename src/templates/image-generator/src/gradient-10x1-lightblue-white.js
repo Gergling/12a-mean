@@ -12,9 +12,9 @@ module.exports = function (png, generator) {
                 getDec("f0")
             ),
             lighterblue: new Pixel(
-                getDec("cc"),
-                getDec("ee"),
-                getDec("ff")
+                getDec("90"),
+                getDec("e0"),
+                getDec("f7")
             )
         };
 

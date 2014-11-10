@@ -32,7 +32,7 @@ module.exports = (function () {
             fnc(png, new Generator(png));
             grunt.log.writeln("- Image generated: '" + fileName + "'");
 
-            png.pack().pipe(dst);
+            png.pack().pipe(dst); // Todo: Touch dist folder.
         } else {
             grunt.log.writeln("- No function exported for: "
                 + fileName + ".js");

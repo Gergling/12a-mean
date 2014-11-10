@@ -33,20 +33,22 @@
 [component-bracket] .horizontal .bracket {
 	border: none;
 	background-repeat: repeat-y;
+	background-image: url(../img/gradient-10x1-lightblue-white.png);
 }
 [component-bracket] .horizontal .bracket:first-child,
 [component-bracket] .horizontal .bracket:last-child {
 	width: 10px;
 }
 [component-bracket] .horizontal .bracket:first-child {
-	background-image: url(../img/gradient-10x1-lightblue-white.png);
+	/*background-image: url(../img/gradient-10x1-lightblue-white.png);*/
 }
 [component-bracket] .horizontal .bracket:first-child > .bracket-inner {
 	bottom: 4px;
 	right: 0;
 }
 [component-bracket] .horizontal .bracket:last-child {
-	background-image: url(../img/gradient-10x1-white-lightblue.png);
+	/*background-image: url(../img/gradient-10x1-white-lightblue.png);*/
+	background-position: right;
 }
 [component-bracket] .horizontal .bracket:last-child > .bracket-inner {
 	top: 4px;

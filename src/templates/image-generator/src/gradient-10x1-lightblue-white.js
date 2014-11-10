@@ -4,23 +4,27 @@ module.exports = function (png, generator) {
     var Pixel = generator.Pixel,
         getDec = function (hex) {
             return parseInt(hex, 16);
+        },
+        colours = {
+            lightblue: new Pixel(
+                getDec("20"),
+                getDec("d0"),
+                getDec("f0")
+            ),
+            lighterblue: new Pixel(
+                getDec("cc"),
+                getDec("ee"),
+                getDec("ff")
+            )
         };
 
     png.width = 19;
 
-    generator.raster.gradient(new Pixel(
-        getDec("20"),
-        getDec("d0"),
-        getDec("f0")
-    ), new Pixel(255, 255, 255),
+    generator.raster.gradient(colours.lightblue.copy(), colours.lighterblue.copy(),
         0, 0,
         9, 0);
 
-    generator.raster.gradient(new Pixel(255, 255, 255), new Pixel(
-        getDec("20"),
-        getDec("d0"),
-        getDec("f0")
-    ),
+    generator.raster.gradient(colours.lighterblue.copy(), colours.lightblue.copy(),
         9, 0,
         19, 0);
 

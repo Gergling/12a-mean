@@ -28,5 +28,4 @@ module.exports = function (png, generator) {
         9, 0,
         19, 0);
 
-    return png;
 };

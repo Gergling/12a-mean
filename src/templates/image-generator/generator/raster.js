@@ -7,6 +7,7 @@ module.exports = function (png) {
     this.forEach = function (fnc, fromX, fromY, toX, toY) {
         var x, y, channel, pixel;
 
+        fnc = fnc || function () {return true; };
         fromX = fromX || 0;
         fromY = fromY || 0;
         toX = toX || png.width;

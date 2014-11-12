@@ -4,6 +4,8 @@
 	border: none;
 	height: 10px;
 	background-color: #2df;
+	background-repeat: repeat-x;
+	background-image: url(../img/gradient-1x10-lightblue-white.png);
 }
 [component-bracket] .bracket > .bracket-inner {
 	position: absolute;
@@ -15,13 +17,14 @@
 }
 
 [component-bracket] .bracket:first-child {
-	border-bottom-width: 0;
+	/*border-bottom-width: 0;*/
 }
 [component-bracket] .bracket:first-child > .bracket-inner {
 	bottom: 0;
 }
 [component-bracket] .bracket:last-child {
-	border-top-width: 0;
+	/*border-top-width: 0;*/
+	background-position: bottom;
 }
 [component-bracket] .bracket:last-child > .bracket-inner {
 	top: 0;

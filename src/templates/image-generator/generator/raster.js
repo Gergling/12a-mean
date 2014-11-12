@@ -15,9 +15,7 @@ module.exports = function (png) {
 
         for (y = fromY; y < toY; y += 1) {
             for (x = fromX; x < toX; x += 1) {
-                /*jslint bitwise: true */
-                channel = (png.width * y + x) << 2;
-                /*jslint bitwise: false */
+                channel = (png.width * y + x) * 4;
 
                 pixel = new Pixel(
                     png.data[channel],

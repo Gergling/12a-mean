@@ -20,12 +20,22 @@ module.exports = function (png, generator) {
 
     png.width = 19;
 
-    generator.raster.gradient(colours.lightblue.copy(), colours.lighterblue.copy(),
-        0, 0,
-        9, 0);
+    generator.raster.gradient(
+        colours.lightblue.copy(),
+        colours.lighterblue.copy(),
+        0,
+        0,
+        9,
+        0
+    );
 
-    generator.raster.gradient(colours.lighterblue.copy(), colours.lightblue.copy(),
-        9, 0,
-        19, 0);
+    generator.raster.gradient(
+        colours.lighterblue.copy(),
+        colours.lightblue.copy(),
+        9,
+        0,
+        19,
+        0
+    );
 
 };

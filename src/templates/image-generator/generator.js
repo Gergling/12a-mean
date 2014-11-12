@@ -21,29 +21,6 @@ module.exports = (function () {
             generator: "src/templates/image-generator/"
         };
 
-    var x = new PNG();
-    x.width = 2;
-    x.height = 1;
-    x.data = [ ];
-    var channel;
-    channel = 0 << 2;
-    x.data[channel] = 0;
-    x.data[channel + 1] = 0;
-    x.data[channel + 2] = 0;
-    x.data[channel + 3] = 255;
-    channel = 1 << 2;
-    x.data[channel] = 0;
-    x.data[channel + 1] = 0;
-    x.data[channel + 2] = 0;
-    x.data[channel + 3] = 255;
-    channel = 2 << 2;
-    x.data[channel] = 0;
-    x.data[channel + 1] = 0;
-    x.data[channel + 2] = 0;
-    x.data[channel + 3] = 255;
-    console.log("Just before pack", x);
-    x.pack();
-
     grunt.file.expand(paths.generator + "src/*.js").forEach(function (srcPath) {
         var fileName = pathService.basename(srcPath, ".js"),
             distPath = paths.generator + "dist/" + fileName + ".png",

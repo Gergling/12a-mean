@@ -34,8 +34,6 @@ module.exports = (function () {
 
             png.pack().pipe(dst); // Todo: Touch dist folder.
             grunt.log.writeln("- Image generated: '" + fileName + "'");
-            // Also, it would be nice to know why the laptop doesn't want to let me 
-            // use the function keys.
         } else {
             grunt.log.writeln("- No function exported for: "
                 + fileName + ".js");

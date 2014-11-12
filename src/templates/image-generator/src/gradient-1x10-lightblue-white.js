@@ -21,11 +21,21 @@ module.exports = function (png, generator) {
     png.width = 2;
     png.height = 19;
 
-    generator.raster.gradient(colours.lightblue.copy(), colours.lighterblue.copy(),
-        0, 0,
-        0, 9);
+    generator.raster.gradient(
+        colours.lightblue.copy(),
+        colours.lighterblue.copy(),
+        0,
+        0,
+        0,
+        9
+    );
 
-    generator.raster.gradient(colours.lighterblue.copy(), colours.lightblue.copy(),
-        0, 9,
-        0, 19);
+    generator.raster.gradient(
+        colours.lighterblue.copy(),
+        colours.lightblue.copy(),
+        0,
+        9,
+        0,
+        19
+    );
 };

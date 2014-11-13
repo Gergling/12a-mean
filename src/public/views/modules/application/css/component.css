@@ -4,29 +4,3 @@
 	width: 0;
 	border-width: 0 2px;
 }
-
-[component-bracket] .bracket {
-	border: solid 4px #2df;
-	height: 6px;
-}
-[component-bracket] .bracket:first-child {
-	border-bottom-width: 0;
-}
-[component-bracket] .bracket:last-child {
-	border-top-width: 0;
-}
-[component-bracket] .horizontal .bracket-cell {
-	display: table-cell;
-}
-[component-bracket] .horizontal .bracket:first-child,
-[component-bracket] .horizontal .bracket:last-child {
-	width: 10px;
-}
-[component-bracket] .horizontal .bracket:first-child {
-	border-bottom-width: 4px;
-	border-right-width: 0;
-}
-[component-bracket] .horizontal .bracket:last-child {
-	border-top-width: 4px;
-	border-left-width: 0;
-}

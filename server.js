@@ -2,6 +2,8 @@ module.exports = (function () {
 
     "use strict";
 
+    /*global console: true */
+
     // Vendor Modules =================================================
     var express = require('express'),
         app = express(),

@@ -17,7 +17,7 @@ Development of a multiplayer turn-based game. In space!
 Each of them can provide certain kinds of 'buff':
 - Tactical: Enemies can force your crew to steer tactically and slow you down and force your crew to work harder. The Chief Tactician can either reduce this for a couple of days by advising the crew on the forseeable future, or remove such a debuff outright by blowing the offending vessel into the next universe.
 - Intelligence: Knowledge of the surrounding area, general scanner optimisations or direct scanner feeds can keep the whole crew up to date on a wide variety of things which may relevant to them. Fixing the engines? Did you know the area you're flying through has a high density of rich colombian dark matter? Best configure the engines appropriately.
-- Medical: The crew can be injured during difficult times. Sure, hardly anyone dies anymore, because this is the future, and what are we? Cave-men? They will naturally heal eventually, but the medic could get the up and back to work much faster than that. Furthermore, they can put crew members in a better frame of mind with short therapy sessions. Or drugs. Whatever.
+- Medical: The crew can be injured during difficult times. Sure, hardly anyone dies anymore, because this is the future, and what are we? Cave-men? They will naturally heal eventually, but the medic could get them up and back to work much faster than that. Furthermore, they can put crew members in a better frame of mind with short therapy sessions. Or drugs. Whatever.
 - Engineer: Anything mechanical can be made to run a bit better. Weapons, shields, medical equipment, engines, scanners, the coffee machines. Anything.
 - Navigator: If you're on a space ship, the chances are you're going to want to go somewhere at some point. The Navigator will stack up a list of planets visited. If your ship has been there in the last two days, that means you can complete your official or *ahem* private missions or trade transactions. Without them, everyone can find something to do, but it's just not the same...
 
@@ -31,8 +31,6 @@ I also wanted other game mechanics, such as hacking, stealth, engineering, resea
 I decided that the easiest approach was to abuse turn-based combat mechanics to express other kinds of potentially complex minigames, such as fixing the engines, scanning for enemies, hacking enemy vessels, and of course shooting other ships.
 
 For that purpose I will build a turn-based engine suitable to switching between these contexts and containing the mechanic above. This will have it's own module, and the potential for export as it's own public node package if completed.
-
-There are also required mechanics external to the turn-based engine. My original idea was to have
 
 Ok? What now?
 -------------

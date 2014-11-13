@@ -19,11 +19,16 @@ module.exports = (function () {
         paths = {
             module: "./",
             generator: "src/templates/image-generator/"
-        };
+        },
+        distFolderPath = paths.generator + "dist/";
+
+    if (!grunt.file.isDir(distFolderPath)) {
+        grunt.file.mkdir(distFolderPath);
+    }
 
     grunt.file.expand(paths.generator + "src/*.js").forEach(function (srcPath) {
         var fileName = pathService.basename(srcPath, ".js"),
-            distPath = paths.generator + "dist/" + fileName + ".png",
+            distPath = distFolderPath + fileName + ".png",
             dst = fs.createWriteStream(distPath),
             png = newPNG(),
             fnc = require(paths.module + "src/" + fileName),
@@ -32,7 +37,7 @@ module.exports = (function () {
         if (typeof fnc === "function") {
             fnc(png, gen);
 
-            png.pack().pipe(dst); // Todo: Touch dist folder.
+            png.pack().pipe(dst);
             grunt.log.writeln("- Image generated: '" + fileName + "'");
         } else {
             grunt.log.writeln("- No function exported for: "

@@ -32,8 +32,6 @@ I decided that the easiest approach was to abuse turn-based combat mechanics to 
 
 For that purpose I will build a turn-based engine suitable to switching between these contexts and containing the mechanic above. This will have it's own module, and the potential for export as it's own public node package if completed.
 
-There are also required mechanics external to the turn-based engine. My original idea was to have
-
 Ok? What now?
 -------------
 

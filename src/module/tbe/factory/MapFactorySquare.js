@@ -15,6 +15,8 @@ module.exports = (function () {
                     map.tile(x, y);
                 }
             }
+
+            return map;
         };
 
     return {

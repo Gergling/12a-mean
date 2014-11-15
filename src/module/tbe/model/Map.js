@@ -17,10 +17,19 @@ module.exports = function () {
 
         if (!tile) {
             tile = new Tile();
+            tile.x(x);
+            tile.y(y);
             tiles[idx] = tile;
         }
 
         return tile;
+    };
+    this.tiles = function (fnc) {
+        Object.keys(tiles).forEach(function (idx) {
+            var tile = tiles[idx];
+
+            fnc(tile);
+        });
     };
 
     // Allow for expansion.

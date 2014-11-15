@@ -1,8 +1,9 @@
 module.exports = (function () {
     "use strict";
 
-    var BattleFactory = require("./BattleFactory"),
-        CharacterFactory = require("./CharacterFactory"),
+    var BattleFactory = require("../factory/BattleFactory"),
+        CharacterFactory = require("../factory/CharacterFactory"),
+
         Ability = require("./Ability"),
         Attribute = require("./Attribute"),
         Capacitor = require("./Capacitor"),

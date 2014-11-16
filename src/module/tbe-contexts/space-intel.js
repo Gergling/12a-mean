@@ -1,10 +1,10 @@
 module.exports = function (context) {
     "use strict";
 
-    var tbePath = {
-            model: "../tbe/model/"
-        },
-        Capacitor = require(tbePath.model + "Capacitor"),
+    var tbePath = "../tbe/",
+
+        Capacitor = require(tbePath + "model/Capacitor"),
+
         stats = {
             attributes: {
                 obscurity: 0
@@ -14,6 +14,11 @@ module.exports = function (context) {
                 energy: new Capacitor(),
                 load: new Capacitor(),
                 mystery: new Capacitor()
+            }
+        },
+        factory = {
+            map: {
+                square: require(tbePath + "factory/MapFactorySquare")
             }
         };
 
@@ -49,18 +54,41 @@ module.exports = function (context) {
 
     // Mysteries probably spawn deliberate structures, such as a secret 
     // mining colony, or a ship buried in an asteroid.
-    context.setBattleFactory("surveillance", function (args) {return false; });
-
-    // Mapping an area of space. Low-level missions for new players.
-    // Most likely to start with natural mysteries.
-    context.setBattleFactory("mapping", function (args, Battle) {
-        // Most likely to start with natural mystery
-        var battle = new Battle();
+    context.battleFactory("surveillance", function (battle) {
         battle.on().turn(0).start(function () {
             //create a natural mystery
             //this.createCharacter(
         });
-        return battle;
+    });
+
+    // Mapping an area of space. Low-level missions for new players.
+    // Most likely to start with natural mysteries.
+    context.battleFactory("mapping", function (battle) {
+        // Most likely to start with natural mystery
+        var size = 5,
+            map = battle.map(factory.map.square.generate(size)),
+            randInt = function (a, b) {
+                return Math.floor(Math.random() * a) + b;
+            },
+            totalMysteries = randInt(5, 1),
+            usedLocations = { },
+            i,
+            x,
+            y;
+
+        map.tile(2, 2).character(context.characterFactory("you").generate());
+        usedLocations[2][2] = true;
+
+        for(i = 0; i < totalMysteries; i += 1) {
+            x = 2;
+            y = 2;
+            while (usedLocations[x] && usedLocations[x][y]) {
+                x = randInt(size);
+                y = randInt(size);
+            };
+            usedLocations[x][y] = true;
+            map.tile(x, y).character(context.characterFactory("mystery-natural").generate());
+        }
     });
 
     // Abilities need:
@@ -161,50 +189,48 @@ module.exports = function (context) {
     });
 
     // An area of interest maybe contain anything and may spawn anything.
-    context.setCharacterFactory("mystery-natural", stats, function (args) {
+    context.characterFactory("mystery-natural", function (character) {
         // Choose spawn(s). Assign attributes and abilities based on spawns.
         var spawns = ["spatial-anomaly"],
             spawnName = spawns[Math.floor(Math.random() * spawns.length)],
             spawn = context.getCharacterFactory(spawnName);
 
-        // Calculate stats according to generated spawn.
-        return {
-            label: "Mysterious Space",
-            spawns: {
-                death: [spawn] // On death, the random spawn is created in it's place.
-            },
-            corpse: false // Does not generate a corpse.
-        };
+        character.label("Mysterious Space");
+        character.on().death().spawn(spawn);
+        // Assign abilities. Mystery has a subset of 'natural' abilities.
+        // Assign attributes, e.g. obscurity.
+        // Assign capacitors, e.g. mystery.
     });
 
-    context.setCharacterFactory("scanner", stats, function () {
+    context.characterFactory("scanner", stats, function () {
         // Fix the stats for the scanner based on skills and equipment.
         return {
             label: "Scanner",
             description: "Contains the hardware to scan areas of space."
         };
     });
-    context.setCharacterFactory("computer", stats, function () {
+    context.characterFactory("computer", stats, function () {
         // Stats based on skills and equipment
         return {
             label: "Computer",
             description: "Machine for analysing scan data."
         };
     });
-    context.setCharacterFactory("you", stats, function (cf) {
+    context.characterFactory("you", stats, function (cf) {
         // Stats based on skills
         cf.setAttribute("patience", 1);
-        cf.setCapacitor("interest", 1); // Passively absorbs interest damage. Based on player stats.
+        cf.setCapacitor("interest", 1); 
+            // Passively absorbs interest damage. Based on player stats.
         return {
             label: "You",
             description: "The Intelligence Officer."
         };
     });
 
-    context.setCharacterFactory("mystery-deliberate", stats);
-    context.setCharacterFactory("spatial-anomaly", stats);
+    context.characterFactory("mystery-deliberate", stats);
+    context.characterFactory("spatial-anomaly", stats);
 
-    context.setCharacterFactory("obscured-structure", stats, function () {
+    context.characterFactory("obscured-structure", stats, function () {
         var adjective = ["", "Asteroid-Buried", "Secret", "Unusual"],
             noun = ["Spaceship", "Mining Colony", "Asteroid"];
         return {
@@ -214,13 +240,13 @@ module.exports = function (context) {
 
     // An obfuscated space has been deliberately hidden from view.
     // It will likely spawn something of military or police interest.
-    context.setCharacterFactory("obfuscated-space", stats);
+    context.characterFactory("obfuscated-space", stats);
 
     // A stealth vessel resides here. Stealth vessels can be scanned 
     // to gain information about a real vessel. As such, it may spawn a 
     // vessel schematic (a corpse) and a real vessel. A real vessel will 
     // open a captain quest for pursuit, and possibly combat.
-    context.setCharacterFactory("stealth-vessel", stats);
+    context.characterFactory("stealth-vessel", stats);
 
     context.abilityRegister(function (name) {
         return [

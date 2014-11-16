@@ -11,8 +11,10 @@ module.exports = (function () {
 
     return function () {
         var scope = this,
-            characterFactories = { },
-            battleFactories = { },
+            factories = {
+                battle: { },
+                character: { }
+            },
             abilities = { },
             abilityRegister = function () {return true; };
 
@@ -25,24 +27,25 @@ module.exports = (function () {
             scope.defaults.stats = stats;
             scope.defaults.generator = generator;
         };
-        this.setCharacterFactory = function (name, stats, generator) {
-            characterFactories[name] = new CharacterFactory(
-                // Look into deep-extend. Giggity.
-                deepExtend(scope.defaults.stats, stats),
+        this.characterFactory = function (name, generator) {
+            /*characterFactories[name] = new CharacterFactory(
                 function (args) {
                     return deepExtend(
                         scope.defaults.generator(args),
                         generator(args)
                     );
                 }
-            );
-        };
-        this.getCharacterFactory = function (name) {
-            return characterFactories[name];
+            );*/
+            var factory = factories.character[name];
+            if (generator) {
+                factory = new CharacterFactory();
+                factories.character[name] = factory;
+            }
+            return factories.character[name];
         };
 
-        this.setBattleFactory = function (name, generator) {
-            battleFactories[name] = new BattleFactory(generator);
+        this.battleFactory = function (name, generator) {
+            factories.battle[name] = new BattleFactory(generator);
         };
 
         this.setCorpse = function (name, label, props) {

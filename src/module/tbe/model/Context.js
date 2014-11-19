@@ -1,13 +1,14 @@
 module.exports = (function () {
     "use strict";
 
-    var BattleFactory = require("../factory/BattleFactory"),
+    var deepExtend = require("deep-extend"),
+
+        BattleFactory = require("../factory/BattleFactory"),
         CharacterFactory = require("../factory/CharacterFactory"),
 
         Ability = require("./Ability"),
         Attribute = require("./Attribute"),
-        Capacitor = require("./Capacitor"),
-        deepExtend = require("deep-extend");
+        Capacitor = require("./Capacitor");
 
     return function () {
         var scope = this,
@@ -28,24 +29,23 @@ module.exports = (function () {
             scope.defaults.generator = generator;
         };
         this.characterFactory = function (name, generator) {
-            /*characterFactories[name] = new CharacterFactory(
-                function (args) {
-                    return deepExtend(
-                        scope.defaults.generator(args),
-                        generator(args)
-                    );
-                }
-            );*/
             var factory = factories.character[name];
             if (generator) {
                 factory = new CharacterFactory();
+                factory.generator(generator);
                 factories.character[name] = factory;
             }
-            return factories.character[name];
+            return factory;
         };
 
         this.battleFactory = function (name, generator) {
-            factories.battle[name] = new BattleFactory(generator);
+            var factory = factories.battle[name];
+            if (generator) {
+                factory = new BattleFactory();
+                factory.generator(generator);
+                factories.battle[name] = factory;
+            }
+            return factory;
         };
 
         this.setCorpse = function (name, label, props) {

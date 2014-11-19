@@ -3,13 +3,14 @@
 module.exports = (function () {
     "use strict";
 
+    var tbeLoader = require("../../tbe/loader"),
+        modulePath = require("./local-paths").module;
+
     return {
-        battle: require(require("./local-paths").module + "battle/controller")(
+        battle: require(modulePath + "battle/controller")(
             require("./contexts"),
-            require("./schemas").tbe,
-            require(require("./local-paths").module + 'tbe/model/Battle')(
-                require("./schemas").tbe
-            )
+            tbeLoader,
+            require(modulePath + 'tbe/model/Battle')
         )
     };
 }());

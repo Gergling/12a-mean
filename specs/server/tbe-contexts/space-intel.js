@@ -6,6 +6,7 @@ describe("tbe-contexts space-intel", function () {
     describe("Factories:", function () {
         describe("Battle:", function () {
             describe("mapping", function () {
+                console.log(context.battleFactory("mapping"));
                 var battle = context.battleFactory("mapping").generate();
 
                 it("player location is at (2, 2)", function () {

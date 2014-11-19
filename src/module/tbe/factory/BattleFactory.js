@@ -1,8 +1,15 @@
 module.exports = function () {
-    return function (generator) {
-        var scope = this;
-        this.getBattle = function (args) {
-            return generator(args);
-        };
+    var Battle = require("../model/Battle"),
+        generator;
+
+    this.generator = function (value) {
+        if (value) {generator = value;}
+        return generator;
+    };
+
+    this.generate = function (args) {
+        var battle = new Battle();
+        generator(battle, args);
+        return battle;
     };
 };

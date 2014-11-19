@@ -15,4 +15,10 @@ module.exports = function () {
         if (value || value === 0) {y = value; }
         return y;
     };
+
+    this.character = function () {
+        // Sets and gets the character at this tile.
+        // Need to handle case where multiple characters can inhabit the same tile.
+        return true;
+    };
 };

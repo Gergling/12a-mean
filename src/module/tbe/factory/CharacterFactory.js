@@ -1,19 +1,22 @@
-module.exports = function (defaults, Character) {
+module.exports = function () {
+    var Character = require("../model/Character"),
+        generator;
 
-    var CharacterFactory = function (stats, generator) {
-        var scope = this;
-        /*this.getCharacter = function (args) {
-            return angular.extend(
-                new Character(stats),
-                generator(args)
-            );
-        };*/
-        this.generate = function () {
-            var character = new Character();
-            generator(character);
-            return character;
-        };
+    this.generator = function (value) {
+        if (value) {
+            if (typeof(value) === "function") {
+                generator = value;
+            } else {
+                throw new Error("tbe.factory.Character.generator(): Parameter must be a function, "
+                    + typeof(value) + " found");
+            }
+        }
+        return generator;
     };
 
-    return CharacterFactory;
+    this.generate = function (args) {
+        var character = new Character();
+        generator(character, args);
+        return character;
+    };
 };

@@ -2,7 +2,8 @@ module.exports = function (contexts, tbeSchemas, Battle) {
     "use strict";
 
     var q = require("q"),
-        BattleModel = tbeSchemas.Battle.model,
+        BattleModel = tbeSchemas.schema.Battle.newModel(),
+        //BattleModel = require("../tbe/loader").schema.Battle.model,
         fetchBattle = function (cb) {
             BattleModel.findOne({}, function (err, battle) {
                 cb(err, battle);

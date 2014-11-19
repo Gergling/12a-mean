@@ -1,9 +1,14 @@
-module.exports = function (tbeSchemas) {
-    var BattleModel = tbeSchemas.Battle.model;
+module.exports = (function () {
+    "use strict";
+
+    var BattleModel = require("../loader").schema.Battle.newModel();
+
     return function () {
         var scope = this,
             battleFactory = "(unknown-battle-factory)",
-            participants = [ ];
+            participants = [ ],
+            map;
+
         this.save = function (success, error) {
             error = error || function (err) {
                 console.error("tbe.model.Battle - error with no callback:", err.message, err.error);
@@ -38,5 +43,9 @@ module.exports = function (tbeSchemas) {
             battleFactory = model.battle_factory;
             //scope.
         };
+        this.map = function (value) {
+            if (value) {map = value; }
+            return map;
+        };
     };
-};
+}());

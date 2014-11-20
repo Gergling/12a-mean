@@ -1,7 +1,8 @@
 module.exports = (function () {
     "use strict";
 
-    var BattleModel = require("../loader").schema.Battle.newModel();
+    var grunt = require("grunt"),
+        BattleModel = require("../loader").schema.Battle.newModel();
 
     return function () {
         var scope = this,
@@ -11,11 +12,14 @@ module.exports = (function () {
 
         this.save = function (success, error) {
             error = error || function (err) {
-                console.error("tbe.model.Battle - error with no callback:", err.message, err.error);
+                grunt.log.writeln("tbe.model.Battle - error with no callback:",
+                    err.message,
+                    err.error
+                    );
             };
 
             // Get the Battle model
-            Battle.findOne({}, function (err, model) {
+            BattleModel.findOne({}, function (err, model) {
                 if (!model) {
                     model = new BattleModel({
                         battle_factory: scope.factory,
@@ -29,7 +33,7 @@ module.exports = (function () {
                             error: err
                         });
                     } else {
-                        success(battle);
+                        success(model);
                     }
                 });
             });
@@ -39,9 +43,10 @@ module.exports = (function () {
         };
         this.set = function (model) {
             // Sets Battle properties to be what the model has.
-            // This will include all characters involved and battle factory name.
+            // This will include all characters involved and battle 
+                // factory name.
             battleFactory = model.battle_factory;
-            //scope.
+            return battleFactory;
         };
         this.map = function (value) {
             if (value) {map = value; }

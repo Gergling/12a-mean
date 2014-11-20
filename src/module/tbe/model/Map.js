@@ -3,6 +3,7 @@ module.exports = function () {
 
     var Tile = require("./Tile"),
 
+        scope = this,
         battle,
         tiles = { };
 
@@ -33,4 +34,13 @@ module.exports = function () {
     };
 
     // Allow for expansion.
+
+    this.charactersPerTile = function (value) {
+        scope.tiles(function (tile) {
+            tile.maximumCharacters(value);
+        });
+    };
+    
+    // A function for moving things between two tiles 
+        // would probably be a good idea.
 };

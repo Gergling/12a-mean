@@ -58,6 +58,7 @@ module.exports = function (context) {
         battle.on().turn(0).start(function () {
             //create a natural mystery
             //this.createCharacter(
+            return true;
         });
     });
 
@@ -67,8 +68,8 @@ module.exports = function (context) {
         // Most likely to start with natural mystery
         var size = 5,
             map = battle.map(factory.map.square.generate(size)),
-            randInt = function (a, b) {
-                return Math.floor(Math.random() * a) + b;
+            randInt = function (a) {
+                return Math.floor(Math.random() * a);
             },
             totalMysteries = randInt(5, 1),
             usedLocations = { },
@@ -79,18 +80,19 @@ module.exports = function (context) {
         map.tile(2, 2).character(context.characterFactory("you").generate());
         usedLocations[2] = {2: true};
 
-        for(i = 0; i < totalMysteries; i += 1) {
+        for (i = 0; i < totalMysteries; i += 1) {
             x = 2;
             y = 2;
             while (usedLocations[x] && usedLocations[x][y]) {
                 x = randInt(size);
                 y = randInt(size);
-            };
+            }
             if (!usedLocations[x]) {usedLocations[x] = { }; }
             usedLocations[x][y] = true;
-            map.tile(x, y).character(context.characterFactory("mystery-natural").generate());
+            map.tile(x, y).character(
+                context.characterFactory("mystery-natural").generate()
+            );
         }
-        ///*/
     });
 
     // Abilities need:
@@ -137,10 +139,10 @@ module.exports = function (context) {
             + "Buff will be consumed by appropriate ability. Find a good name "
             + "for buff."
             + "Preferably better than 'analysed'.",
-        {glyphicon: "floppy-saved"}); // Todo: image of 1s and 0s pattern
+        {glyphicon: "floppy-saved"}); // Image of 1s and 0s pattern
 
     context.ability("renewed-interest", "Renew Interest", {
-        glyphicon: "eye-open", // Todo: image of a brain being electricuted.
+        glyphicon: "eye-open", // Image of a brain being electricuted.
         text: {
             action: "find something interesting",
             description: "Heal interest levels. Requires analyse buff. "
@@ -164,13 +166,14 @@ module.exports = function (context) {
             target: "self"
             // Function for healing mystery.
         });
-        // Todo: image of question mark-covered cloud
+        // Image of question mark-covered cloud
 
     context.ability("inconsistent-data", "Data Inconsistency", {
-        // Todo: image of 1s and 0s, and maybe a 2. Maybe make it red.
+        // Image of 1s and 0s, and maybe a 2. Maybe make it red.
         text: {
             action: "show inconsistent data",
-            description: "Attacks a little of the target's interest. Restores mystery."
+            description: "Attacks a little of the target's interest. "
+                + "Restores mystery."
         },
         sub: {
             bore: 0.25,
@@ -194,8 +197,10 @@ module.exports = function (context) {
     context.characterFactory("mystery-natural", function (character) {
         // Choose spawn(s). Assign attributes and abilities based on spawns.
         var spawns = ["spatial-anomaly"],
-            spawnName = spawns[Math.floor(Math.random() * spawns.length)],
-            spawn = context.getCharacterFactory(spawnName);
+            spawnFactoryName = spawns[
+                Math.floor(Math.random() * spawns.length)
+            ],
+            spawn = context.characterFactory(spawnFactoryName);
 
         character.label("Mysterious Space");
         character.on().death().spawn(spawn);
@@ -221,12 +226,10 @@ module.exports = function (context) {
     context.characterFactory("you", function (character) {
         // Stats based on skills
         character.attribute("patience", 1);
-        character.capacitor("interest", 1); 
+        character.capacitor("interest", 1);
             // Passively absorbs interest damage. Based on player stats.
-        return {
-            label: "You",
-            description: "The Intelligence Officer."
-        };
+        character.label("You");
+        character.description("The Intelligence Officer.");
     });
 
     context.characterFactory("mystery-deliberate", function () {

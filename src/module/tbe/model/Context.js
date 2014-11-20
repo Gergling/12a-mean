@@ -1,9 +1,7 @@
 module.exports = (function () {
     "use strict";
 
-    var deepExtend = require("deep-extend"),
-
-        BattleFactory = require("../factory/BattleFactory"),
+    var BattleFactory = require("../factory/BattleFactory"),
         CharacterFactory = require("../factory/CharacterFactory"),
 
         Ability = require("./Ability"),
@@ -49,7 +47,7 @@ module.exports = (function () {
         };
 
         this.setCorpse = function (name, label, props) {
-            console.log("Context::setCorpse needs a body.");
+            return true;
         };
 
         this.ability = function (name, label, props) {
@@ -68,7 +66,9 @@ module.exports = (function () {
             return unlocked;
         };
         this.abilityRegister = function (fnc) {abilityRegister = fnc; };
-        this.abilityAvailable = function (name) {return abilityRegister(name); };
+        this.abilityAvailable = function (name) {
+            return abilityRegister(name);
+        };
 
         this.attributes = { };
         this.setAttribute = function (name, description) {

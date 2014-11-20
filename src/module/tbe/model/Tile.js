@@ -1,7 +1,11 @@
 module.exports = function () {
     "use strict";
 
-    var x = 0, y = 0, map;
+    var x = 0,
+        y = 0,
+        map,
+        characters = [ ],
+        maximumCharacters = 1;
 
     this.map = function (value) {
         if (value) {map = value; }
@@ -16,9 +20,30 @@ module.exports = function () {
         return y;
     };
 
-    this.character = function () {
+    this.maximumCharacters = function (value) {
+        if (!(typeof(value) === "undefined")) {
+            maximumCharacters = value;
+        }
+        return maximumCharacters;
+    };
+    this.character = function (character) {
         // Sets and gets the character at this tile.
-        // Need to handle case where multiple characters can inhabit the same tile.
-        return true;
+        // Need to handle case where multiple characters 
+            // can inhabit the same tile.
+        if (typeof (character) !== "undefined") {
+            // Adding a character
+            if (characters.length < maximumCharacters) {
+                characters.push(character);
+            } else {
+                throw new Error([
+                    "Maximum characters met for Tile (",
+                    x,
+                    ",",
+                    y,
+                    ")."
+                ].join(""));
+            }
+        }
+        return maximumCharacters === 1 ? characters[0] : characters;
     };
 };

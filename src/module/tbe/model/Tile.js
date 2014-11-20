@@ -21,7 +21,7 @@ module.exports = function () {
     };
 
     this.maximumCharacters = function (value) {
-        if (!(typeof(value) === "undefined")) {
+        if (!(value === undefined)) {
             maximumCharacters = value;
         }
         return maximumCharacters;
@@ -30,7 +30,7 @@ module.exports = function () {
         // Sets and gets the character at this tile.
         // Need to handle case where multiple characters 
             // can inhabit the same tile.
-        if (typeof (character) !== "undefined") {
+        if (character !== undefined) {
             // Adding a character
             if (characters.length < maximumCharacters) {
                 characters.push(character);

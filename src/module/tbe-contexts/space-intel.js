@@ -1,7 +1,9 @@
 module.exports = function (context) {
     "use strict";
 
-    var tbePath = "../tbe/",
+    var deepExtend = require("deep-extend"),
+
+        tbePath = "../tbe/",
 
         Capacitor = require(tbePath + "model/Capacitor"),
 
@@ -64,18 +66,24 @@ module.exports = function (context) {
 
     // Mapping an area of space. Low-level missions for new players.
     // Most likely to start with natural mysteries.
-    context.battleFactory("mapping", function (battle) {
+    context.battleFactory("mapping", function (battle, args) {
         // Most likely to start with natural mystery
         var size = 5,
             map = battle.map(factory.map.square.generate(size)),
             randInt = function (a) {
                 return Math.floor(Math.random() * a);
             },
-            totalMysteries = randInt(5, 1),
+            totalMysteries,
             usedLocations = { },
             i,
             x,
             y;
+
+        args = deepExtend({
+            totalMysteries: randInt(5, 1)
+        }, args);
+
+        totalMysteries = args.totalMysteries;
 
         map.tile(2, 2).character(context.characterFactory("you").generate());
         usedLocations[2] = {2: true};

@@ -69,7 +69,6 @@ module.exports = function (contexts, tbeSchemas, Battle) {
             ability = contexts["space-intel"].ability(abilityName),
             available = contexts["space-intel"].abilityAvailable(abilityName); // Check if available to playerId.
 
-        console.log(1, contexts["space-intel"].abilities());
         if (ability) {
             // Check if ability is available to playerId
             if (available) {

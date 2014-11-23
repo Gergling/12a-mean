@@ -8,9 +8,9 @@ module.exports = function (contexts, tbeSchemas, Battle) {
             BattleModel.findOne({}, function (err, battle) {
                 cb(err, battle);
             });
-        };
+        },
+        bc = { };
 
-    var bc = { };
     bc.start = function (contextName, battleFactoryName, player_id, success, error) {
         // Validate battleFactoryName and player_id.
         // Ensure that there is no existing battle first. Find a good place to request the existence of a battle.

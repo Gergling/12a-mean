@@ -49,11 +49,11 @@ module.exports = function (app, tbeSchemas, controllers, mongoose) {
     });
 
     // PUT /battle casts an ability
-    app.param('abilityName', function(req, res, next, name){
+    app.param('abilityName', function (req, res, next, name) {
         var regex = new RegExp(/^[a-z]$/);
-        if(regex.test(name)){
+        if (regex.test(name)) {
             next();
-        }else{
+        } else {
             next('route');
         }
     });
@@ -115,9 +115,9 @@ module.exports = function (app, tbeSchemas, controllers, mongoose) {
         res.send(require("../../skills/config/tree")());
     });
 
-    //app.get('/quest/:id', function (req, res) {
-        //res.sendFile(req.param("id")
-    //});
+    app.get('/quests', function (req, res) {
+        res.send(controllers.quests.get());
+    });
 
     // Frontend
     app.get('/', function (req, res) {

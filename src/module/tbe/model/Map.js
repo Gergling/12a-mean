@@ -40,7 +40,7 @@ module.exports = function () {
             tile.maximumCharacters(value);
         });
     };
-    
+
     // A function for moving things between two tiles 
         // would probably be a good idea.
 };

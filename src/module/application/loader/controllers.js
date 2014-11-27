@@ -11,6 +11,7 @@ module.exports = (function () {
             require("./contexts"),
             tbeLoader,
             require(modulePath + 'tbe/model/Battle')
-        )
+        ),
+        quests: require(modulePath + "quests/controller")
     };
 }());

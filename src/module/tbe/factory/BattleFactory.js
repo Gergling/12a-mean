@@ -5,7 +5,7 @@ module.exports = function () {
         generator;
 
     this.generator = function (value) {
-        if (value) {generator = value;}
+        if (value) {generator = value; }
         return generator;
     };
 

@@ -6,12 +6,12 @@ module.exports = function () {
 
     this.generator = function (value) {
         if (value) {
-            if (typeof (value) === "function") {
+            if (typeof value === "function") {
                 generator = value;
             } else {
                 throw new Error("tbe.factory.Character.generator(): "
                     + "Parameter must be a function, "
-                    + typeof (value) + " found");
+                    + (typeof value) + " found");
             }
         }
         return generator;

@@ -1,8 +1,7 @@
 module.exports = function () {
     "use strict";
 
-    var extend = require("deep-extend"),
-        SkillReference = function (strRef) {
+    var SkillReference = function (strRef) {
             var chunks = strRef.split("."),
                 name = chunks.shift(),
                 descRef = chunks.join(".");
@@ -125,10 +124,11 @@ module.exports = function () {
                         // Save player model.
                         // Remove the child skill model.
                     }
+                    return hours;
                 });
             };
             this.save = function () {
-                
+                return true;
             };
         };
 

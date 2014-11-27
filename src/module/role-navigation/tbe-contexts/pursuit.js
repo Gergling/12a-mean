@@ -1,6 +1,7 @@
 module.exports = function (context) {
     "use strict";
 
+    var Capacitor = require("../../tbe/model/Capacitor");
     // Ship is in pursuit of another ship.
     // Abilities generally include speeding up and
     // trying to slow down the target with persuasion 

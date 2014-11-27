@@ -34,6 +34,12 @@ var Character = function (props) {
             }
         };
     };
+    this.view = function () {
+        return {
+            label: this.label(),
+            image: "there-is-no-image.png"
+        };
+    };
 };
 
 module.exports = Character;

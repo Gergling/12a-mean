@@ -52,5 +52,10 @@ module.exports = (function () {
             if (value) {map = value; }
             return map;
         };
+        this.view = function () {
+            return {
+                map: this.map().view()
+            };
+        };
     };
 }());

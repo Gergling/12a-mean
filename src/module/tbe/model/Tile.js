@@ -46,4 +46,17 @@ module.exports = function () {
         }
         return maximumCharacters === 1 ? characters[0] : characters;
     };
+    this.view = function () {
+        var view = {
+            x: this.x(),
+            y: this.y(),
+            characters: [ ]
+        };
+
+        characters.forEach(function (character) {
+            view.characters.push(character.view());
+        });
+
+        return view;
+    };
 };

@@ -41,6 +41,13 @@ module.exports = function () {
         });
     };
 
+    this.view = function () {
+        var view = { tiles: [ ] };
+        this.tiles(function (tile) {
+            view.tiles.push(tile.view());
+        });
+        return view;
+    };
     // A function for moving things between two tiles 
         // would probably be a good idea.
 };

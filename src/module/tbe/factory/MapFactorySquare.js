@@ -10,8 +10,8 @@ module.exports = (function () {
 
             map.battle(battle);
 
-            for(x = 0; x < size; x += 1) {
-                for(y = 0; y < size; y += 1) {
+            for (x = 0; x < size; x += 1) {
+                for (y = 0; y < size; y += 1) {
                     map.tile(x, y);
                 }
             }

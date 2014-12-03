@@ -1,3 +1,5 @@
+// Module is a singleton object.
+
 module.exports = (function () {
     "use strict";
 

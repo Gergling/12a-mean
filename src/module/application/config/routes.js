@@ -1,7 +1,8 @@
-module.exports = function (app, tbeSchemas, controllers, mongoose) {
+module.exports = function (app, controllers, mongoose) {
     "use strict";
 
-    var Character = tbeSchemas.Character.model;
+    var tbeSchemas = require("../../tbe/loader").schema,
+        Character = tbeSchemas.Character.model;
 
     app.post('/test', function (req, res) {
         Character.findOne({id: 2}, function (err, character) {
@@ -117,6 +118,17 @@ module.exports = function (app, tbeSchemas, controllers, mongoose) {
 
     app.get('/quests', function (req, res) {
         res.send(controllers.quests.get());
+    });
+    app.param('questId', function (req, res, next, name) {
+        var regex = new RegExp(/^[0-9]$/);
+        if (regex.test(name)) {
+            next();
+        } else {
+            next('route');
+        }
+    });
+    app.post('/quests/:questId', function (req, res) {
+        res.send(controllers.quests.startMission(req.params.questId));
     });
 
     // Frontend

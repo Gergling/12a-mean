@@ -18,8 +18,6 @@ module.exports = (function () {
     // config files
         dbConfig = require(modPath + 'application/config/db'),
 
-        schemas = require(modPath + "application/loader/schemas"),
-
     // controllers
         controllers = require(modPath + "application/loader/controllers"),
 
@@ -45,7 +43,7 @@ module.exports = (function () {
 
     // routes ==================================================
     require(modPath + 'application/config/routes')(app,
-        schemas.tbe, controllers, mongoose);
+        controllers, mongoose);
 
     // start app ===============================================
     app.listen(port); // startup our app at http://localhost:8080

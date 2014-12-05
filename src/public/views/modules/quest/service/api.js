@@ -3,29 +3,19 @@ ngModules.get("quest").component(function (ngm, mod) {
 
     ngm.service(mod.getModuleName("service", "api"), [
 
-        "$q",
         "Restangular",
 
-        function ($q, Restangular) {
-            var quests = Restangular.all("quests"),
-                scope = this;
-
-            this.loading = false;
-            this.loaded = false;
+        function (Restangular) {
+            var quests = Restangular.all("quests");
 
             this.fetch = function () {
-                var deferred = $q.defer();
-                scope.loading = true;
-                quests.getList().then(function (list) {
-                    console.log(list);
-                    scope.loading = false;
-                    scope.loaded = true;
-                    deferred.resolve(list);
-                });
-                return deferred.promise;
+                return quests.getList();
             };
 
-            /// POST for start mission.
+            this.startMission = function (questId) {
+                // Find out how to do a restangular post.
+                return quests.post({questId: questId});
+            };
             this.all = function () {return quests; };
 
         }

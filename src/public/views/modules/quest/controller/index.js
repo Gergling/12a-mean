@@ -9,7 +9,7 @@ ngModules.get("quest").component(function (ngm, mod) {
 
         function ($scope, $location, api) {
             $scope.quests = [ ];
-            $scope.selected = { };
+            $scope.selected = false;
             $scope.select = function (idx) {
                 $scope.selected = $scope.quests[idx];
             };
@@ -23,11 +23,16 @@ ngModules.get("quest").component(function (ngm, mod) {
 
             api.fetch().then(function (list) {
                 $scope.quests = list;
+                $scope.status.loaded = true;
+            }).finally(function () {
+                $scope.status.loading = false;
             });
 
             $scope.awaitingStartMission = false;
             $scope.successfulStartMission = false;
             $scope.status = {
+                loading: true,
+                loaded: false,
                 startMission: {
                     awaiting: false,
                     successful: false
@@ -39,7 +44,7 @@ ngModules.get("quest").component(function (ngm, mod) {
                 $scope.status.startMission.awaiting = true;
                 api.startMission(idx).then(function () {
                     $scope.status.startMission.successful = true;
-                    ///$location.href();
+                    $location.path("/bridge/battle/");
                 }).finally(function () {
                     $scope.status.startMission.awaiting = false;
                 });

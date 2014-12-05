@@ -22,7 +22,10 @@
             <div class="stalk" style="height: 20px; margin: 0 auto;"></div>
             <div component-bracket style="position: relative;">
                 {{selected.description || "Select a task to see the description"}}
-                <button data-ng-click="startMission(selected.idx);">Start Mission</button>
+                <button data-ng-show="selected"
+                    data-ng-click="startMission(selected.idx);">
+                    Start Mission
+                </button>
             </div>
         </div>
 

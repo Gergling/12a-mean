@@ -117,7 +117,8 @@ module.exports = function (app, controllers, mongoose) {
     });
 
     app.get('/quests', function (req, res) {
-        res.send(controllers.quests.get());
+        // Todo: Put a delay in here to test quests page loading output.
+        res.send(controllers.quests.list());
     });
     app.param('questId', function (req, res, next, name) {
         var regex = new RegExp(/^[0-9]$/);
@@ -127,7 +128,7 @@ module.exports = function (app, controllers, mongoose) {
             next('route');
         }
     });
-    app.post('/quests/:questId', function (req, res) {
+    app.post('/quests', function (req, res) {
         res.send(controllers.quests.startMission(req.params.questId));
     });
 

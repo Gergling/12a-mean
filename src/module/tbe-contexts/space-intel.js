@@ -26,26 +26,26 @@ module.exports = function (context) {
 
     // Setup all possible stats for this context somewhere.
         // The point is to easily feed in stats.
-    context.setAttribute("patience", "Resistance to reduction of interest.");
-    context.setCapacitor("interest", "How long the entity can hold your "
+    context.attribute("patience", "Resistance to reduction of interest.");
+    context.capacitor("interest", "How long the entity can hold your "
         + "attention for.",
         {
             dr: "patience"
         });
 
-    context.setCapacitor("energy", "Available energy for the equipment to "
+    context.capacitor("energy", "Available energy for the equipment to "
         + "use.");
-    context.setCapacitor("load", "Degree of use the processor/memory are "
+    context.capacitor("load", "Degree of use the processor/memory are "
         + "getting.");
 
-    context.setAttribute("obscurity", "Slows reduction of mystery.");
-    context.setCapacitor("mystery", "Extent to which the entity is "
+    context.attribute("obscurity", "Slows reduction of mystery.");
+    context.capacitor("mystery", "Extent to which the entity is "
         + "understood.",
         {
             dr: "obscurity"
         });
 
-    context.setCorpse("report", "Report", {
+    context.corpse("report", "Report", {
         drops: function (args) {
             // Training hours for skills
             // Data which can be sold for credits

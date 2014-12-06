@@ -6,7 +6,10 @@ module.exports = (function () {
 
         Ability = require("./Ability"),
         Attribute = require("./Attribute"),
-        Capacitor = require("./Capacitor");
+        Capacitor = require("./Capacitor"),
+
+        attributes = { },
+        capacitors = { };
 
     return function () {
         var scope = this,
@@ -46,7 +49,7 @@ module.exports = (function () {
             return factory;
         };
 
-        this.setCorpse = function (name, label, props) {
+        this.corpse = function () {
             return true;
         };
 
@@ -70,16 +73,15 @@ module.exports = (function () {
             return abilityRegister(name);
         };
 
-        this.attributes = { };
-        this.setAttribute = function (name, description) {
+        this.attribute = function (name, description) {
             var attribute = new Attribute();
-            scope.attributes[name] = attribute;
+            attribute.description(description);
+            attributes[name] = attribute;
         };
 
-        this.capacitors = { };
-        this.setCapacitor = function (name, description) {
+        this.capacitor = function (name) {
             var capacitor = new Capacitor();
-            scope.capacitors[name] = capacitor;
+            capacitors[name] = capacitor;
         };
     };
 }());

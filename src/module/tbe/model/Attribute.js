@@ -1,6 +1,10 @@
-module.exports = function (label, description, props) {
+module.exports = function () {
     "use strict";
 
-    this.label = label;
-    this.description = description;
+    var description;
+
+    this.description = function (value) {
+        if (value) {description = value; }
+        return description;
+    };
 };

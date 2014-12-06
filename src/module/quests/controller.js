@@ -53,6 +53,9 @@ module.exports = (function () {
     };
 
     controller.startMission = function (questId) {
+        // Get quest.
+        // quest.startMission();
+        // Report success.
         return { success: false, message: "I would like to tell you the "
             + "message updated successfully. I'd like to tell you that..." };
     };

@@ -52,7 +52,19 @@ module.exports = function () {
         };
     };
 
+    this.save = function () {
+        // Save quest.
+        // Save battle.
+        this.battle().save();
+    };
+
     this.startBattle = function () {
-        return true;
+        var report = { };
+        // Generate battle.
+        this.generateBattle();
+        // Save quest.
+        this.save();
+        // Saving is probably non-blocking, so will require a promise.
+        return report;
     };
 };

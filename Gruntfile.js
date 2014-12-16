@@ -103,16 +103,12 @@ module.exports = function (grunt) {
             server: {
                 src: paths.other,
                 directives: {
-                    unparam: true,
-                    maxlen: 80,
                     predef: [ 'module', 'require', 'process' ]
                 }
             },
             module: {
                 src: paths.module,
                 directives: {
-                    unparam: true,
-                    maxlen: 80,
                     predef: [ 'module', 'require', 'process' ]
                 }
             },
@@ -203,7 +199,7 @@ module.exports = function (grunt) {
                     keepRunner: true,
                     junit:      { path:  'build/logs/junit' }
                 }
-            },
+            }/*,
             coverage: {
                 src: paths.client,
                 options: {
@@ -227,7 +223,7 @@ module.exports = function (grunt) {
                     display: 'none',
                     summary: true
                 }
-            }
+            }*/
         },
         jasmine_node: {
             options: {

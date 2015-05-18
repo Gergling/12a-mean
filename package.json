@@ -34,5 +34,52 @@
     "mongoose": "~3.8.0",
     "pngjs": "^0.4.0",
     "q": "^1.0.1"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "description": "12a-mean",
+  "dependencies": {
+    "express": "^4.8.5",
+    "bower": "^1.3.9",
+    "mongoose": "^3.8.15",
+    "q": "^1.0.1",
+    "grunt-contrib-clean": "^0.6.0",
+    "method-override": "^2.0.2",
+    "body-parser": "^1.4.3",
+    "karma": "^0.12.24",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-bower-task": "^0.4.0",
+    "grunt-cli": "^0.1.13",
+    "pngjs": "^0.4.0",
+    "karma-jasmine": "^0.1.5",
+    "karma-story-reporter": "^0.2.2",
+    "deep-extend": "^0.2.11",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-jslint": "^1.1.12",
+    "grunt-eol": "^0.2.0",
+    "grunt-contrib-jasmine": "^0.7.0",
+    "grunt-jasmine-runner": "^0.6.0",
+    "grunt-jsdoc": "^0.5.7",
+    "grunt-jasmine-node": "^0.2.1",
+    "grunt-karma": "^0.8.3",
+    "grunt-contrib-htmlmin": "^0.3.0",
+    "grunt-template": "^0.2.3",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-execute": "^0.2.2",
+    "grunt-template-jasmine-istanbul": "^0.3.0",
+    "grunt-contrib-uglify": "^0.5.1",
+    "grunt": "^0.4.5",
+    "karma-phantomjs-launcher": "^0.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Gergling/12a-mean.git"
+  },
+  "author": "Greg Davies",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gergling/12a-mean/issues"
+  },
+  "homepage": "https://github.com/Gergling/12a-mean"
 }

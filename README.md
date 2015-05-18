@@ -4,7 +4,7 @@
 What am I looking at?
 ---------------------
 
-Development of a multiplayer turn-based game. In space!
+Development of a multiplayer isometric (for starters) turn-based game. In space!
 
 ### Looking for Crew ###
 5 real people on board a ship, performing different duties:

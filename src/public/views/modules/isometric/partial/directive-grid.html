@@ -1,0 +1,8 @@
+<div class="isometric-grid unselectable" 
+    style="top: {{cellHeight}}px;" 
+    data-ng-click="click($event)"
+    data-ng-mousedown="mousedown($event)" 
+    data-ng-mouseup="mouseup($event)" 
+    data-ng-mousemove="mousemove($event)">
+    <div data-ng-repeat="tile in tiles" isometric-tile="tile"></div>
+</div>

@@ -4,5 +4,6 @@ ngModules.set(angular.module("application", [
     "restangular",
 
     "battle",
+    "isometric",
     "skill"
 ]));

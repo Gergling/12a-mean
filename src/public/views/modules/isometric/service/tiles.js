@@ -1,0 +1,73 @@
+angular.module("isometric").service("isometric.service.tiles", [
+
+    "$filter",
+    "isometric.service.tile",
+    "isometric.service.view",
+
+    function ($filter, tileService, view) {
+        "use strict";
+
+        var tiles = {
+                facility: [ ], // All tiles with facilities
+                construction: [ ], // All tiles eligible for new construction
+                visible: [ ] // All tiles printed to the html
+            },
+            constructionMode = false,
+            updateCallbacks = [ ],
+            update = function () {
+                if (constructionMode) {
+                    // Algorithm for generating construction tiles
+                } else {
+                    tiles.construction = [ ];
+                }
+                // Update all visible tiles
+                tiles.visible = $filter('filter')(tiles.facility, function (tile) {
+                    var isVisible = true;
+                    if (
+                        tile.left() > view.size().x()
+                            || tile.left() + tile.size().x() < 0
+                            || tile.top() > view.size().y() + 300
+                            || tile.top() + tile.size().y() < 0
+                    ) {
+                        isVisible = false;
+                    }
+                    return isVisible;
+                });
+                updateCallbacks.forEach(function (fnc) {fnc(); });
+            };
+
+        (function () {
+            // TODO: Generate some empty tiles.
+            var x = 0, z = 0, tile;
+            for (z = 0; z < 3; z += 1) {
+                for (x = 0; x < 3; x += 1) {
+                    tile = tileService.create();
+                    tile.point().set(x, 0, z);
+                    tiles.facility.push(tile);
+                }
+            }
+        }());
+
+        this.gridToggle = function () {
+            // This function needs to run the update and set all the construction tiles to 'show'.
+            //tiles.forEach(function
+            console.log($filter('filter')(tiles.facility, function (tile) {
+                console.log(tile);
+                // return true to include this tile
+            }));
+            // Toggle tiles != current level - new facility mode
+            // Toggle tiles above current level - full view mode
+        };
+        this.visible = function () {
+            return $filter('orderBy')(tiles.visible, [
+                "+y()",
+                function (tile) {return tile.point().x() - tile.point().z(); }
+            ]);
+        };
+        this.update = update;
+        this.onChange = function (cb) {
+            updateCallbacks.push(cb);
+            update();
+        };
+    }
+]);

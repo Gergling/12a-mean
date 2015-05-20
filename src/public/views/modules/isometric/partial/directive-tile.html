@@ -1,0 +1,13 @@
+<div 
+    class="isometric-square"
+    data-ng-show="isometricTile.show()"
+    data-ng-class="{hover: isometricTile.hover()}"
+    style="
+        left: {{isometricTile.left()}}px;
+        top: {{isometricTile.top()}}px;
+        width: {{isometricTile.size().x()}}px;
+        height: {{isometricTile.size().y()}}px;
+    ">
+        <img class="unselectable" width="{{isometricTile.size().x()}}" data-ng-src="{{image}}" />
+        <div class="unselectable overlay"></div>
+</div>

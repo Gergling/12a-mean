@@ -1,3 +1,3 @@
 mode 120,2500
-npm run start
+node server.js
 cmd.exe

@@ -1,8 +1,6 @@
 module.exports = function (app, controllers, mongoose) {
     "use strict";
 
-    var tbeSchemas = require("../../tbe/loader").schema,
-        Character = tbeSchemas.Character.model;
 
 
                 }

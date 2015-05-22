@@ -4,30 +4,9 @@ module.exports = function (app, controllers, mongoose) {
     var tbeSchemas = require("../../tbe/loader").schema,
         Character = tbeSchemas.Character.model;
 
-    app.post('/test', function (req, res) {
-        Character.findOne({id: 2}, function (err, character) {
-            if (!character) {
-                // create
-                character = new Character({id: 2, health: 0});
-            }
-            character.health += 1;
-            character.save(function (err) {
-                if (err) {
-                    console.log('error saving character');
-                    console.log(err);
-                }
-            });
 
-            res.send({
-                game_state: {
-                    battle_id: 1,
-                    characters: {
-                        2: {health: character.health}
-                    }
                 }
             });
-        });
-    });
 
     // GET /battle returns the state of the current battle
     app.get('/battle', function (req, res) {

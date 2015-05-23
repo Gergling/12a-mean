@@ -1,10 +1,41 @@
-module.exports = function (app, controllers, mongoose) {
+module.exports = function (app, controllers) {
     "use strict";
 
+    var routes = function (controllerPath, list) {
+            var controller = require(controllerPath);
+            list.forEach(function (route) {
+                var method = route[0],
+                    url = route[1],
+                    functionName = route[2],
+                    params = route[3];
 
+                if (params) {
+                    params.forEach(function (param) {
+                        var paramName = param[0],
+                            regex = param[1];
 
+                        app.param(paramName, function (req, res, next, name) {
+                            if (regex.test(name)) {
+                                next();
+                            } else {
+                                next('route');
+                            }
+                        });
+                    });
                 }
+                console.log(url, functionName, controller, controllerPath, controller[functionName]);
+                app[method](url, controller[functionName]);
             });
+        };
+
+    routes('../../battle/controller', [
+        [ 'get',    '/battle',                      'current' ],
+        [ 'post',   '/battle/turn',                 'turn' ],
+        [ 'post',   '/battle/start/:missionId',     'start' ],
+        [ 'post',   '/battle/cast/:abilityName',    'cast',
+                [ 'abilityName', /^[a-z]$/ ]
+            ]
+    ]);
 
     // GET /battle returns the state of the current battle
     app.get('/battle', function (req, res) {

@@ -1,8 +1,11 @@
-module.exports = function (contexts, tbeSchemas, Battle) {
+module.exports = (function () {
+//module.exports = function (contexts, tbeSchemas, Battle) {
     "use strict";
 
+    
     var q = require("q"),
-        BattleModel = tbeSchemas.schema.Battle.newModel(),
+        BattleModel = require('../tbe/schema').Battle.newModel(),
+        //BattleModel = tbeSchemas.schema.Battle.newModel(),
         //BattleModel = require("../tbe/loader").schema.Battle.model,
         fetchBattle = function (cb) {
             BattleModel.findOne({}, function (err, battle) {
@@ -53,7 +56,26 @@ module.exports = function (contexts, tbeSchemas, Battle) {
         // If valid, return 200. If invalid, return appropriate code.
         return { };
     };
+    bc.current = function (req, res) {
+        var player_id = 1;
+        if (player_id) {
+            bc.get(
+                player_id,
+                function (battle) {
+                    res.send(battle);
+                },
+                function (err) {
+                    res.send(err);
+                    //res.status(500).end();
+                }
+            );
+        } else {
+            res.send();
+            res.status(403).end();
+        }
+    };
     bc.get = function (player_id, success, error) {
+        // Todo: Move this entire function into bc.current.
         // Player can only be in one battle at a time, so check it.
         // Get battle state.
         // Also try to return a delta - showing changes. 
@@ -70,12 +92,41 @@ module.exports = function (contexts, tbeSchemas, Battle) {
             abilities: abilities
         });
     };
+    bc.cast = function (req, res) {
+        var player_id = 1;
+        if (player_id) {
+            bc.ability(
+                player_id,
+                req.params.abilityName,
+                req.query // Controller to sanitise.
+            ).then(function () {
+                res.send({ });
+            }, function (error) {
+                switch (error.type) {
+                case "malformed":
+                    res.status(400).send(error.query);
+                    break;
+                case "unavailable":
+                    res.status(403).end();
+                    break;
+                case "nonexistent":
+                    res.status(404).end();
+                    break;
+                default:
+                    res.status(500).end();
+                }
+            });
+        } else {
+            res.status(401).end();
+        }
+    };
     bc.ability = function (playerId, abilityName, queryData) {
         // queryData must be considered unsanitised and potentially dangerous
         // at this point.
         var deferred = q.defer(),
             reject = false,
-            error = {type: "unknown"},
+            error = { type: "unknown" },
+            contexts = require("../application/loader/contexts"),
             ability = contexts["space-intel"].ability(abilityName),
             available = contexts["space-intel"].abilityAvailable(abilityName);
                 // Check if available to playerId.
@@ -110,4 +161,4 @@ module.exports = function (contexts, tbeSchemas, Battle) {
     };
 
     return bc;
-};
+}());

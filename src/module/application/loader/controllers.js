@@ -3,7 +3,8 @@
 module.exports = (function () {
     "use strict";
 
-    var tbeLoader = require("../../tbe/loader"),
+    throw new Error("Do not load this module");
+    var //tbeLoader = require("../../tbe/loader"),
         modulePath = require("./local-paths").module;
 
     return {

@@ -1,15 +1,18 @@
 // All schemas here.
-
-module.exports = function (mongoose) {
+// Todo: Investigate how schemas and models are created.
+module.exports = (function () {
     "use strict";
 
-    var schemas = {}, setSchema = function (name, fields) {
-        var schema = mongoose.Schema(fields);
-        schemas[name] = {
-            schema: schema,
-            newModel: function () {return mongoose.model(name, schema);}
+    var mongoose = require('mongoose'),
+        schemas = {},
+        setSchema = function (name, fields) {
+            var schema = mongoose.Schema(fields);
+            schemas[name] = {
+                schema: schema,
+                newModel: function () {return mongoose.model(name, schema);}
+            };
         };
-    };
+
     setSchema("Player", {
         name: String
     });
@@ -27,4 +30,4 @@ module.exports = function (mongoose) {
         participants: [schemas.Character.schema]
     });
     return schemas;
-};
+}());

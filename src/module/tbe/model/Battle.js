@@ -2,7 +2,7 @@ module.exports = (function () {
     "use strict";
 
     var grunt = require("grunt"),
-        BattleModel = require("../loader").schema.Battle.newModel();
+        BattleModel = require("../schema").Battle.newModel();
 
     return function () {
         var scope = this,

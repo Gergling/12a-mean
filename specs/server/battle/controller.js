@@ -6,7 +6,7 @@ describe("Battle controller", function () {
     // assuming we always need to do it.
 
     var promise = require("q").defer().promise,
-        controller = require("../../../src/module/application/loader/controllers").battle;
+        controller = require("../../../src/module/battle/controller");
 
     describe("#ability(playerId, abilityName, queryData)", function () {
         it("returns a promise", function () {

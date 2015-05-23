@@ -1,4 +1,4 @@
-module.exports = function (app, controllers) {
+module.exports = function (app) {
     "use strict";
 
     var routes = function (controllerPath, list) {
@@ -14,6 +14,7 @@ module.exports = function (app, controllers) {
                         var paramName = param[0],
                             regex = param[1];
 
+                        /*jslint unparam: true */
                         app.param(paramName, function (req, res, next, name) {
                             if (regex.test(name)) {
                                 next();
@@ -21,9 +22,9 @@ module.exports = function (app, controllers) {
                                 next('route');
                             }
                         });
+                        /*jslint unparam: false */
                     });
                 }
-                console.log(url, functionName, controller, controllerPath, controller[functionName]);
                 app[method](url, controller[functionName]);
             });
         };
@@ -38,7 +39,7 @@ module.exports = function (app, controllers) {
     ]);
 
     // GET /battle returns the state of the current battle
-    app.get('/battle', function (req, res) {
+    /*app.get('/battle', function (req, res) {
         var player_id = 1;
         if (player_id) {
             controllers.battle.get(
@@ -55,10 +56,19 @@ module.exports = function (app, controllers) {
             res.send();
             res.status(403).end();
         }
-    });
+    });*/
+    // POST /battle/start/:mission-id
+    // - Starts a new battle based on the mission
+
+    // POST /battle/cast/:ability-id
+    // - Uses an ability
+    // - Body contains various ability details
+
+    // POST /battle/turn
+    // - Turns the game
 
     // PUT /battle casts an ability
-    app.param('abilityName', function (req, res, next, name) {
+    /*app.param('abilityName', function (req, res, next, name) {
         var regex = new RegExp(/^[a-z]$/);
         if (regex.test(name)) {
             next();
@@ -93,10 +103,10 @@ module.exports = function (app, controllers) {
         } else {
             res.status(401).end();
         }
-    });
+    });*/
 
     // POST /battle starts a new battle.
-    app.post('/battle', function (req, res) {
+    /*app.post('/battle', function (req, res) {
         // Will need to check for authentication.
         // If authentication successful, populate player_id
         var player_id = 1;
@@ -118,17 +128,23 @@ module.exports = function (app, controllers) {
             res.send();
             res.status(403).end();
         }
-    });
+    });*/
 
-    app.get('/skills', function (req, res) {
-        res.send(require("../../skills/config/tree")());
-    });
+    routes('../../skills/controller', [
+        [ 'get',    '/skills', 'tree' ]
+    ]);
 
-    app.get('/quests', function (req, res) {
-        // Todo: Put a delay in here to test quests page loading output.
+    routes('../../quest/controller', [
+        [ 'get',    '/quests',          'list' ],
+        [ 'post',   '/quests/:questId', 'startMission',
+                [ 'questId', /^[0-9a-zA-Z]$/ ]
+            ]
+    ]);
+
+    /*app.get('/quests', function (req, res) {
         res.send(controllers.quests.list());
-    });
-    app.param('questId', function (req, res, next, name) {
+    });*/
+    /*app.param('questId', function (req, res, next, name) {
         var regex = new RegExp(/^[0-9]$/);
         if (regex.test(name)) {
             next();
@@ -138,17 +154,19 @@ module.exports = function (app, controllers) {
     });
     app.post('/quests', function (req, res) {
         res.send(controllers.quests.startMission(req.params.questId));
-    });
+    });*/
 
     // Frontend
+    /*jslint unparam: true */
     app.get('/', function (req, res) {
         res.sendFile('public/index.html');
     });
 
     // Everything else
     app.get('*', function (req, res) {
-        res.send("404'd");
+        res.send({ error: "404'd", message: "This is not the page you are looking for." });
         res.status(404).end();
     });
+    /*jslint unparam: false */
 
 };

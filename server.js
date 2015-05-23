@@ -43,7 +43,7 @@ module.exports = (function () {
 
     // routes ==================================================
     require(modPath + 'application/config/routes')(app,
-        controllers, mongoose);
+        controllers);
 
     // start app ===============================================
     app.listen(port); // startup our app at http://localhost:8080

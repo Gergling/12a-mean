@@ -1,4 +1,4 @@
-describe("Skill Tree Factory (skill.factory.tree)", function () {
+describe("Skill Tree Service (skill.service.tree)", function () {
     "use strict";
 
     var factory, $httpBackend;
@@ -8,7 +8,7 @@ describe("Skill Tree Factory (skill.factory.tree)", function () {
         module('skill');
         inject(function ($injector) {
             $httpBackend = $injector.get("$httpBackend");
-            $httpBackend.expectGET("/skills").respond({
+            $httpBackend.expectGET("/skill").respond({
                 level: 0,
                 children: {
                     combat: {

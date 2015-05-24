@@ -23,6 +23,7 @@ ngModules.get("skill").component(function (ngm, mod) {
 
                     angular.forEach(props.children, function (childData) {
                         childData.parentUrl = snScope.url;
+                        childData.parent = snScope;
                         snScope.children[childData.name] = new SkillNode(childData);
                     });
 
@@ -33,20 +34,40 @@ ngModules.get("skill").component(function (ngm, mod) {
                         }
                         return progress;
                     };
+                    this.getFullReference = function () {
+                        var reference = this.name;
+                        if (snScope.parent) {
+                            reference = [ this.parent.getFullReference(), reference ].join(".");
+                        }
+                        return reference;
+                    };
 
                     this.find = function (reference) {
                         var childName = reference.shift(),
                             child = snScope.children[childName],
-                            node;
+                            node,
+                            snNonExistent = function () {
+                                return new SkillNode({
+                                    name: childName,
+                                    label: "(Not a skill)",
+                                    level: 0,
+                                    trainingHours: 0,
+                                    description: "There is no such skill as '" + [ snScope.getFullReference(), childName ].join(".") + "', and if there is, people probably shouldn't be trained in it."
+                                });
+                            };
 
                         if (reference.length) {
                             if (child) {
                                 node = child.find(reference);
                             } else {
-                                throw new Error("skill.service.tree: No such skill '" + reference.join(".") + "'");
+                                node = snNonExistent();
                             }
                         } else {
-                            node = child;
+                            if (child) {
+                                node = child;
+                            } else {
+                                node = snNonExistent();
+                            }
                         }
 
                         return node;

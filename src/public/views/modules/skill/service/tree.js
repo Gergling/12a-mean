@@ -34,10 +34,16 @@ ngModules.get("skill").component(function (ngm, mod) {
                         }
                         return progress;
                     };
-                    this.getFullReference = function () {
-                        var reference = this.name;
+                    this.fullReference = function () {
+                        var reference, ancestralReference, chunks;
                         if (snScope.parent) {
-                            reference = [ this.parent.getFullReference(), reference ].join(".");
+                            chunks = [ ];
+                            ancestralReference = this.parent.fullReference();
+                            if (ancestralReference) {
+                                chunks.push(ancestralReference);
+                            }
+                            chunks.push(this.name);
+                            reference = chunks.join(".");
                         }
                         return reference;
                     };
@@ -52,7 +58,7 @@ ngModules.get("skill").component(function (ngm, mod) {
                                     label: "(Not a skill)",
                                     level: 0,
                                     trainingHours: 0,
-                                    description: "There is no such skill as '" + [ snScope.getFullReference(), childName ].join(".") + "', and if there is, people probably shouldn't be trained in it."
+                                    description: "There is no such skill as '" + [ snScope.fullReference(), childName ].join(".") + "', and if there is, people probably shouldn't be trained in it."
                                 });
                             };
 

@@ -18,9 +18,6 @@ module.exports = (function () {
     // config files
         dbConfig = require(modPath + 'application/config/db'),
 
-    // controllers
-        controllers = require(modPath + "application/loader/controllers"),
-
         port = process.env.PORT || 8080; // set our port
 
     mongoose.connect(dbConfig.url);
@@ -42,8 +39,7 @@ module.exports = (function () {
     app.use(express.static('./src/public/views'));
 
     // routes ==================================================
-    require(modPath + 'application/config/routes')(app,
-        controllers);
+    require(modPath + 'application/config/routes')(app);
 
     // start app ===============================================
     app.listen(port); // startup our app at http://localhost:8080

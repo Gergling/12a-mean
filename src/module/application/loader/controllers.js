@@ -3,7 +3,7 @@
 module.exports = (function () {
     "use strict";
 
-    throw new Error("Do not load this module");
+    // Todo: Remove this module
     var //tbeLoader = require("../../tbe/loader"),
         modulePath = require("./local-paths").module;
 

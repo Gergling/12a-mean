@@ -1,8 +1,10 @@
 module.exports = function (app) {
     "use strict";
 
-    var routes = function (controllerPath, list) {
-            var controller = require(controllerPath);
+    var routes = function (moduleName, list) {
+            var controllerPath = "../../" + moduleName + "/controller",
+                controller = require(controllerPath);
+
             list.forEach(function (route) {
                 var method = route[0],
                     url = route[1],
@@ -46,7 +48,7 @@ module.exports = function (app) {
             });
         };
 
-    routes('../../battle/controller', [
+    routes('battle', [
         [ 'get',    '/battle',                      'current' ],
         [ 'post',   '/battle/turn',                 'turn' ],
         [ 'post',   '/battle/start/:missionId',     'start' ],
@@ -57,11 +59,11 @@ module.exports = function (app) {
         ]
     ]);
 
-    routes('../../skill/controller', [
+    routes('skill', [
         [ 'get',    '/skill', 'tree' ]
     ]);
 
-    routes('../../quest/controller', [
+    routes('quest', [
         [ 'get',    '/quests',          'list' ],
         [ 'post',   '/quests', 'startMission',
             [

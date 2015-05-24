@@ -89,6 +89,10 @@ module.exports = (function () {
     };
     /*jslint unparam: false */
 
+    bc.turn = function (req, res) {
+        res.send(req);
+    };
+
     bc.cast = function (req, res) {
         var player_id = 1;
         if (player_id) {

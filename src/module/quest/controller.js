@@ -57,12 +57,11 @@ module.exports = (function () {
         res.send(quests);
     };
 
-    controller.startMission = function (questId) {
+    controller.startMission = function (req, res) {
+        res.send({ success: false, message: "I would like to tell you the message updated successfully. I'd like to tell you that..." });
         // Get quest.
         // quest.startMission();
         // Report success.
-        return { success: false, message: "I would like to tell you the "
-            + "message updated successfully. I'd like to tell you that..." };
     };
 
     return controller;

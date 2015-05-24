@@ -51,8 +51,10 @@ module.exports = function (app) {
         [ 'post',   '/battle/turn',                 'turn' ],
         [ 'post',   '/battle/start/:missionId',     'start' ],
         [ 'post',   '/battle/cast/:abilityName',    'cast',
+            [
                 [ 'abilityName', /^[a-z]$/ ]
             ]
+        ]
     ]);
 
     // GET /battle returns the state of the current battle
@@ -153,9 +155,11 @@ module.exports = function (app) {
 
     routes('../../quest/controller', [
         [ 'get',    '/quests',          'list' ],
-        [ 'post',   '/quests/:questId', 'startMission',
+        [ 'post',   '/quests', 'startMission',
+            [
                 [ 'questId', /^[0-9a-zA-Z]$/ ]
             ]
+        ]
     ]);
 
     /*app.get('/quests', function (req, res) {

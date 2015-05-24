@@ -58,10 +58,10 @@ module.exports = (function () {
     };
 
     controller.startMission = function (req, res) {
-        res.send({ success: false, message: "I would like to tell you the message updated successfully. I'd like to tell you that..." });
         // Get quest.
         // quest.startMission();
         // Report success.
+        res.send({ success: false, message: "I would like to tell you the message updated successfully. I'd like to tell you that..." });
     };
 
     return controller;

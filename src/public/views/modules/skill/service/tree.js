@@ -56,18 +56,14 @@ ngModules.get("skill").component(function (ngm, mod) {
                                 });
                             };
 
-                        if (reference.length) {
-                            if (child) {
+                        if (child) {
+                            if (reference.length) {
                                 node = child.find(reference);
                             } else {
-                                node = snNonExistent();
+                                node = child;
                             }
                         } else {
-                            if (child) {
-                                node = child;
-                            } else {
-                                node = snNonExistent();
-                            }
+                            node = snNonExistent();
                         }
 
                         return node;

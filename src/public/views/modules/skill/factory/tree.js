@@ -7,7 +7,7 @@ ngModules.get("skill").component(function (ngm, mod) {
         "Restangular",
 
         function ($q, Restangular) {
-            var skills = Restangular.one("skills"),
+            var skills = Restangular.one("skill"),
                 scope = this,
                 deferred = $q.defer(),
                 SkillNode = function (props) {

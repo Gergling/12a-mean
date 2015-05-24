@@ -1,7 +1,7 @@
 describe("SkillNode class", function () {
     "use strict";
 
-    var SkillNode = require("../../../../src/module/skills/model/SkillNode")(),
+    var SkillNode = require("../../../../src/module/skill/factory/skillNode")(),
         references = [
             ["combat"],
             ["combat", "strategy"],

@@ -1,7 +1,7 @@
 module.exports = function () {
     "use strict";
 
-    var SkillNode = require("../model/SkillNode")(),
+    var SkillNode = require("../factory/skillNode")(),
         root = new SkillNode("root");
 
     root.set("combat", {

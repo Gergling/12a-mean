@@ -35,7 +35,7 @@ module.exports = function (app) {
                         if (typeof fnc === 'function') {
                             app[method](url, fnc);
                         } else {
-                            throw new Error("Routing function parameter '" + controllerPath + "." + functionName + "' should be a function. " + ( typeof fnc ) + " found.");
+                            throw new Error("Routing function parameter '" + controllerPath + "." + functionName + "' should be a function. " + (typeof fnc) + " found.");
                         }
                     } else {
                         throw new Error("No routing function in '" + controllerPath + "' named '" + functionName + "'.");
@@ -149,8 +149,8 @@ module.exports = function (app) {
         }
     });*/
 
-    routes('../../skills/controller', [
-        [ 'get',    '/skills', 'tree' ]
+    routes('../../skill/controller', [
+        [ 'get',    '/skill', 'tree' ]
     ]);
 
     routes('../../quest/controller', [

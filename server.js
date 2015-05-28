@@ -11,6 +11,10 @@ module.exports = (function () {
         bodyParser = require('body-parser'),
         methodOverride = require('method-override'),
 
+        passport = require('passport'),
+
+        expressSession = require('express-session'),
+
     // configuration ===========================================
 
         modPath = "./src/module/",
@@ -37,6 +41,18 @@ module.exports = (function () {
 
     // set the static files location /public/img will be /img for users
     app.use(express.static('./src/public/views'));
+
+    // Configure passport
+    app.use(expressSession({
+        secret: 'secret',
+        name: 'name',
+        //store: sessionStore, // connect-mongo session store
+        proxy: true,
+        resave: true,
+        saveUninitialized: true
+    })); // When in use, this key should be in a separate file in application.
+    app.use(passport.initialize());
+    app.use(passport.session());
 
     // routes ==================================================
     require(modPath + 'application/config/routes')(app);

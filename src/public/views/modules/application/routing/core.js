@@ -9,7 +9,9 @@ ngModules.get("application").component(function (ngm, mod) {
             '/mess/': {partial: getPartialUrl('index'), name: "mess"},
             '/cargo-bay/': {partial: 'modules/test/partial/test.html', name: "cargo-bay"},
             '/bridge/': {partial: 'modules/quest/partial/quests.html', name: "bridge"},
-            '/skills/': {partial: 'modules/skill/partial/skills.html', name: "skills"}
+            '/skills/': {partial: 'modules/skill/partial/skills.html', name: "skills"},
+            '/register/': {partial: 'modules/authenticate/partial/register.html', name: "register"},
+            '/login/': {partial: 'modules/authenticate/partial/login.html', name: "login"}
         };
 
         routes['/bridge/battle/'] = angular.copy(routes['/bridge/']);

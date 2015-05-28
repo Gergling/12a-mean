@@ -72,6 +72,13 @@ module.exports = function (app) {
         ]
     ]);
 
+    routes('user', [
+        [ 'get',    '/user',    'authenticated' ],
+        [ 'post',   '/user',    'login', ],
+        [ 'put',    '/user',    'register', ],
+        //[ 'delete', '/user',    'logout', ]
+    ]);
+
     // Frontend
     /*jslint unparam: true */
     app.get('/', function (req, res) {

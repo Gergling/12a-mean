@@ -3,6 +3,7 @@ ngModules.set(angular.module("application", [
 
     "restangular",
 
+    "authenticate",
     "battle",
     "isometric",
     "skill"

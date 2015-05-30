@@ -1,1 +1,1 @@
-ngModules.set(angular.module("isometric", [ ]));
+angular.module("isometric", [ ]);

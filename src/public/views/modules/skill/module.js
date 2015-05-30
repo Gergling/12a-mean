@@ -1,1 +1,1 @@
-ngModules.set(angular.module("skill", []));
+angular.module("skill", [ ]);

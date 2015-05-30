@@ -1,1 +1,1 @@
-ngModules.set(angular.module("battle", []));
+angular.module("battle", [ ]);

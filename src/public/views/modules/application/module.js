@@ -1,4 +1,4 @@
-ngModules.set(angular.module("application", [
+angular.module("application", [
     "ngRoute",
 
     "restangular",
@@ -6,5 +6,6 @@ ngModules.set(angular.module("application", [
     "authenticate",
     "battle",
     "isometric",
+    "quest",
     "skill"
-]));
+]);

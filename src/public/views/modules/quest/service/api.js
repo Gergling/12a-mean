@@ -1,23 +1,22 @@
-ngModules.get("quest").component(function (ngm, mod) {
-    "use strict";
+angular.module("quest").service("quest.service.api", [
 
-    ngm.service(mod.getModuleName("service", "api"), [
+    "Restangular",
 
-        "Restangular",
+    function (Restangular) {
 
-        function (Restangular) {
-            var quests = Restangular.all("quests");
+        "use strict";
 
-            this.fetch = function () {
-                return quests.getList();
-            };
+        var quests = Restangular.all("quests");
 
-            this.startMission = function (questId) {
-                // Find out how to do a restangular post.
-                return quests.post({questId: questId});
-            };
-            this.all = function () {return quests; };
+        this.fetch = function () {
+            return quests.getList();
+        };
 
-        }
-    ]);
-});
+        this.startMission = function (questId) {
+            // Find out how to do a restangular post.
+            return quests.post({questId: questId});
+        };
+        this.all = function () {return quests; };
+
+    }
+]);

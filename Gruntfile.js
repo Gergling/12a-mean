@@ -94,8 +94,6 @@ module.exports = function (grunt) {
                         'angular',
                         'document',
                         'jQuery',
-                        'ngModules',
-                        'NGModuleCollection'
                     ]
                 },
                 options: { checkstyle: 'build/logs/checkstyle.xml' }

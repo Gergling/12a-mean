@@ -1,11 +1,7 @@
-ngModules.get("battle").component(function (ngm, mod) {
-    "use strict";
+angular.module("battle").controller("battle.controller.index", [
 
-    ngm.controller(mod.getModuleName("controller", "index"), [
+    "$scope",
 
-        "$scope",
-
-        function ($scope) {
-        }
-    ]);
-});
+    function ($scope) {
+    }
+]);

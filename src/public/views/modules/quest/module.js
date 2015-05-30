@@ -1,1 +1,1 @@
-ngModules.set(angular.module("quest", []));
+angular.module("quest", [ ]);

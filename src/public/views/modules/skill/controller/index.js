@@ -1,13 +1,12 @@
-ngModules.get("skill").component(function (ngm, mod) {
-    "use strict";
+angular.module("skill").controller("skill.controller.index", [
 
-    ngm.controller(mod.getModuleName("controller", "index"), [
+    "$scope",
+    "skill.service.navigation",
 
-        "$scope",
-        "skill.service.navigation",
+    function ($scope, navigation) {
 
-        function ($scope, navigation) {
-            $scope.navigation = navigation;
-        }
-    ]);
-});
+        "use strict";
+
+        $scope.navigation = navigation;
+    }
+]);

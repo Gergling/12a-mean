@@ -1,14 +1,13 @@
-ngModules.get("battle").component(function (ngm, mod) {
-    "use strict";
+angular.module("battle").service("battle.service.fetch", [
 
-    ngm.service(mod.getModuleName("service", "fetch"), [
+    "$http",
 
-        "$http",
+    function ($http) {
 
-        function ($http) {
-            this.state = function () {
-                return $http.get('/battle');
-            };
-        }
-    ]);
-});
+        "use strict";
+
+        this.state = function () {
+            return $http.get('/battle');
+        };
+    }
+]);

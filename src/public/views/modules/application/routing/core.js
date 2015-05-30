@@ -1,18 +1,17 @@
-ngModules.get("application").component(function (ngm, mod) {
-    "use strict";
-
-    ngm.config(['$routeProvider', function ($routeProvider) {
-        var getPartialUrl = function (name) {return 'modules/' + mod.getPartialUrl(name); };
-
-        var routes = {
-            '/': {redirectTo: "/mess/"},
-            '/mess/': {partial: getPartialUrl('index'), name: "mess"},
-            '/cargo-bay/': {partial: 'modules/test/partial/test.html', name: "cargo-bay"},
-            '/bridge/': {partial: 'modules/quest/partial/quests.html', name: "bridge"},
-            '/skills/': {partial: 'modules/skill/partial/skills.html', name: "skills"},
-            '/register/': {partial: 'modules/authenticate/partial/register.html', name: "register"},
-            '/login/': {partial: 'modules/authenticate/partial/login.html', name: "login"}
-        };
+// Todo: Use state provider instead of routeprovider.
+angular.module('application')
+    .config(['$routeProvider', function ($routeProvider) {
+        "use strict";
+        var getPartialUrl = function (name) {return 'modules/application/partial/' + name + '.html'; },
+            routes = {
+                '/': {redirectTo: "/mess/"},
+                '/mess/': {partial: getPartialUrl('index'), name: "mess"},
+                '/cargo-bay/': {partial: 'modules/test/partial/test.html', name: "cargo-bay"},
+                '/bridge/': {partial: 'modules/quest/partial/quests.html', name: "bridge"},
+                '/skills/': {partial: 'modules/skill/partial/skills.html', name: "skills"},
+                '/register/': {partial: 'modules/authenticate/partial/register.html', name: "register"},
+                '/login/': {partial: 'modules/authenticate/partial/login.html', name: "login"}
+            };
 
         routes['/bridge/battle/'] = angular.copy(routes['/bridge/']);
         routes['/bridge/battle/'].partial = "modules/battle/partial/battle.html";
@@ -24,8 +23,8 @@ ngModules.get("application").component(function (ngm, mod) {
             $routeProvider.when(route, obj);
         });
         $routeProvider.otherwise({templateUrl: getPartialUrl('container'), partial: getPartialUrl('404')});
-    }]);
-    ngm.controller(mod.getModuleName("controller", "index"), [
+    }])
+    .controller("application.controller.index", [
 
         "$rootScope",
         "application.service.primary-navigation",
@@ -33,7 +32,7 @@ ngModules.get("application").component(function (ngm, mod) {
 
         function ($scope, navigation, skillNavigation) {
             $scope.navigation = navigation;
-            $scope.$on("$routeChangeStart", function (event, next, current) {
+            $scope.$on("$routeChangeStart", function (event, next) {
                 $scope.routeTemplateUrl = next.partial;
                 navigation.setActive(next.name);
 
@@ -43,4 +42,3 @@ ngModules.get("application").component(function (ngm, mod) {
             });
         }
     ]);
-});

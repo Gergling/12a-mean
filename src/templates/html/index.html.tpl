@@ -21,6 +21,7 @@
 
 </head>
 <body data-ng-controller="application.controller.index">
- <div data-ng-view></div>
+    <!--<div data-ng-include="'modules/application/partial/container.html'">-->
+    <div ui-view></div>
 </body>
 </html>

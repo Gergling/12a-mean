@@ -1,8 +1,15 @@
 // Todo: Use state provider instead of routeprovider.
-angular.module('application')
-    .config(['$routeProvider', function ($routeProvider) {
+angular.module('application').config([
+
+    "$routeProvider",
+    "$stateProvider",
+    "$urlRouterProvider",
+
+    function ($routeProvider, $stateProvider, $urlRouterProvider) {
+
         "use strict";
-        var getPartialUrl = function (name) {return 'modules/application/partial/' + name + '.html'; },
+
+        /*var getPartialUrl = function (name) {return 'modules/application/partial/' + name + '.html'; },
             routes = {
                 '/': {redirectTo: "/mess/"},
                 '/mess/': {partial: getPartialUrl('index'), name: "mess"},
@@ -23,22 +30,66 @@ angular.module('application')
             $routeProvider.when(route, obj);
         });
         $routeProvider.otherwise({templateUrl: getPartialUrl('container'), partial: getPartialUrl('404')});
-    }])
-    .controller("application.controller.index", [
+        */
 
-        "$rootScope",
-        "application.service.primary-navigation",
-        "skill.service.navigation",
-
-        function ($scope, navigation, skillNavigation) {
-            $scope.navigation = navigation;
-            $scope.$on("$routeChangeStart", function (event, next) {
-                $scope.routeTemplateUrl = next.partial;
-                navigation.setActive(next.name);
-
-                if (next.name === "skills") {
-                    skillNavigation.setPath(next.params.skill);
-                }
+        // Todo:
+        // One state for each route
+        // Load up more recent ngRoute
+        $stateProvider
+            .state('container', {
+                url: "/",
+                templateUrl: "modules/application/partial/container.html",
+                controller: "application.controller.index"
+            })
+            .state('container.login', {
+                url: "/login",
+                templateUrl: "modules/authenticate/partial/login.html"
+            })
+            .state('container.register', {
+                url: "/register",
+                templateUrl: "modules/authenticate/partial/register.html"
+            })
+            .state('container.skills', {
+                url: "/skills/*skill",
+                templateUrl: "modules/skill/partial/skills.html"
+            })
+            .state('container.quests', {
+                url: "/bridge",
+                templateUrl: "modules/quest/partial/quests.html"
+            })
+            .state('container.battle', {
+                url: "/battle",
+                templateUrl: "modules/authenticate/partial/battle.html"
+            })
+            .state('container.404', {
+                url: "/*path",
+                templateUrl: "modules/application/partial/404.html"
             });
-        }
-    ]);
+
+        $urlRouterProvider.otherwise({ redirectTo: '/' });
+        /*$urlRouterProvider
+            .when('/*path/', {
+                redirectTo: '/*path'
+            });*/
+    }
+])
+.controller("application.controller.index", [
+
+    "$rootScope",
+    "application.service.primary-navigation",
+    "skill.service.navigation",
+    "$state",
+
+    function ($scope, navigation, skillNavigation) {
+        $scope.navigation = navigation;
+        $scope.$on("$routeChangeStart", function (event, next) {
+            $scope.routeTemplateUrl = next.partial;
+            navigation.setActive(next.name);
+
+            // Todo: Use state name
+            if (next.name === "skills") {
+                skillNavigation.setPath(next.params.skill);
+            }
+        });
+    }
+]);

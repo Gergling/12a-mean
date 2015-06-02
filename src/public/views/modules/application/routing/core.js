@@ -1,11 +1,11 @@
 // Todo: Use state provider instead of routeprovider.
 angular.module('application').config([
 
-    "$routeProvider",
+    //"$routeProvider",
     "$stateProvider",
     "$urlRouterProvider",
 
-    function ($routeProvider, $stateProvider, $urlRouterProvider) {
+    function (/*$routeProvider, */$stateProvider, $urlRouterProvider) {
 
         "use strict";
 
@@ -32,12 +32,9 @@ angular.module('application').config([
         $routeProvider.otherwise({templateUrl: getPartialUrl('container'), partial: getPartialUrl('404')});
         */
 
-        // Todo:
-        // One state for each route
-        // Load up more recent ngRoute
         $stateProvider
             .state('container', {
-                url: "/",
+                abstract: true,
                 templateUrl: "modules/application/partial/container.html",
                 controller: "application.controller.index"
             })
@@ -66,23 +63,19 @@ angular.module('application').config([
                 templateUrl: "modules/application/partial/404.html"
             });
 
-        $urlRouterProvider.otherwise({ redirectTo: '/' });
-        /*$urlRouterProvider
-            .when('/*path/', {
-                redirectTo: '/*path'
-            });*/
+        //$urlRouterProvider.otherwise('/');
     }
 ])
 .controller("application.controller.index", [
 
     "$rootScope",
     "application.service.primary-navigation",
-    "skill.service.navigation",
+    //"skill.service.navigation",
     "$state",
 
-    function ($scope, navigation, skillNavigation) {
+    function ($scope, navigation, /*skillNavigation, */$state) {
         $scope.navigation = navigation;
-        $scope.$on("$routeChangeStart", function (event, next) {
+        /*$scope.$on("$routeChangeStart", function (event, next) {
             $scope.routeTemplateUrl = next.partial;
             navigation.setActive(next.name);
 
@@ -90,6 +83,10 @@ angular.module('application').config([
             if (next.name === "skills") {
                 skillNavigation.setPath(next.params.skill);
             }
+        });*/
+        console.log($state.get());
+        $scope.$on("$stateChangeStart", function (event, next) {
+            console.log($state.current);
         });
     }
 ]);

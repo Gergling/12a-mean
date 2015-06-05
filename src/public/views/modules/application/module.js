@@ -1,5 +1,5 @@
 angular.module("application", [
-    "ngRoute",
+    "ui.router",
 
     "restangular",
 

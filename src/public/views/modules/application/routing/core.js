@@ -71,23 +71,9 @@ angular.module('application').config([
 
     "$rootScope",
     "application.service.primary-navigation",
-    //"skill.service.navigation",
     "$state",
 
-    function ($scope, navigation, /*skillNavigation, */$state) {
+    function ($scope, navigation) {
         $scope.navigation = navigation;
-        /*$scope.$on("$routeChangeStart", function (event, next) {
-            $scope.routeTemplateUrl = next.partial;
-            navigation.setActive(next.name);
-
-            // Todo: Use state name
-            if (next.name === "skills") {
-                skillNavigation.setPath(next.params.skill);
-            }
-        });*/
-        console.log($state.get());
-        $scope.$on("$stateChangeStart", function (event, next) {
-            console.log($state.current);
-        });
     }
 ]);

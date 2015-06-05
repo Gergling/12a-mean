@@ -48,7 +48,8 @@ angular.module('application').config([
             })
             .state('container.skills', {
                 url: "/skills/*skill",
-                templateUrl: "modules/skill/partial/skills.html"
+                templateUrl: "modules/skill/partial/skills.html",
+                controller: "skill.controller.tree"
             })
             .state('container.quests', {
                 url: "/bridge",

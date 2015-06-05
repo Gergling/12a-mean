@@ -12,7 +12,7 @@ angular.module("application").service("application.service.primary-navigation", 
     this.list = [];
 
     setNavItem("mess", "Mess");
-    setNavItem("bridge", "Bridge");
+    setNavItem("quests", "Bridge");
     setNavItem("cargo-bay", "Cargo Bay");
     setNavItem("skills", "Skills");
 

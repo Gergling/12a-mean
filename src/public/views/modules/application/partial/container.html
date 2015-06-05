@@ -4,7 +4,7 @@
             <li data-ng-repeat="item in navigation.list" data-ng-class="{active: item.active}">
                 <div class="stalk"></div>
                 <div component-bracket>
-                    <a href="#/{{item.name}}/">{{item.label}}</a>
+                    <a ui-sref="{{item.sref}}">{{item.label}}</a>
                 </div>
             </li>
         </ul>

@@ -10,8 +10,8 @@ angular.module("skill").service("skill.service.navigation", [
 
         this.setPath = function (newPath) {
             path = newPath;
-            scope.breadcrumbs = [ {name: "root", label: "Skills", url: "#/skills/"} ];
             tree.promise().then(function () {
+                scope.breadcrumbs = [ { name: "root", label: "Skills", url: "#/skills/", sref: "container.skill" } ];
                 if (path) {
                     var breadcrumbNames = path.split("/"),
                         reference = [ ];

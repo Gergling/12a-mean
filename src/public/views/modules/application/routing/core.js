@@ -1,36 +1,11 @@
-// Todo: Use state provider instead of routeprovider.
 angular.module('application').config([
 
-    //"$routeProvider",
     "$stateProvider",
     "$urlRouterProvider",
 
-    function (/*$routeProvider, */$stateProvider, $urlRouterProvider) {
+    function ($stateProvider, $urlRouterProvider) {
 
         "use strict";
-
-        /*var getPartialUrl = function (name) {return 'modules/application/partial/' + name + '.html'; },
-            routes = {
-                '/': {redirectTo: "/mess/"},
-                '/mess/': {partial: getPartialUrl('index'), name: "mess"},
-                '/cargo-bay/': {partial: 'modules/test/partial/test.html', name: "cargo-bay"},
-                '/bridge/': {partial: 'modules/quest/partial/quests.html', name: "bridge"},
-                '/skills/': {partial: 'modules/skill/partial/skills.html', name: "skills"},
-                '/register/': {partial: 'modules/authenticate/partial/register.html', name: "register"},
-                '/login/': {partial: 'modules/authenticate/partial/login.html', name: "login"}
-            };
-
-        routes['/bridge/battle/'] = angular.copy(routes['/bridge/']);
-        routes['/bridge/battle/'].partial = "modules/battle/partial/battle.html";
-
-        routes['/skills/:skill*'] = routes['/skills/'];
-
-        angular.forEach(routes, function (obj, route) {
-            obj.templateUrl = getPartialUrl('container');
-            $routeProvider.when(route, obj);
-        });
-        $routeProvider.otherwise({templateUrl: getPartialUrl('container'), partial: getPartialUrl('404')});
-        */
 
         $stateProvider
             .state('container', {
@@ -64,7 +39,6 @@ angular.module('application').config([
                 templateUrl: "modules/application/partial/404.html"
             });
 
-        //$urlRouterProvider.otherwise('/');
         $urlRouterProvider.otherwise('/');
     }
 ])

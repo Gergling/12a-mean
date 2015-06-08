@@ -243,7 +243,7 @@ module.exports = function (grunt) {
             },
             scripts: {
                 options: { banner: banner },
-                files: { 'build/public_html/js/scripts.min.js': paths.scripts }
+                files: { 'build/public_html/js/scripts.min.js': paths.client }
             }
         },
 

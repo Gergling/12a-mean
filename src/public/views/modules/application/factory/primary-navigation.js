@@ -2,19 +2,19 @@ angular.module("application").service("application.service.primary-navigation", 
 
     "use strict";
 
-    var scope = this, setNavItem = function (name, label) {
+    var scope = this, setNavItem = function (sref, label) {
         var item = {
             label: label,
-            name: name
+            sref: 'container.' + sref
         };
         scope.list.push(item);
     };
     this.list = [];
 
-    setNavItem("mess", "Mess");
+    //setNavItem("mess", "Mess");
     setNavItem("quests", "Bridge");
-    setNavItem("cargo-bay", "Cargo Bay");
-    setNavItem("skills", "Skills");
+    //setNavItem("cargo-bay", "Cargo Bay");
+    setNavItem("skills({skill: ''})", "Skills");
 
     this.setActive = function (name) {
         angular.forEach(scope.list, function (item) {

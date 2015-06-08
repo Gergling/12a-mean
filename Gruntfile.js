@@ -11,16 +11,7 @@ module.exports = function (grunt) {
                 'src/public/views/vendor/bootstrap/bootstrap.js'
             ],
 
-            scripts: [
-                'src/public_html/modules.js',          // QH module definitions.
-                'src/public_html/module/fusepump/fusepump.js', // Fusepump lib.
-                'src/public_html/module/**/module.js', // Module.js files.
-                'src/public_html/module/**/*.js',      // Other source files.
-                'src/public_html/angular.bootstrap.run.js' // Bootstrap.
-            ],
             client: [
-                'src/public/views/modules/NGModule.js',
-                'src/public/views/index.js',
                 'src/public/views/modules/**/module.js',
                 'src/public/views/modules/**/*.js'
             ],
@@ -90,10 +81,7 @@ module.exports = function (grunt) {
                 src: paths.client,
                 directives: {
                     predef: [
-                        '$',
                         'angular',
-                        'document',
-                        'jQuery',
                     ]
                 },
                 options: { checkstyle: 'build/logs/checkstyle.xml' }

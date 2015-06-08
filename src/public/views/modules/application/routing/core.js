@@ -65,6 +65,7 @@ angular.module('application').config([
             });
 
         //$urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/');
     }
 ])
 .controller("application.controller.index", [

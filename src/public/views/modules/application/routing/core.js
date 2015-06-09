@@ -22,7 +22,12 @@ angular.module('application').config([
                 templateUrl: "modules/authenticate/partial/register.html"
             })
             .state('container.skills', {
-                url: "/skills/*skill",
+                url: "/skills/",
+                templateUrl: "modules/skill/partial/skills.html",
+                controller: "skill.controller.tree"
+            })
+            .state('container.skill-tree', {
+                url: "/skills/*skill/",
                 templateUrl: "modules/skill/partial/skills.html",
                 controller: "skill.controller.tree"
             })

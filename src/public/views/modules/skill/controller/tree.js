@@ -10,7 +10,7 @@ angular.module("skill").controller("skill.controller.tree", [
         "use strict";
 
         var stateChange = function () {
-            if ($state.current.name === "container.skills") {
+            if ([ "container.skills", "container.skill-tree" ].indexOf($state.current.name) > -1) {
                 navigation.setPath($state.params.skill);
             }
         };

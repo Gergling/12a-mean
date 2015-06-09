@@ -28,7 +28,7 @@ angular.module("application").service("application.service.primary-navigation", 
         $rootScope.$on("$stateChangeSuccess", angular.bind(this, function () {
             console.log($state.current.name, $stateParams);
             this.list.forEach(function (item) {
-                item.active = item.name === $state.current.name;
+                item.active = item.sref === $state.current.name;
             });
         }));
         /*this.setActive = function (name) {

@@ -79,6 +79,21 @@ module.exports = function (app) {
         //[ 'delete', '/user',    'logout', ]
     ]);
 
+    routes('player', [
+        [ 'get',    '/player',              'list' ],
+        [ 'get',    '/player/:playerId',    'profile',
+            [
+                [ 'playerId', /^[0-9a-zA-Z]$/ ]
+            ]
+        ],
+        [ 'post',    '/player',             'create' ],
+        [ 'post',    '/player/:playerId',   'edit',
+            [
+                [ 'playerId', /^[0-9a-zA-Z]$/ ]
+            ]
+        ]
+    ]);
+
     // Frontend
     /*jslint unparam: true */
     app.get('/', function (req, res) {

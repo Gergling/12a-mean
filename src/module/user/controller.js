@@ -101,7 +101,19 @@ module.exports = (function () {
 
     return {
         authenticated: function (req, res) {
-            res.send(req.session);
+            var id = req.session.passport.user;
+            if (id) {
+                User.findById(id, function(err, user) {
+                    if (err) {
+                        res.status(401).send(err).end();
+                    } else {
+                        res.send(user);
+                    }
+                });
+            } else {
+                res.status(401).end();
+            }
+
             // req.session.passport.user has the mongo id
             // find the user with db.users.find({_id: ObjectId(id)})
         },

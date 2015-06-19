@@ -1,8 +1,9 @@
 module.exports = (function () {
     "use strict";
 
-    var Quest = require("./class/Quest"),
-        controller = { };
+    var Quest = require("./class/Quest");
+    var factory = require("./factory/core");
+    var controller = { };
 
     controller.list = function (req, res) {
         // Return a list of quests that the player is eligible for.
@@ -13,36 +14,14 @@ module.exports = (function () {
 
         if (req) {
             // Ultimately, we will check if the user is authenticated here
-            [
-                {context: "space-intel", type: "emergency",
-                    label: "Scan Approaching Object",
-                    description: "Something is matching our course and speed. "
-                        + "Find out what it is."},
-                {context: "space-intel", type: "buff",
-                    label: "Navigation Feed",
-                    description: "Offer the navigator an information feed, "
-                        + "such that movement space is increased overall."},
-                {context: "space-intel", type: "buff",
-                    label: "Tactical Feed",
-                    description: "Offer the tactical chief an information "
-                        + "feed, such that weapon and defense usage is "
-                        + "improved."},
-                {context: "space-intel", type: "buff",
-                    label: "Environmental Feed",
-                    description: "Setup a general feed of the external "
-                        + "environment, such that ship systems can be "
-                        + "optimised more efficiently."},
-                {context: "space-intel", type: "practise",
-                    label: "General Astronomy",
-                    description: "Look out into the stars and and uncover the "
-                        + "mysteries of space. There is the potential for "
-                        + "valuable data out there."},
-                {context: "space-intel", type: "mission",
-                    label: "Scan Mystery Void",
-                    description: "There is an unusually empty area of space "
-                        + "at {{x}}. {{y}} has asked that you find out what "
-                        + "resides there."}
-            ].forEach(function (obj) {
+            //factory.all(player)
+            // Todo: All player quests will come from here, created or existing.
+            // Need a list of all available quests.
+            // Pass player object to the core, where 
+            // At this point, suitable quests will be created for the player.
+            // Also need some session information on which player is in use.
+            // A user can have multiple players.
+            require("./hardcoded-quests").forEach(function (obj) {
                 var quest = new Quest(),
                     view;
                 quest.context(obj.context);
@@ -50,7 +29,7 @@ module.exports = (function () {
                 quest.label(obj.label);
                 quest.description(obj.description);
                 view = quest.view();
-                view.idx = quests.length;
+                view.idx = quests.length; // Todo: Probably just to satisfy the front end.
                 quests.push(view);
             });
         }
@@ -64,5 +43,6 @@ module.exports = (function () {
         res.send({ success: false, message: "I would like to tell you the message updated successfully. I'd like to tell you that..." });
     };
 
+    //require('./factories/loader');
     return controller;
 }());

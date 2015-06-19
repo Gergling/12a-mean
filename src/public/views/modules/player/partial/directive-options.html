@@ -1,0 +1,17 @@
+<div component-bracket data-horizontal="true" style="margin-bottom: 10px;">
+    <div style="padding: 10px;">
+        <div class="btn-group">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">{{ user }} <i class="caret"></i></button>
+            <ul class="dropdown-menu">
+                <li><a href>Profile</a></li>
+            </ul>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">{{ player.chosen }} <i class="caret"></i></button>
+            <ul class="dropdown-menu">
+                <li><a ui-sref="container.player-create">Create New Character</a></li>
+                <li data-ng-repeat="item in player.list"><a href>{{ item }}</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

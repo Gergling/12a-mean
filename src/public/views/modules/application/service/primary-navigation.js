@@ -18,8 +18,8 @@ angular.module("application").service("application.service.primary-navigation", 
         };
         this.list = [];
 
-        setNavItem("quests", "Bridge");
-        setNavItem("skills", "Skills");
+        setNavItem("player.quests", "Bridge");
+        setNavItem("player.skills", "Skills");
 
         $rootScope.$on("$stateChangeSuccess", angular.bind(this, function () {
             this.list.forEach(function (item) {

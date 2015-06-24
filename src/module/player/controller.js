@@ -66,7 +66,13 @@ module.exports = (function () {
     controller.create = function (req, res) {
         // Create a new player character
         // Respond with character profile
-        res.send({ message: "Give me das player profile!" });
+        var player = new Player({
+            name: req.body.name,
+            userId: req.session.passport.user
+        });
+        player.save(function () {
+            res.send(player);
+        });
     };
     controller.edit = function (req, res) {
         // Send an edit of a player profile... this might not have an application

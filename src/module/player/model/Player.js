@@ -9,11 +9,6 @@ module.exports = (function () {
     return mongoose.model('Player', {
         userId: String,
         name: String,
-        characters: [
-            new Schema({
-                name: String,
-                skills: [ SkillSchema ]
-            })
-        ]
+        skills: [ SkillSchema ]
     });
 }());

@@ -23,13 +23,21 @@ angular.module('application').config([
             })
             .state('container.player-create', {
                 url: "/player/create",
-                templateUrl: "modules/player/partial/create.html",
-                controller: "player.controller.create"
+                templateUrl: "modules/player/partial/detail.html",
+                controller: "player.controller.detail"
             })
-            // Some of these routes (not all) will needed to redirect to login if authentication is non-existent.
+            // This will need to redirect to login if nobody is authenticated.
             .state('container.player', {
                 abstract: true,
-                templateUrl: "modules/player/partial/index.html"
+                templateUrl: "modules/player/partial/index.html",
+                resolve: {
+                    player: function () {} // Load up player from service
+                }
+            })
+            .state('container.player.edit', {
+                url: "/player/edit",
+                templateUrl: "modules/player/partial/detail.html",
+                controller: "player.controller.detail"
             })
             .state('container.player.skills', {
                 url: "/skills/",
@@ -54,7 +62,17 @@ angular.module('application').config([
                 templateUrl: "modules/application/partial/404.html"
             });
 
-        $urlRouterProvider.otherwise('/');
+        // New routes:
+            // Container abstract
+                // Skills
+                // Guest abstract
+                    // Login
+                    // Register
+                // Auth
+                    // Quests
+                    // Battle
+
+        $urlRouterProvider.otherwise('/bridge');
     }
 ])
 .controller("application.controller.index", [

@@ -57,7 +57,7 @@ Some might consider that to be almost (*sunglasses*) Unreal! :O
 A mapping of possible sprite-scales and their map-decoration/designs.
 
 - Humanoid:
-  - Ship: On board a ship.
+  - Vessel: On board a ship or spacestation.
   - Planetside: Any terrain.
   - Space: A spacewalk.
 - Components:
@@ -86,13 +86,29 @@ Consider assistance of quests in progress to avoid breaking causality and freein
 - Medical Mystery Tour (Components/Biological): What's wrong with my patient?
 - Upgrade (Components/Circuitboard|Mechanical|Cyberspace): Upgrade the tech on any level.
 - Warp Chase (Spaceships/Interstellar): Pursue a spaceship in deep space.
+- Boarding Party (Humanoid/Spaceship|Spacewalk): Enter a ship. Commandeer it.
+
+Quests always have the same format. Victory is achieved by defeating all the sprites within given restrictions (e.g. time limit), and defeat occurs under counter-conditions.
+
+Victory can include rewards dependent on the quest configuration. Usually items (which can include data, software and AI configs) and currency.
+
+Quests will arise automatically to apply buffs to the ship and crew. This way, players always have something to do, even if somebody is doing the quest chain.
 
 ## Narrative
 
 Quest generation needs to have a tree of outcomes.
 
-For example, the crew are given a mission to seek out a band of pirates. This is a navigational quest. On completion, they enter a chase.
-- Catching up results in:
-  - A hacking quest where the enemies try to undermine your engineering systems so you can't pursue and your weapons so you can't fight.
-  - A combat quest
-- Losing track of the pirates results in a quest to look for their trail.
+For example, the crew are given a mission to seek out a band of pirates. This is a navigational quest. On completion, they enter a Warp Chase.
+- Victory (catch up):
+  - Opens a Hacking quest where the enemies try to undermine your engineering systems and weapons so you can't pursue or fight.
+    - Victory:
+    - Defeat:
+  - Opens a Star Wars quest where you attempt to disable the ship.
+    - Victory: Opens a Boarding Party quest.
+    - Defeat: The ship escapes.
+  - Possibly opens an unknown medical quest where you heal crew members.
+  - Opens an unknown medical quest where you buff boarding soldiers.
+  - Opens an engineering quest to keep the ship together and able to continue fighting.
+- Defeat: results in a quest to look for their trail. This is an intelligence quest. Victory is achieved by defeating a number of mysteries. There may be a time limit. Defeat is achieved otherwise.
+  - Victory: Reopens the conditions of the root quest, but described as 'we have picked up the trail'.
+  - Defeat: The chain ends. The pirates escape. Theoretically this could drive Plot.

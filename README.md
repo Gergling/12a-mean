@@ -94,18 +94,37 @@ Victory can include rewards dependent on the quest configuration. Usually items 
 
 Quests will arise automatically to apply buffs to the ship and crew. This way, players always have something to do, even if somebody is doing the quest chain.
 
+## Quest Types
+
+- Narrative - this is a conditional chain of quests opened from a 'root'. Victory requires killing all enemies within a number of turns. Victory and defeat may open different quests. Victory may come with a range of rewards.
+- Emergency - this is a Narrative quest which must be completed before any other quests. It may open further emergency quests.
+- Buff - this has no defeat condition. Enemies will spawn for five minutes. Each kill will add to the buff bonus, and the mission will be over when all the enemies are killed, applying the buffs.
+
 ## Narrative
 
 Quest generation needs to have a tree of outcomes.
 
 For example, the crew are given a mission to seek out a band of pirates. This is a navigational quest. On completion, they enter a Warp Chase.
 - Victory (catch up):
-  - Opens a Hacking quest where the enemies try to undermine your engineering systems and weapons so you can't pursue or fight.
-    - Victory:
-    - Defeat:
-  - Opens a Star Wars quest where you attempt to disable the ship.
-    - Victory: Opens a Boarding Party quest.
-    - Defeat: The ship escapes.
+  - Might open emergency Hacking quests where the enemies try to:
+    - undermine your engineering systems so you can't pursue.
+      - Victory:
+      - Defeat:
+    - disable your weapons so you can't fight.
+      - Victory:
+      - Defeat:
+    - compromise your defenses.
+      - Victory:
+      - Defeat:
+  - Opens a Hacking quest where you can attempt to:
+    - undermine their engineering systems so they can't get away.
+      - Victory: Opens a Star Wars quest, but they can't get away from you. This should be some kind of environmental condition that you can stack with adjacent quests, such that the resulting battle involves the enemy having no weapons, engines or defenses.
+        - Victory: Gives you the option of:
+          - destroying the ship. This could be some kind of 'morality' quest or something.
+          - boarding the ship.
+        - Defeat: Your engineer gets to repair your ship.
+      - Defeat: Opens a Star Wars quest, but they have the option of retreat.
+    - disable their weapons so they can't fight you.
   - Possibly opens an unknown medical quest where you heal crew members.
   - Opens an unknown medical quest where you buff boarding soldiers.
   - Opens an engineering quest to keep the ship together and able to continue fighting.

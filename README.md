@@ -87,6 +87,9 @@ Consider assistance of quests in progress to avoid breaking causality and freein
 - Upgrade (Components/Circuitboard|Mechanical|Cyberspace): Upgrade the tech on any level.
 - Warp Chase (Spaceships/Interstellar): Pursue a spaceship in deep space.
 - Boarding Party (Humanoid/Spaceship|Spacewalk): Enter a ship. Commandeer it.
+- Research (*/*): Some kind of tech-tree is needed and it should be a quest. Probably this will depend on many factors.
+- Production/Manufacture (*/*): I like this is as a concept and setting up a manufacturing system may as well be a quest.
+- Resources/Processing (*/*): Turning things into other things or digging them up. Similar theme. The important thing is making it fun. All quests will have sprite corpses dropping loot of some kind.
 
 Quests always have the same format. Victory is achieved by defeating all the sprites within given restrictions (e.g. time limit), and defeat occurs under counter-conditions.
 

@@ -109,17 +109,11 @@ Quest generation needs to have a tree of outcomes.
 
 For example, the crew are given a mission to seek out a band of pirates. This is a navigational quest. On completion, they enter a Warp Chase.
 - Victory (catch up):
-  - Might open emergency Hacking quests where the enemies try to:
-    - undermine your engineering systems so you can't pursue.
-      - Victory:
-      - Defeat:
-    - disable your weapons so you can't fight.
-      - Victory:
-      - Defeat:
-    - compromise your defenses.
-      - Victory:
-      - Defeat:
-  - Opens a Hacking quest where you can attempt to:
+  - Ideally this would open one hacking quest. The engines, weapons and defenses of each ship would be handled by sprites. If the enemy ship initiates this, it's an emergency quest.
+    - Outcome: This is determined by the sprites left alive by the end of the battle. Opens a Star Wars quest. Engines determine retreat options, weapons determine available attacks and defenses determine whether the engineer has an emergency quest to fix the ship. The Star Wars quest is a second chance to disable the enemy weapons, engines and defenses. The enemy could do the same, which would result in your defeat.
+      - Victory: Opens a Boarding Quest.
+      - Defeat: Probably fix the ship, then try to pick up the trail again.
+  - (Old) Opens a Hacking quest where you can attempt to:
     - undermine their engineering systems so they can't get away.
       - Victory: Opens a Star Wars quest, but they can't get away from you. This should be some kind of environmental condition that you can stack with adjacent quests, such that the resulting battle involves the enemy having no weapons, engines or defenses.
         - Victory: Gives you the option of:

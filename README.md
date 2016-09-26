@@ -63,7 +63,21 @@ A mapping of possible sprite-scales and their map-decoration/designs.
 - Components:
   - Circuitboard
   - Mechanical
-  - Cyberspace
+  - Cyberspace:
+    - Sprites: Sprites are always some kind of data. Consist mostly of software interfaces, e.g. data streams and such. Terrain is usually in the form of bandwidth. Space is not represented at all. A single (albeit 'hilly') tile could be a connection to another ship, and multiple tiles would represent the size of the computer.
+      - Software: When able to interact with other software, can have certain effects.
+      - Data: Can be spawned by software and moved. Once spawned, can be moved by any software equipped to manage it.
+    - Terrain: Represents latency and lossiness.
+      - Memory: Easily passable area, usually suited to keeping data, including software.
+      - Bad Sectors: If memory is turned into a bad sector while a unit is on it, the unit is lost. Nothing can be moved into bad sectors.
+      - Connection: Usually has a latency and lossiness level.
+      - Processor: A resource tile allowing software the processing power to run its operations.
+    - Abilities:
+      - Refactor (channeled): Sacrifice the health of a program and upgrade it. Includes a HoT buff.
+      - Ping: Scan a piece of terrain for information. It will tell you whether the terrain causes harm or is hard to traverse.
+      - Copy: Software copies itself.
+      - Install: Installs a Software Copy
+      - Delete: Clears data from a tile.
   - Biological
 - Spaceships: 
   - Interstellar: Star systems for other sprites.
